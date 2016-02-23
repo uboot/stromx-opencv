@@ -1,0 +1,13 @@
+Source: stromx-opencv
+Priority: extra
+Maintainer: Matthias Fuchs <stromx-devel@googlegroups.com>
+Build-Depends: debhelper (>= 7.0.50~), cmake, cdbs, libstromx-dev, libopencv-dev, libcppunit-dev
+Standards-Version: 3.9.1
+Section: libs
+Homepage: http://www.stromx.org
+
+Package: libstromx-opencv
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Stromx operators for OpenCV functions
