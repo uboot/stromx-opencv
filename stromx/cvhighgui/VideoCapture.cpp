@@ -16,7 +16,6 @@
 
 #include "stromx/cvhighgui/VideoCapture.h"
 
-#include <boost/assert.hpp>
 #include <stromx/cvsupport/Image.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Variant.h>
@@ -146,7 +145,7 @@ namespace stromx
                 {
                     try
                     {
-                        std::auto_ptr<cv::VideoCapture> camera(new cv::VideoCapture(iCameraPort));
+                        std::unique_ptr<cv::VideoCapture> camera(new cv::VideoCapture(iCameraPort));
                         
                         if(camera.get() && camera->isOpened())
                         {
@@ -255,8 +254,6 @@ namespace stromx
 
         void VideoCapture::execute(runtime::DataProvider& provider)
         {            
-            BOOST_ASSERT(m_webcam.get());
-        
             // grab and retrieve a frame
             // apparently the returned frame is a pointer to a fixed frame buffer
             // (i.e. with a constant address)
@@ -291,13 +288,13 @@ namespace stromx
         {
             if(!m_alreadyInitializedCameraPorts[m_portId])
             {
-                std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(m_portId));
+                std::unique_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(m_portId));
                 if(!webcam.get())
                     throw runtime::OperatorError(*this, "Failed to allocate VideoCapture.");
                 if(!webcam->isOpened())
                     throw runtime::OperatorError(*this, "Failed to open VideoCapture.");
                 
-                m_webcam = webcam;
+                m_webcam.swap(webcam);
                 
                 //Construct empty inputs and outputs needed for function call OperatorKernel::initialize
                 //Since the new input and output is added to existing one, you cannot call

@@ -75,7 +75,7 @@ namespace stromx
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
 
-            std::auto_ptr<cv::VideoCapture> m_webcam;
+            std::unique_ptr<cv::VideoCapture> m_webcam;
             runtime::Enum m_portId;
             static std::vector<bool> m_alreadyInitializedCameraPorts;
             static std::vector<int> m_availableCameraPorts;
