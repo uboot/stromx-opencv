@@ -34,6 +34,15 @@ BuildRequires:  cmake gcc-c++ stromx-devel opencv-devel cppunit-devel
 %description
 This package contains stromx operators for many functions of the OpenCV library.
 
+%package        -n stromx-opencv-devel
+Summary:        Development files for stromx-opencv
+Group:          Development/Libraries/C and C++
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+%description    -n stromx-opencv-devel
+This package contains libraries and header files for
+developing applications that use stromx-opencv.
+
 %prep
 %setup -q
 
@@ -76,5 +85,12 @@ rm -rf %{buildroot}
 %doc
 %{_libdir}/*.so.*
 %exclude %{_datadir}/stromx
+
+%files -n stromx-opencv-devel
+%defattr(0644, root, root, 0755)
+%doc
+%{_includedir}/*
+%{_libdir}/*.so
+%{_datadir}/stromx
 
 %changelog

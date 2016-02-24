@@ -11,3 +11,9 @@ Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Stromx operators for OpenCV functions
+
+Package: libstromx-opencv-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libstromx-opencv (= ${binary:Version})
+Description: Development files for stromx-opencv
