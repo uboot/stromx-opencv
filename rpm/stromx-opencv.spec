@@ -58,7 +58,6 @@ cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
       ..
 
 make %{?_smp_mflags}
-make %{?_smp_mflags} doc
 
 
 %check
