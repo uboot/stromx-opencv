@@ -266,7 +266,7 @@ class SaveResultVisitor(interface.ArgumentVisitor):
             self.doc.line("const runtime::Matrix* matrix = "
                           "runtime::data_cast<runtime::Matrix>(*iter);")
             self.doc.line(('std::string fileName = "{0}_{1}_" + '
-                           'boost::lexical_cast<std::string>(index) + ".npy";'
+                           'std::to_string(index) + ".npy";'
                            ).format(self.testFileName, ident))
             self.doc.line('cvsupport::Matrix::save(fileName, *matrix);')
             self.doc.line("++index;")

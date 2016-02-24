@@ -1,6 +1,5 @@
 #include "stromx/cvimgproc/test/FindContoursTest.h"
 
-#include <boost/lexical_cast.hpp>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/cvsupport/Image.h"
@@ -39,7 +38,7 @@ namespace stromx
             for (std::vector<const runtime::Data*>::const_iterator iter = content.begin(); iter != content.end(); ++iter)
             {
                 const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);
-                std::string fileName = "FindContoursTest_testAllocate0_dst_" + boost::lexical_cast<std::string>(index) + ".npy";
+                std::string fileName = "FindContoursTest_testAllocate0_dst_" + std::to_string(index) + ".npy";
                 cvsupport::Matrix::save(fileName, *matrix);
                 ++index;
             }
@@ -64,7 +63,7 @@ namespace stromx
             for (std::vector<const runtime::Data*>::const_iterator iter = content.begin(); iter != content.end(); ++iter)
             {
                 const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);
-                std::string fileName = "FindContoursTest_testAllocate1_dst_" + boost::lexical_cast<std::string>(index) + ".npy";
+                std::string fileName = "FindContoursTest_testAllocate1_dst_" + std::to_string(index) + ".npy";
                 cvsupport::Matrix::save(fileName, *matrix);
                 ++index;
             }

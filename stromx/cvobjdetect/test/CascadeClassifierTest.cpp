@@ -1,7 +1,5 @@
 #include "stromx/cvobjdetect/test/CascadeClassifierTest.h"
 
-#include <boost/lexical_cast.hpp>
-
 #include <stromx/runtime/List.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
@@ -44,7 +42,7 @@ namespace stromx
             for (std::vector<const runtime::Data*>::const_iterator iter = content.begin(); iter != content.end(); ++iter)
             {
                 const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);
-                std::string fileName = "CascadeClassifierTest_testExecute_dst_" + boost::lexical_cast<std::string>(index) + ".npy";
+                std::string fileName = "CascadeClassifierTest_testExecute_dst_" + std::to_string(index) + ".npy";
                 cvsupport::Matrix::save(fileName, *matrix);
                 ++index;
             }

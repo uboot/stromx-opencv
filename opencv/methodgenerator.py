@@ -1548,7 +1548,6 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
             ).format(self.p.ident, self.m.ident.className()))
         self.doc.blank()
         
-        self.doc.line('#include <boost/lexical_cast.hpp>')
         self.doc.line('#include <stromx/runtime/OperatorException.h>')
         self.doc.line('#include <stromx/runtime/ReadAccess.h>')
         self.doc.line('#include "stromx/cvsupport/Image.h"')
