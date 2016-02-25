@@ -68,3 +68,6 @@ set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/${LOCALE_SUFFIX}")
 
 add_subdirectory(stromx)
 
+if(BUILD_TESTS)
+    add_subdirectory(integration)
+endif(BUILD_TESTS)
