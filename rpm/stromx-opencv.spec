@@ -83,13 +83,11 @@ rm -rf %{buildroot}
 %defattr(0644, root, root, 0755)
 %doc
 %{_libdir}/*.so.*
-%exclude %{_datadir}/stromx
 
 %files -n stromx-opencv-devel
 %defattr(0644, root, root, 0755)
 %doc
 %{_includedir}/*
 %{_libdir}/*.so
-%{_datadir}/stromx
 
 %changelog
