@@ -1,5 +1,5 @@
 # setup the LD_LIBRARY_PATH for unit tests on launchpad 
-set(LD_LIBRARY_PATH "/stromx/cvcalib3d/")
+set(LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/stromx/cvcalib3d/")
 
 add_test(NAME integration_test COMMAND integration_test)
 set(INTEGRATION_TEST_ENVIRONMENT "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}")
