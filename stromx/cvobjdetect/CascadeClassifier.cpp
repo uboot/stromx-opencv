@@ -12,6 +12,8 @@
 #include <stromx/runtime/List.h>
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/Variant.h>
+#include <stromx/runtime/Visualization.h>
 
 #include <opencv2/objdetect/objdetect.hpp>
 
@@ -138,7 +140,7 @@ namespace stromx
             
             runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
             dst->setTitle(L_("Detected rectangles"));
-            dst->setVisualization(runtime::Variant::RECTANGLE);
+            dst->setVisualization(runtime::Visualization::RECTANGLE);
             outputs.push_back(dst);
             
             return outputs;

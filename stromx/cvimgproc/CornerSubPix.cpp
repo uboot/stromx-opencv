@@ -140,7 +140,7 @@ namespace stromx
                     
                     m_pointMatrixDescription = new runtime::MatrixDescription(POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     m_pointMatrixDescription->setTitle("Point coordinates");
-                    m_pointMatrixDescription->setVisualization(runtime::Variant::POINT);
+                    m_pointMatrixDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointMatrixDescription->setRows(0);
                     m_pointMatrixDescription->setCols(2);
                     inputs.push_back(m_pointMatrixDescription);
@@ -162,7 +162,7 @@ namespace stromx
                 {
                     runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     pointMatrix->setTitle(L_("Point coordinates"));
-                    pointMatrix->setVisualization(runtime::Variant::POINT);
+                    pointMatrix->setVisualization(runtime::Visualization::POINT);
                     pointMatrix->setRows(0);
                     pointMatrix->setCols(2);
                     outputs.push_back(pointMatrix);

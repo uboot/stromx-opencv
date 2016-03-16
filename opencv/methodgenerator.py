@@ -327,6 +327,8 @@ class OpHeaderGenerator(MethodGenerator):
         self.doc.line('#include <stromx/runtime/OperatorException.h>')
         self.doc.line('#include <stromx/runtime/OperatorKernel.h>')
         self.doc.line('#include <stromx/runtime/Primitive.h>')
+        self.doc.line('#include <stromx/runtime/Variant.h>')
+        self.doc.line('#include <stromx/runtime/Visualization.h>')
         self.doc.blank()
         
     def __includeGuardEnter(self):

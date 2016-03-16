@@ -98,7 +98,7 @@ namespace stromx
                 {
                     m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
-                    m_pointsDescription->setVisualization(runtime::Variant::POINT);
+                    m_pointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointsDescription->setRows(0);
                     m_pointsDescription->setCols(2);
                     inputs.push_back(m_pointsDescription);
@@ -120,7 +120,7 @@ namespace stromx
                 {
                     runtime::MatrixDescription* rect = new runtime::MatrixDescription(RECT, runtime::Variant::FLOAT_32_MATRIX);
                     rect->setTitle(L_("Rectangle"));
-                    rect->setVisualization(runtime::Variant::ROTATED_RECTANGLE);
+                    rect->setVisualization(runtime::Visualization::ROTATED_RECTANGLE);
                     rect->setRows(1);
                     rect->setCols(5);
                     outputs.push_back(rect);

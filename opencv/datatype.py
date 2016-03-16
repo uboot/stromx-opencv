@@ -211,21 +211,21 @@ class Visualization(object):
     def __init__(self, variant):
         self.variant = variant
         
-Visualization.POINT = Visualization("runtime::Variant::POINT")
-Visualization.LINE = Visualization("runtime::Variant::LINE")
-Visualization.LINE_SEGMENT = Visualization("runtime::Variant::LINE_SEGMENT")
-Visualization.POLYLINE = Visualization("runtime::Variant::POLYLINE")
-Visualization.POLYGON = Visualization("runtime::Variant::POLYGON")
+Visualization.POINT = Visualization("runtime::Visualization::POINT")
+Visualization.LINE = Visualization("runtime::Visualization::LINE")
+Visualization.LINE_SEGMENT = Visualization("runtime::Visualization::LINE_SEGMENT")
+Visualization.POLYLINE = Visualization("runtime::Visualization::POLYLINE")
+Visualization.POLYGON = Visualization("runtime::Visualization::POLYGON")
 Visualization.POLYGON_OR_POLYLINE = Visualization(
-    "runtime::Variant::POLYGON || runtime::Variant::POLYLINE"
+    "runtime::Visualization::POLYGON || runtime::Visualization::POLYLINE"
 )
-Visualization.RECTANGLE = Visualization("runtime::Variant::RECTANGLE")
+Visualization.RECTANGLE = Visualization("runtime::Visualization::RECTANGLE")
 Visualization.ROTATED_RECTANGLE = Visualization(
-    "runtime::Variant::ROTATED_RECTANGLE"
+    "runtime::Visualization::ROTATED_RECTANGLE"
 )
-Visualization.CIRCLE = Visualization("runtime::Variant::CIRCLE")
-Visualization.ELLIPSE = Visualization("runtime::Variant::ELLIPSE")
-Visualization.HISTOGRAM = Visualization("runtime::Variant::HISTOGRAM")
+Visualization.CIRCLE = Visualization("runtime::Visualization::CIRCLE")
+Visualization.ELLIPSE = Visualization("runtime::Visualization::ELLIPSE")
+Visualization.HISTOGRAM = Visualization("runtime::Visualization::HISTOGRAM")
         
 if __name__ == "__main__":
     import doctest
