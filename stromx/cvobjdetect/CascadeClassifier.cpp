@@ -1,5 +1,7 @@
 #include "stromx/cvobjdetect/CascadeClassifier.h"
 
+#include <opencv2/objdetect/objdetect.hpp>
+
 #include "stromx/cvobjdetect/Locale.h"
 #include "stromx/cvobjdetect/Utility.h"
 #include <stromx/cvsupport/Image.h>
@@ -15,7 +17,6 @@
 #include <stromx/runtime/Variant.h>
 #include <stromx/runtime/Visualization.h>
 
-#include <opencv2/objdetect/objdetect.hpp>
 
 namespace stromx
 {
