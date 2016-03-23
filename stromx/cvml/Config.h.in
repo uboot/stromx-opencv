@@ -26,17 +26,21 @@
 #define STROMX_CVML_LOCALE_DIR "@LOCALE_DIR@"
 
 #ifdef WIN32
-    #ifdef STROMX_CVML_STATIC
-        #define STROMX_CVML_API
-    #else
-        #ifdef stromx_cvml_EXPORTS
-            #define STROMX_CVML_API __declspec(dllexport)
-        #else
-            #define STROMX_CVML_API __declspec(dllimport)
-        #endif // stromx_cvml_EXPORTS
-    #endif // STROMX_CVML_STATIC
+    #define STROMX_CVML_HELPER_DLL_IMPORT __declspec(dllimport)
+    #define STROMX_CVML_HELPER_DLL_EXPORT __declspec(dllexport)
 #else
-    #define STROMX_CVML_API
+    #define STROMX_CVML_HELPER_DLL_IMPORT
+    #define STROMX_CVML_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
 #endif // WIN32
+
+#ifdef STROMX_CVML_STATIC
+    #define STROMX_CVML_API
+#else // STROMX_CVML_STATIC
+    #ifdef stromx_cvml_EXPORTS
+        #define STROMX_CVML_API STROMX_CVML_HELPER_DLL_EXPORT
+    #else // stromx_cvml_EXPORTS
+        #define STROMX_CVML_API STROMX_CVML_HELPER_DLL_IMPORT
+    #endif // stromx_cvml_EXPORTS
+#endif // STROMX_CVML_STATIC
 
 #endif // STROMX_CVML_CONFIG_H

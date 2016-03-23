@@ -10,17 +10,21 @@
 #define STROMX_CVCORE_LOCALE_DIR "@LOCALE_DIR@"
 
 #ifdef WIN32
-    #ifdef STROMX_CVCORE_STATIC
-        #define STROMX_CVCORE_API
-    #else // STROMX_CVCORE_STATIC
-        #ifdef stromx_cvcore_EXPORTS
-            #define STROMX_CVCORE_API __declspec(dllexport)
-        #else // stromx_cvcore_EXPORTS
-            #define STROMX_CVCORE_API __declspec(dllimport)
-        #endif // stromx_cvcore_EXPORTS
-    #endif // STROMX_CVCORE_STATIC
-#else // WIN32
-    #define STROMX_CVCORE_API
+    #define STROMX_CVCORE_HELPER_DLL_IMPORT __declspec(dllimport)
+    #define STROMX_CVCORE_HELPER_DLL_EXPORT __declspec(dllexport)
+#else
+    #define STROMX_CVCORE_HELPER_DLL_IMPORT
+    #define STROMX_CVCORE_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
 #endif // WIN32
+
+#ifdef STROMX_CVCORE_STATIC
+    #define STROMX_CVCORE_API
+#else // STROMX_CVCORE_STATIC
+    #ifdef stromx_cvcore_EXPORTS
+        #define STROMX_CVCORE_API STROMX_CVCORE_HELPER_DLL_EXPORT
+    #else // stromx_cvcore_EXPORTS
+        #define STROMX_CVCORE_API STROMX_CVCORE_HELPER_DLL_IMPORT
+    #endif // stromx_cvcore_EXPORTS
+#endif // STROMX_CVCORE_STATIC
 
 #endif // STROMX_CVCORE_CONFIG_H

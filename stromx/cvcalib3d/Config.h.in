@@ -10,17 +10,21 @@
 #define STROMX_CVCALIB3D_LOCALE_DIR "@LOCALE_DIR@"
 
 #ifdef WIN32
-    #ifdef STROMX_CVCALIB3D_STATIC
-        #define STROMX_CVCALIB3D_API
-    #else // STROMX_CVCALIB3D_STATIC
-        #ifdef stromx_cvcalib3d_EXPORTS
-            #define STROMX_CVCALIB3D_API __declspec(dllexport)
-        #else // stromx_cvcalib3d_EXPORTS
-            #define STROMX_CVCALIB3D_API __declspec(dllimport)
-        #endif // stromx_cvcalib3d_EXPORTS
-    #endif // STROMX_CVCALIB3D_STATIC
-#else // WIN32
-    #define STROMX_CVCALIB3D_API
+    #define STROMX_CVCALIB3D_HELPER_DLL_IMPORT __declspec(dllimport)
+    #define STROMX_CVCALIB3D_HELPER_DLL_EXPORT __declspec(dllexport)
+#else
+    #define STROMX_CVCALIB3D_HELPER_DLL_IMPORT
+    #define STROMX_CVCALIB3D_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
 #endif // WIN32
+
+#ifdef STROMX_CVCALIB3D_STATIC
+    #define STROMX_CVCALIB3D_API
+#else // STROMX_CVCALIB3D_STATIC
+    #ifdef stromx_cvcalib3d_EXPORTS
+        #define STROMX_CVCALIB3D_API STROMX_CVCALIB3D_HELPER_DLL_EXPORT
+    #else // stromx_cvcalib3d_EXPORTS
+        #define STROMX_CVCALIB3D_API STROMX_CVCALIB3D_HELPER_DLL_IMPORT
+    #endif // stromx_cvcalib3d_EXPORTS
+#endif // STROMX_CVCALIB3D_STATIC
 
 #endif // STROMX_CVCALIB3D_CONFIG_H

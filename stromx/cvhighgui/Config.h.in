@@ -26,17 +26,21 @@
 #define STROMX_CVHIGHGUI_LOCALE_DIR "@LOCALE_DIR@"
 
 #ifdef WIN32
-    #ifdef STROMX_CVHIGHGUI_STATIC
-        #define STROMX_CVHIGHGUI_API
-    #else
-        #ifdef stromx_cvhighgui_EXPORTS
-            #define STROMX_CVHIGHGUI_API __declspec(dllexport)
-        #else
-            #define STROMX_CVHIGHGUI_API __declspec(dllimport)
-        #endif // stromx_cvhighgui_EXPORTS
-    #endif // STROMX_CVHIGHGUI_STATIC
+    #define STROMX_CVHIGHGUI_HELPER_DLL_IMPORT __declspec(dllimport)
+    #define STROMX_CVHIGHGUI_HELPER_DLL_EXPORT __declspec(dllexport)
 #else
-    #define STROMX_CVHIGHGUI_API
+    #define STROMX_CVHIGHGUI_HELPER_DLL_IMPORT
+    #define STROMX_CVHIGHGUI_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
 #endif // WIN32
+
+#ifdef STROMX_CVHIGHGUI_STATIC
+    #define STROMX_CVHIGHGUI_API
+#else // STROMX_CVHIGHGUI_STATIC
+    #ifdef stromx_cvhighgui_EXPORTS
+        #define STROMX_CVHIGHGUI_API STROMX_CVHIGHGUI_HELPER_DLL_EXPORT
+    #else // stromx_cvhighgui_EXPORTS
+        #define STROMX_CVHIGHGUI_API STROMX_CVHIGHGUI_HELPER_DLL_IMPORT
+    #endif // stromx_cvhighgui_EXPORTS
+#endif // STROMX_CVHIGHGUI_STATIC
 
 #endif // STROMX_CVHIGHGUI_CONFIG_H
