@@ -209,14 +209,6 @@ class CMakeGenerator(LibGenerator):
     Generator of the CMake file for the package.
     """
     def generate(self):
-        self.doc.line("set (STROMX_{0}_VERSION_MAJOR {1})"\
-            .format(self.p.ident.upper(), self.p.major))
-        self.doc.line("set (STROMX_{0}_VERSION_MINOR {1})"\
-            .format(self.p.ident.upper(), self.p.minor))
-        self.doc.line("set (STROMX_{0}_VERSION_PATCH {1})"\
-            .format(self.p.ident.upper(), self.p.patch))
-        self.doc.blank()
-        
         self.doc.line("configure_file (")
         self.doc.increaseIndent()
         self.doc.line(r"${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in")
@@ -247,9 +239,9 @@ class CMakeGenerator(LibGenerator):
             .format(self.p.ident))
         self.doc.blank()
         
-        self.doc.line('set(VERSION_STRING "${{STROMX_{0}_VERSION_MAJOR}}.'
-                  '${{STROMX_{0}_VERSION_MINOR}}.${{STROMX_{0}_VERSION_PATCH}}")'\
-                  .format(self.p.ident.upper()))
+        self.doc.line('set(VERSION_STRING "${STROMX_OPENCV_VERSION_MAJOR}.'
+                      '${STROMX_OPENCV_VERSION_MINOR}.'
+                      '${STROMX_OPENCV_VERSION_PATCH}")')
         self.doc.blank()
         
         self.doc.line("set_target_properties (stromx_{0} PROPERTIES"\
@@ -610,9 +602,9 @@ class ConfigGenerator(LibGenerator):
         self.doc.blank()
         
         version = "{0}_VERSION".format(p)
-        self.doc.line("#define STROMX_{0}_MAJOR @STROMX_{0}_MAJOR@".format(version))
-        self.doc.line("#define STROMX_{0}_MINOR @STROMX_{0}_MINOR@".format(version))
-        self.doc.line("#define STROMX_{0}_PATCH @STROMX_{0}_PATCH@".format(version))
+        self.doc.line("#define STROMX_{0}_MAJOR @STROMX_OPENCV_VERSION_MAJOR@".format(version))
+        self.doc.line("#define STROMX_{0}_MINOR @STROMX_OPENCV_VERSION_MINOR@".format(version))
+        self.doc.line("#define STROMX_{0}_PATCH @STROMX_OPENCV_VERSION_PATCH@".format(version))
         self.doc.blank()
         
         packageName = "cv::{0}".format(str(self.p.ident)[2:])
