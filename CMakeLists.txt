@@ -53,6 +53,10 @@ find_package(CppUnit)
 find_package(stromx REQUIRED)
 find_package(OpenCV COMPONENTS calib3d core imgproc highgui ml objdetect REQUIRED)
 
+if(OpenCV_VERSION VERSION_LESS "3")
+    add_definitions(-DSTROMX_OPENCV2)
+endif(OpenCV_VERSION VERSION_LESS "3")
+
 if(CPPUNIT_FOUND)
     option(BUILD_TESTS "Build unit tests" ON)
 endif()

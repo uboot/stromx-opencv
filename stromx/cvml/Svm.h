@@ -17,16 +17,27 @@
 #ifndef STROMX_CVML_SVM_H
 #define STROMX_CVML_SVM_H
 
+
+#ifdef STROMX_OPENCV2
+#else // STROMX_OPENCV2
+#include <opencv2/ml.hpp>
+#endif // STROMX_OPENCV2
+
 #include <stromx/runtime/File.h>
 #include <stromx/runtime/OperatorKernel.h>
 
 #include "stromx/cvml/Cvml.h"
 
-class CvSVM;
-
 namespace cv
 {
-    class Mat;
+class Mat;
+
+#ifdef STROMX_OPENCV2
+namespace ml
+{
+class SVM;
+}
+#endif // STROMX_OPENCV2
 }
 
 namespace stromx
@@ -71,7 +82,11 @@ namespace stromx
             static const std::vector<const runtime::Parameter*> setupParameters();
             
             runtime::File m_statisticalModel;
-            CvSVM* m_svm;
+#ifdef STROMX_OPENCV2
+            cv::ml::SVM* m_svm;
+#else // STROMX_OPENCV2
+            cv::Ptr<cv::ml::SVM> m_svm;
+#endif // STROMX_OPENCV2
             runtime::Bool m_trainingIsActive;
             cv::Mat* m_trainingData;
             cv::Mat* m_trainingResponses;

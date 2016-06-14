@@ -43,7 +43,11 @@ namespace stromx
             
         Svm::Svm()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-            m_svm(new cv::SVM()),
+#ifdef STROMX_OPENCV2
+            m_svm(new cv::ml::SVM()),
+#else
+            m_svm(cv::ml::SVM::create()),
+#endif // STROMX_OPENCV2
             m_trainingIsActive(false),
             m_trainingData(new cv::Mat()),
             m_trainingResponses(new cv::Mat())
@@ -52,7 +56,10 @@ namespace stromx
         
         Svm::~Svm()
         {
+#ifdef STROMX_OPENCV2
             delete m_svm;
+#else // STROMX_OPENCV2
+#endif // STROMX_OPENCV2
             delete m_trainingData;
         }
         
@@ -78,7 +85,11 @@ namespace stromx
                 case STATISTICAL_MODEL:
                     m_statisticalModel = stromx::runtime::data_cast<File>(value);
                     if (! m_statisticalModel.path().empty())
+#ifdef STROMX_OPENCV2
                         m_svm->load(m_statisticalModel.path().c_str());
+#else // STROMX_OPENCV2
+                        m_svm = cv::Algorithm::load<cv::ml::SVM>(m_statisticalModel.path());
+#endif // STROMX_OPENCV2
                     break;
                 case TRAINING_IS_ACTIVE:
                     if (m_trainingIsActive == stromx::runtime::data_cast<Bool>(value))
@@ -94,7 +105,13 @@ namespace stromx
                     }
                     else
                     {
+#ifdef STROMX_OPENCV2
                         m_svm->train(*m_trainingData, *m_trainingResponses);
+#else // STROMX_OPENCV2
+                        cv::Ptr<cv::ml::TrainData> trainData = 
+                            cv::ml::TrainData::create(*m_trainingData, cv::ml::ROW_SAMPLE, *m_trainingResponses);
+                        m_svm->train(trainData);
+#endif
                         std::string modelPath = File::tempPath(".xml");
                         m_svm->save(modelPath.c_str());
                         m_statisticalModel = File(modelPath);
@@ -123,12 +140,16 @@ namespace stromx
                 const Float32 & response = responseAccess.get<Float32>();
                 
                 m_trainingData->push_back(cvsupport::getOpenCvMat(data));
+#ifdef STROMX_OPENCV2
                 m_trainingResponses->push_back(static_cast<float>(response));
+#else // STROMX_OPENCV2
+                m_trainingResponses->push_back(static_cast<int32_t>(response));
+#endif // STROMX_OPENCV2
                 
                 Id2DataPair outputMapper(PREDICTED_RESPONSE, dataMapper.data());
                 provider.sendOutputData(outputMapper);
             }
-            else
+            else 
             {
                 Id2DataPair dataMapper(DATA);
                 provider.receiveInputData(dataMapper);
