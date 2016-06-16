@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer contour(new cvsupport::Matrix("non_convex_f32.npy"));
             
-            m_operator->setInputData(ContourArea::CONTOUR, contour);
+            m_operator->setInputData(ContourArea::INPUT_CONTOUR, contour);
             
-            runtime::DataContainer areaResult = m_operator->getOutputData(ContourArea::AREA);
+            runtime::DataContainer areaResult = m_operator->getOutputData(ContourArea::OUTPUT_AREA);
             
             runtime::ReadAccess areaAccess(areaResult);
             std::ofstream areaFile;
@@ -46,9 +46,9 @@ namespace stromx
             
             runtime::DataContainer contour(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(ContourArea::CONTOUR, contour);
+            m_operator->setInputData(ContourArea::INPUT_CONTOUR, contour);
             
-            runtime::DataContainer areaResult = m_operator->getOutputData(ContourArea::AREA);
+            runtime::DataContainer areaResult = m_operator->getOutputData(ContourArea::OUTPUT_AREA);
             
             runtime::ReadAccess areaAccess(areaResult);
             std::ofstream areaFile;

@@ -21,19 +21,18 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API MinAreaRect : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                POINTS,
-                RECT
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_POINTS,
+                OUTPUT_RECT,
+                PARAMETER_DATA_FLOW
             };
             MinAreaRect();
             virtual OperatorKernel* clone() const { return new MinAreaRect; }

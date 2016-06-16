@@ -36,15 +36,15 @@ namespace stromx
         {
             switch(id)
             {
-            case CH_1:
+            case PARAMETER_CH_1:
                 return m_ch1;
-            case CH_2:
+            case PARAMETER_CH_2:
                 return m_ch2;
-            case CH_3:
+            case PARAMETER_CH_3:
                 return m_ch3;
-            case THICKNESS:
+            case PARAMETER_THICKNESS:
                 return m_thickness;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -57,7 +57,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case CH_1:
+                case PARAMETER_CH_1:
                     {
                         const runtime::UInt8 & castedValue = runtime::data_cast<runtime::UInt8>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_8))
@@ -68,7 +68,7 @@ namespace stromx
                         m_ch1 = castedValue;
                     }
                     break;
-                case CH_2:
+                case PARAMETER_CH_2:
                     {
                         const runtime::UInt8 & castedValue = runtime::data_cast<runtime::UInt8>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_8))
@@ -79,7 +79,7 @@ namespace stromx
                         m_ch2 = castedValue;
                     }
                     break;
-                case CH_3:
+                case PARAMETER_CH_3:
                     {
                         const runtime::UInt8 & castedValue = runtime::data_cast<runtime::UInt8>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_8))
@@ -90,7 +90,7 @@ namespace stromx
                         m_ch3 = castedValue;
                     }
                     break;
-                case THICKNESS:
+                case PARAMETER_THICKNESS:
                     {
                         const runtime::Int32 & castedValue = runtime::data_cast<runtime::Int32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::INT_32))
@@ -101,7 +101,7 @@ namespace stromx
                         m_thickness = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -137,22 +137,22 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_ch1Parameter = new runtime::NumericParameter<runtime::UInt8>(CH_1);
+                    m_ch1Parameter = new runtime::NumericParameter<runtime::UInt8>(PARAMETER_CH_1);
                     m_ch1Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ch1Parameter->setTitle(L_("Channel 1"));
                     parameters.push_back(m_ch1Parameter);
                     
-                    m_ch2Parameter = new runtime::NumericParameter<runtime::UInt8>(CH_2);
+                    m_ch2Parameter = new runtime::NumericParameter<runtime::UInt8>(PARAMETER_CH_2);
                     m_ch2Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ch2Parameter->setTitle(L_("Channel 2"));
                     parameters.push_back(m_ch2Parameter);
                     
-                    m_ch3Parameter = new runtime::NumericParameter<runtime::UInt8>(CH_3);
+                    m_ch3Parameter = new runtime::NumericParameter<runtime::UInt8>(PARAMETER_CH_3);
                     m_ch3Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ch3Parameter->setTitle(L_("Channel 3"));
                     parameters.push_back(m_ch3Parameter);
                     
-                    m_thicknessParameter = new runtime::NumericParameter<runtime::Int32>(THICKNESS);
+                    m_thicknessParameter = new runtime::NumericParameter<runtime::Int32>(PARAMETER_THICKNESS);
                     m_thicknessParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thicknessParameter->setTitle(L_("Thickness"));
                     parameters.push_back(m_thicknessParameter);
@@ -172,11 +172,11 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_imgDescription = new runtime::Description(IMG, runtime::Variant::IMAGE);
+                    m_imgDescription = new runtime::Description(INPUT_IMG, runtime::Variant::IMAGE);
                     m_imgDescription->setTitle(L_("Image"));
                     inputs.push_back(m_imgDescription);
                     
-                    m_contoursDescription = new runtime::Description(CONTOURS, runtime::Variant::LIST);
+                    m_contoursDescription = new runtime::Description(INPUT_CONTOURS, runtime::Variant::LIST);
                     m_contoursDescription->setTitle(L_("Contours"));
                     m_contoursDescription->setVisualization(runtime::Visualization::POLYGON);
                     inputs.push_back(m_contoursDescription);
@@ -196,7 +196,7 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::Description* img = new runtime::Description(IMG, runtime::Variant::IMAGE);
+                    runtime::Description* img = new runtime::Description(OUTPUT_IMG, runtime::Variant::IMAGE);
                     img->setTitle(L_("Image"));
                     outputs.push_back(img);
                     
@@ -218,8 +218,8 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::Id2DataPair imgInMapper(IMG);
-                    runtime::Id2DataPair contoursInMapper(CONTOURS);
+                    runtime::Id2DataPair imgInMapper(INPUT_IMG);
+                    runtime::Id2DataPair contoursInMapper(INPUT_CONTOURS);
                     
                     provider.receiveInputData(imgInMapper && contoursInMapper);
                     
@@ -233,7 +233,7 @@ namespace stromx
                     
                     if(contoursInMapper.data() == inContainer)
                     {
-                        throw runtime::InputError(CONTOURS, *this, "Can not operate in place.");
+                        throw runtime::InputError(INPUT_CONTOURS, *this, "Can not operate in place.");
                     }
                     else
                     {
@@ -243,11 +243,11 @@ namespace stromx
                     
                     if(! imgData->variant().isVariant(m_imgDescription->variant()))
                     {
-                        throw runtime::InputError(IMG, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_IMG, *this, "Wrong input data variant.");
                     }
                     if(! contoursData->variant().isVariant(m_contoursDescription->variant()))
                     {
-                        throw runtime::InputError(CONTOURS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_CONTOURS, *this, "Wrong input data variant.");
                     }
                     
                     runtime::Image * imgCastedData = runtime::data_cast<runtime::Image>(imgData);
@@ -263,7 +263,7 @@ namespace stromx
                     cv::drawContours(imgCvData, contoursCvData, -1, cv::Scalar(ch1CvData, ch2CvData, ch3CvData), thicknessCvData);
                     
                     runtime::DataContainer imgOutContainer = inContainer;
-                    runtime::Id2DataPair imgOutMapper(IMG, imgOutContainer);
+                    runtime::Id2DataPair imgOutMapper(OUTPUT_IMG, imgOutContainer);
                     
                     provider.sendOutputData(imgOutMapper);
                 }

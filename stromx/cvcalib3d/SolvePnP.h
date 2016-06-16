@@ -21,23 +21,22 @@ namespace stromx
     {
         class STROMX_CVCALIB3D_API SolvePnP : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                OBJECT_POINTS,
-                RVEC,
-                TVEC,
-                IMAGE_POINTS
-            };
-            enum ParameterId
-            {
-                DIST_COEFFS,
-                DATA_FLOW,
-                CAMERA_MATRIX
+                INPUT_IMAGE_POINTS,
+                INPUT_OBJECT_POINTS,
+                OUTPUT_RVEC,
+                OUTPUT_TVEC,
+                PARAMETER_CAMERA_MATRIX,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DIST_COEFFS
             };
             SolvePnP();
             virtual OperatorKernel* clone() const { return new SolvePnP; }

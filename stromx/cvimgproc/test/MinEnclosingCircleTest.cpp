@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(MinEnclosingCircle::POINTS, points);
+            m_operator->setInputData(MinEnclosingCircle::INPUT_POINTS, points);
             
-            runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::CIRCLE);
+            runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::OUTPUT_CIRCLE);
             
             runtime::ReadAccess circleAccess(circleResult);
             cvsupport::Matrix::save("MinEnclosingCircleTest_testAllocate0_circle.npy", circleAccess.get<runtime::Matrix>());
@@ -43,9 +43,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(MinEnclosingCircle::POINTS, points);
+            m_operator->setInputData(MinEnclosingCircle::INPUT_POINTS, points);
             
-            runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::CIRCLE);
+            runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::OUTPUT_CIRCLE);
             
             runtime::ReadAccess circleAccess(circleResult);
             cvsupport::Matrix::save("MinEnclosingCircleTest_testAllocate1_circle.npy", circleAccess.get<runtime::Matrix>());

@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Dilate : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum ShapeId
             {
@@ -34,18 +36,17 @@ namespace stromx
                 ALLOCATE,
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                DATA_FLOW,
-                SHAPE,
-                KSIZEX,
-                ITERATIONS,
-                KSIZEY
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                OUTPUT_SRC,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_ITERATIONS,
+                PARAMETER_KSIZEX,
+                PARAMETER_KSIZEY,
+                PARAMETER_SHAPE
             };
             Dilate();
             virtual OperatorKernel* clone() const { return new Dilate; }

@@ -39,13 +39,13 @@ namespace stromx
             runtime::UInt8 ch2(0);
             runtime::UInt8 ch3(0);
             
-            m_operator->setInputData(DrawContours::IMG, img);
-            m_operator->setInputData(DrawContours::CONTOURS, contours);
-            m_operator->setParameter(DrawContours::CH_1, ch1);
-            m_operator->setParameter(DrawContours::CH_2, ch2);
-            m_operator->setParameter(DrawContours::CH_3, ch3);
+            m_operator->setInputData(DrawContours::INPUT_IMG, img);
+            m_operator->setInputData(DrawContours::INPUT_CONTOURS, contours);
+            m_operator->setParameter(DrawContours::PARAMETER_CH_1, ch1);
+            m_operator->setParameter(DrawContours::PARAMETER_CH_2, ch2);
+            m_operator->setParameter(DrawContours::PARAMETER_CH_3, ch3);
             
-            runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::IMG);
+            runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::OUTPUT_IMG);
             
             runtime::ReadAccess imgAccess(imgResult);
             cvsupport::Image::save("DrawContoursTest_testInPlace0_img.png", imgAccess.get<runtime::Image>());
@@ -70,14 +70,14 @@ namespace stromx
             runtime::UInt8 ch3(0);
             runtime::Int32 thickness(-1);
             
-            m_operator->setInputData(DrawContours::IMG, img);
-            m_operator->setInputData(DrawContours::CONTOURS, contours);
-            m_operator->setParameter(DrawContours::CH_1, ch1);
-            m_operator->setParameter(DrawContours::CH_2, ch2);
-            m_operator->setParameter(DrawContours::CH_3, ch3);
-            m_operator->setParameter(DrawContours::THICKNESS, thickness);
+            m_operator->setInputData(DrawContours::INPUT_IMG, img);
+            m_operator->setInputData(DrawContours::INPUT_CONTOURS, contours);
+            m_operator->setParameter(DrawContours::PARAMETER_CH_1, ch1);
+            m_operator->setParameter(DrawContours::PARAMETER_CH_2, ch2);
+            m_operator->setParameter(DrawContours::PARAMETER_CH_3, ch3);
+            m_operator->setParameter(DrawContours::PARAMETER_THICKNESS, thickness);
             
-            runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::IMG);
+            runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::OUTPUT_IMG);
             
             runtime::ReadAccess imgAccess(imgResult);
             cvsupport::Image::save("DrawContoursTest_testInPlace1_img.png", imgAccess.get<runtime::Image>());

@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(FitLine::POINTS, points);
+            m_operator->setInputData(FitLine::INPUT_POINTS, points);
             
-            runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::LINE);
+            runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::OUTPUT_LINE);
             
             runtime::ReadAccess lineAccess(lineResult);
             cvsupport::Matrix::save("FitLineTest_testAllocate0_line.npy", lineAccess.get<runtime::Matrix>());
@@ -43,9 +43,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(FitLine::POINTS, points);
+            m_operator->setInputData(FitLine::INPUT_POINTS, points);
             
-            runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::LINE);
+            runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::OUTPUT_LINE);
             
             runtime::ReadAccess lineAccess(lineResult);
             cvsupport::Matrix::save("FitLineTest_testAllocate1_line.npy", lineAccess.get<runtime::Matrix>());

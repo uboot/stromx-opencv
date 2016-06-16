@@ -28,16 +28,13 @@
 
 #include "stromx/cvml/Cvml.h"
 
+#ifdef STROMX_OPENCV2
+class CvSVM;
+#endif // STROMX_OPENCV2
+
 namespace cv
 {
-class Mat;
-
-#ifdef STROMX_OPENCV2
-namespace ml
-{
-class SVM;
-}
-#endif // STROMX_OPENCV2
+    class Mat;
 }
 
 namespace stromx
@@ -46,22 +43,18 @@ namespace stromx
     {
         class STROMX_CVML_API Svm : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:      
-            enum InputId
+            enum DataId
             {
                 DATA,
-                TRAINING_RESPONSE
-            };
-            
-            enum OutputId
-            {
-                PREDICTED_RESPONSE
-            };
-            
-            enum ParameterId
-            {
+                TRAINING_RESPONSE,
+                PREDICTED_RESPONSE,
                 TRAINING_IS_ACTIVE,
-                STATISTICAL_MODEL
+                STATISTICAL_MODEL,
+                OUTPUT_OFFSET = 2,
+                PARAMETER_OFFSET = 3
             };
             
             Svm();
@@ -83,7 +76,7 @@ namespace stromx
             
             runtime::File m_statisticalModel;
 #ifdef STROMX_OPENCV2
-            cv::ml::SVM* m_svm;
+            CvSVM* m_svm;
 #else // STROMX_OPENCV2
             cv::Ptr<cv::ml::SVM> m_svm;
 #endif // STROMX_OPENCV2

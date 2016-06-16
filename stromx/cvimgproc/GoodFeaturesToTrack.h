@@ -21,25 +21,24 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API GoodFeaturesToTrack : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                POINT_MATRIX
-            };
-            enum ParameterId
-            {
-                MAX_CORNERS,
-                K,
-                DATA_FLOW,
-                QUALITY_LEVEL,
-                BLOCK_SIZE,
-                USE_HARRIS_DETECTOR,
-                MIN_DISTANCE
+                INPUT_SRC,
+                OUTPUT_POINT_MATRIX,
+                PARAMETER_BLOCK_SIZE,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_K,
+                PARAMETER_MAX_CORNERS,
+                PARAMETER_MIN_DISTANCE,
+                PARAMETER_QUALITY_LEVEL,
+                PARAMETER_USE_HARRIS_DETECTOR
             };
             GoodFeaturesToTrack();
             virtual OperatorKernel* clone() const { return new GoodFeaturesToTrack; }

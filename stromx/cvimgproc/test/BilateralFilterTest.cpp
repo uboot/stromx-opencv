@@ -23,7 +23,7 @@ namespace stromx
         
         void BilateralFilterTest::testManual0()
         {
-            m_operator->setParameter(BilateralFilter::DATA_FLOW, runtime::Enum(BilateralFilter::MANUAL));
+            m_operator->setParameter(BilateralFilter::PARAMETER_DATA_FLOW, runtime::Enum(BilateralFilter::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -33,13 +33,13 @@ namespace stromx
             runtime::Float64 sigmaColor(100);
             runtime::Float64 sigmaSpace(75);
             
-            m_operator->setInputData(BilateralFilter::SRC, src);
-            m_operator->setInputData(BilateralFilter::DST, dst);
-            m_operator->setParameter(BilateralFilter::D, d);
-            m_operator->setParameter(BilateralFilter::SIGMA_COLOR, sigmaColor);
-            m_operator->setParameter(BilateralFilter::SIGMA_SPACE, sigmaSpace);
+            m_operator->setInputData(BilateralFilter::INPUT_SRC, src);
+            m_operator->setInputData(BilateralFilter::INPUT_DST, dst);
+            m_operator->setParameter(BilateralFilter::PARAMETER_D, d);
+            m_operator->setParameter(BilateralFilter::PARAMETER_SIGMA_COLOR, sigmaColor);
+            m_operator->setParameter(BilateralFilter::PARAMETER_SIGMA_SPACE, sigmaSpace);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(BilateralFilter::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(BilateralFilter::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("BilateralFilterTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -47,15 +47,15 @@ namespace stromx
         
         void BilateralFilterTest::testAllocate0()
         {
-            m_operator->setParameter(BilateralFilter::DATA_FLOW, runtime::Enum(BilateralFilter::ALLOCATE));
+            m_operator->setParameter(BilateralFilter::PARAMETER_DATA_FLOW, runtime::Enum(BilateralFilter::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             
-            m_operator->setInputData(BilateralFilter::SRC, src);
+            m_operator->setInputData(BilateralFilter::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(BilateralFilter::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(BilateralFilter::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("BilateralFilterTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
@@ -63,7 +63,7 @@ namespace stromx
         
         void BilateralFilterTest::testAllocate1()
         {
-            m_operator->setParameter(BilateralFilter::DATA_FLOW, runtime::Enum(BilateralFilter::ALLOCATE));
+            m_operator->setParameter(BilateralFilter::PARAMETER_DATA_FLOW, runtime::Enum(BilateralFilter::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -72,12 +72,12 @@ namespace stromx
             runtime::Float64 sigmaColor(100);
             runtime::Float64 sigmaSpace(75);
             
-            m_operator->setInputData(BilateralFilter::SRC, src);
-            m_operator->setParameter(BilateralFilter::D, d);
-            m_operator->setParameter(BilateralFilter::SIGMA_COLOR, sigmaColor);
-            m_operator->setParameter(BilateralFilter::SIGMA_SPACE, sigmaSpace);
+            m_operator->setInputData(BilateralFilter::INPUT_SRC, src);
+            m_operator->setParameter(BilateralFilter::PARAMETER_D, d);
+            m_operator->setParameter(BilateralFilter::PARAMETER_SIGMA_COLOR, sigmaColor);
+            m_operator->setParameter(BilateralFilter::PARAMETER_SIGMA_SPACE, sigmaSpace);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(BilateralFilter::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(BilateralFilter::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("BilateralFilterTest_testAllocate1_dst.png", dstAccess.get<runtime::Image>());

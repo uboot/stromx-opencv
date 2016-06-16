@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Scharr : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DdepthId
             {
@@ -33,19 +35,17 @@ namespace stromx
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                SCALE,
-                DELTA,
-                DDEPTH,
-                DX,
-                DY,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DDEPTH,
+                PARAMETER_DELTA,
+                PARAMETER_DX,
+                PARAMETER_DY,
+                PARAMETER_SCALE
             };
             Scharr();
             virtual OperatorKernel* clone() const { return new Scharr; }

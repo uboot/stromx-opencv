@@ -35,13 +35,13 @@ namespace stromx
         {
             switch(id)
             {
-            case AEPS:
+            case PARAMETER_AEPS:
                 return m_aeps;
-            case DIST_TYPE:
+            case PARAMETER_DIST_TYPE:
                 return m_distType;
-            case REPS:
+            case PARAMETER_REPS:
                 return m_reps;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -54,7 +54,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case AEPS:
+                case PARAMETER_AEPS:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -65,7 +65,7 @@ namespace stromx
                         m_aeps = castedValue;
                     }
                     break;
-                case DIST_TYPE:
+                case PARAMETER_DIST_TYPE:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -76,7 +76,7 @@ namespace stromx
                         m_distType = castedValue;
                     }
                     break;
-                case REPS:
+                case PARAMETER_REPS:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -87,7 +87,7 @@ namespace stromx
                         m_reps = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -123,7 +123,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_distTypeParameter = new runtime::EnumParameter(DIST_TYPE);
+                    m_distTypeParameter = new runtime::EnumParameter(PARAMETER_DIST_TYPE);
                     m_distTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_distTypeParameter->setTitle(L_("Distance type"));
                     m_distTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_L2), L_("L2")));
@@ -134,13 +134,13 @@ namespace stromx
                     m_distTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_HUBER), L_("Huber")));
                     parameters.push_back(m_distTypeParameter);
                     
-                    m_repsParameter = new runtime::NumericParameter<runtime::Float64>(REPS);
+                    m_repsParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_REPS);
                     m_repsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_repsParameter->setTitle(L_("Accuracy of \u03C1"));
                     m_repsParameter->setMin(runtime::Float64(0.0));
                     parameters.push_back(m_repsParameter);
                     
-                    m_aepsParameter = new runtime::NumericParameter<runtime::Float64>(AEPS);
+                    m_aepsParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_AEPS);
                     m_aepsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_aepsParameter->setTitle(L_("Accuracy of \u03B8"));
                     m_aepsParameter->setMin(runtime::Float64(0.0));
@@ -161,7 +161,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_pointsDescription = new runtime::MatrixDescription(INPUT_POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
                     m_pointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointsDescription->setRows(0);
@@ -183,7 +183,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* line = new runtime::MatrixDescription(LINE, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* line = new runtime::MatrixDescription(OUTPUT_LINE, runtime::Variant::FLOAT_32_MATRIX);
                     line->setTitle(L_("Line (\u03C1, \u03B8)"));
                     line->setVisualization(runtime::Visualization::LINE);
                     line->setRows(1);
@@ -208,7 +208,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair pointsInMapper(POINTS);
+                    runtime::Id2DataPair pointsInMapper(INPUT_POINTS);
                     
                     provider.receiveInputData(pointsInMapper);
                     
@@ -221,7 +221,7 @@ namespace stromx
                     
                     if(! pointsData->variant().isVariant(m_pointsDescription->variant()))
                     {
-                        throw runtime::InputError(POINTS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_POINTS, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* pointsCastedData = runtime::data_cast<runtime::Matrix>(pointsData);
@@ -237,7 +237,7 @@ namespace stromx
                     
                     runtime::Matrix* lineCastedData = new cvsupport::Matrix(lineCvData);
                     runtime::DataContainer lineOutContainer = runtime::DataContainer(lineCastedData);
-                    runtime::Id2DataPair lineOutMapper(LINE, lineOutContainer);
+                    runtime::Id2DataPair lineOutMapper(OUTPUT_LINE, lineOutContainer);
                     
                     provider.sendOutputData(lineOutMapper);
                 }
@@ -262,7 +262,7 @@ namespace stromx
             case DIST_HUBER:
                 return CV_DIST_HUBER;
             default:
-                throw runtime::WrongParameterValue(parameter(DIST_TYPE), *this);
+                throw runtime::WrongParameterValue(parameter(PARAMETER_DIST_TYPE), *this);
             }
         }
         

@@ -65,13 +65,13 @@ namespace stromx
             runtime::UInt32 imageSizeX(320);
             runtime::UInt32 imageSizeY(240);
             
-            m_operator->setInputData(CalibrateCamera::OBJECT_POINTS, objectPoints);
-            m_operator->setInputData(CalibrateCamera::IMAGE_POINTS, imagePoints);
-            m_operator->setParameter(CalibrateCamera::IMAGE_SIZE_X, imageSizeX);
-            m_operator->setParameter(CalibrateCamera::IMAGE_SIZE_Y, imageSizeY);
+            m_operator->setInputData(CalibrateCamera::INPUT_OBJECT_POINTS, objectPoints);
+            m_operator->setInputData(CalibrateCamera::INPUT_IMAGE_POINTS, imagePoints);
+            m_operator->setParameter(CalibrateCamera::PARAMETER_IMAGE_SIZE_X, imageSizeX);
+            m_operator->setParameter(CalibrateCamera::PARAMETER_IMAGE_SIZE_Y, imageSizeY);
             
-            runtime::DataContainer cameraMatrixResult = m_operator->getOutputData(CalibrateCamera::CAMERA_MATRIX);
-            runtime::DataContainer distCoeffsResult = m_operator->getOutputData(CalibrateCamera::DIST_COEFFS);
+            runtime::DataContainer cameraMatrixResult = m_operator->getOutputData(CalibrateCamera::OUTPUT_CAMERA_MATRIX);
+            runtime::DataContainer distCoeffsResult = m_operator->getOutputData(CalibrateCamera::OUTPUT_DIST_COEFFS);
             
             runtime::ReadAccess cameraMatrixAccess(cameraMatrixResult);
             cvsupport::Matrix::save("CalibrateCameraTest_testAllocate0_cameraMatrix.npy", cameraMatrixAccess.get<runtime::Matrix>());

@@ -21,21 +21,21 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API FloodFill : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC
-            };
-            enum ParameterId
-            {
-                SEED_POINT_Y,
-                NEW_VAL,
-                DATA_FLOW,
-                SEED_POINT_X
+                INPUT_SRC,
+                OUTPUT_SRC,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_NEW_VAL,
+                PARAMETER_SEED_POINT_X,
+                PARAMETER_SEED_POINT_Y
             };
             FloodFill();
             virtual OperatorKernel* clone() const { return new FloodFill; }

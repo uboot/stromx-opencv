@@ -34,11 +34,11 @@ namespace stromx
         {
             switch(id)
             {
-            case BLOCK_SIZE:
+            case PARAMETER_BLOCK_SIZE:
                 return m_blockSize;
-            case KSIZE:
+            case PARAMETER_KSIZE:
                 return m_ksize;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -51,7 +51,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case BLOCK_SIZE:
+                case PARAMETER_BLOCK_SIZE:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -64,7 +64,7 @@ namespace stromx
                         m_blockSize = castedValue;
                     }
                     break;
-                case KSIZE:
+                case PARAMETER_KSIZE:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -77,7 +77,7 @@ namespace stromx
                         m_ksize = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -102,7 +102,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
+            m_dataFlowParameter = new runtime::EnumParameter(PARAMETER_DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
@@ -120,13 +120,13 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
+                    m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_BLOCK_SIZE);
                     m_blockSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_blockSizeParameter->setTitle(L_("Block size"));
                     m_blockSizeParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_blockSizeParameter);
                     
-                    m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
+                    m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_KSIZE);
                     m_ksizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ksizeParameter->setTitle(L_("Kernel size"));
                     m_ksizeParameter->setMin(runtime::UInt32(1));
@@ -137,13 +137,13 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
+                    m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_BLOCK_SIZE);
                     m_blockSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_blockSizeParameter->setTitle(L_("Block size"));
                     m_blockSizeParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_blockSizeParameter);
                     
-                    m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
+                    m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_KSIZE);
                     m_ksizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ksizeParameter->setTitle(L_("Kernel size"));
                     m_ksizeParameter->setMin(runtime::UInt32(1));
@@ -165,11 +165,11 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_dstDescription = new runtime::Description(DST, runtime::Variant::MATRIX);
+                    m_dstDescription = new runtime::Description(INPUT_DST, runtime::Variant::MATRIX);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -177,7 +177,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -196,7 +196,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::FLOAT_32_MATRIX);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -204,7 +204,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::FLOAT_32_MATRIX);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -226,8 +226,8 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
-                    runtime::Id2DataPair dstInMapper(DST);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
+                    runtime::Id2DataPair dstInMapper(INPUT_DST);
                     
                     provider.receiveInputData(srcInMapper && dstInMapper);
                     
@@ -241,7 +241,7 @@ namespace stromx
                     
                     if(srcInMapper.data() == inContainer)
                     {
-                        throw runtime::InputError(SRC, *this, "Can not operate in place.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Can not operate in place.");
                     }
                     else
                     {
@@ -251,11 +251,11 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     if(! dstData->variant().isVariant(m_dstDescription->variant()))
                     {
-                        throw runtime::InputError(DST, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_DST, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -272,14 +272,14 @@ namespace stromx
                     cv::cornerMinEigenVal(srcCvData, dstCvData, blockSizeCvData, ksizeCvData);
                     
                     runtime::DataContainer dstOutContainer = inContainer;
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -292,7 +292,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -306,7 +306,7 @@ namespace stromx
                     
                     runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }

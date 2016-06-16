@@ -21,23 +21,22 @@ namespace stromx
     {
         class STROMX_CVCALIB3D_API CalibrateCamera : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                OBJECT_POINTS,
-                DIST_COEFFS,
-                CAMERA_MATRIX,
-                IMAGE_POINTS
-            };
-            enum ParameterId
-            {
-                IMAGE_SIZE_X,
-                IMAGE_SIZE_Y,
-                DATA_FLOW
+                INPUT_IMAGE_POINTS,
+                INPUT_OBJECT_POINTS,
+                OUTPUT_CAMERA_MATRIX,
+                OUTPUT_DIST_COEFFS,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_IMAGE_SIZE_X,
+                PARAMETER_IMAGE_SIZE_Y
             };
             CalibrateCamera();
             virtual OperatorKernel* clone() const { return new CalibrateCamera; }

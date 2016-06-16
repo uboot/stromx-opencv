@@ -30,11 +30,11 @@ namespace stromx
             cvsupport::Matrix cameraMatrix("camera_matrix.npy");
             cvsupport::Matrix distCoeffs("dist_coeffs.npy");
             
-            m_operator->setInputData(UndistortPoints::SRC, src);
-            m_operator->setParameter(UndistortPoints::CAMERA_MATRIX, cameraMatrix);
-            m_operator->setParameter(UndistortPoints::DIST_COEFFS, distCoeffs);
+            m_operator->setInputData(UndistortPoints::INPUT_SRC, src);
+            m_operator->setParameter(UndistortPoints::PARAMETER_CAMERA_MATRIX, cameraMatrix);
+            m_operator->setParameter(UndistortPoints::PARAMETER_DIST_COEFFS, distCoeffs);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(UndistortPoints::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(UndistortPoints::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("UndistortPointsTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());
@@ -47,9 +47,9 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(UndistortPoints::SRC, src);
+            m_operator->setInputData(UndistortPoints::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(UndistortPoints::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(UndistortPoints::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("UndistortPointsTest_testAllocate1_dst.npy", dstAccess.get<runtime::Matrix>());

@@ -35,13 +35,13 @@ namespace stromx
         {
             switch(id)
             {
-            case HIST_MAX:
+            case PARAMETER_HIST_MAX:
                 return m_histMax;
-            case HIST_MIN:
+            case PARAMETER_HIST_MIN:
                 return m_histMin;
-            case HIST_SIZE:
+            case PARAMETER_HIST_SIZE:
                 return m_histSize;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -54,7 +54,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case HIST_MAX:
+                case PARAMETER_HIST_MAX:
                     {
                         const runtime::Float32 & castedValue = runtime::data_cast<runtime::Float32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_32))
@@ -65,7 +65,7 @@ namespace stromx
                         m_histMax = castedValue;
                     }
                     break;
-                case HIST_MIN:
+                case PARAMETER_HIST_MIN:
                     {
                         const runtime::Float32 & castedValue = runtime::data_cast<runtime::Float32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_32))
@@ -76,7 +76,7 @@ namespace stromx
                         m_histMin = castedValue;
                     }
                     break;
-                case HIST_SIZE:
+                case PARAMETER_HIST_SIZE:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -87,7 +87,7 @@ namespace stromx
                         m_histSize = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -123,17 +123,17 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_histMinParameter = new runtime::NumericParameter<runtime::Float32>(HIST_MIN);
+                    m_histMinParameter = new runtime::NumericParameter<runtime::Float32>(PARAMETER_HIST_MIN);
                     m_histMinParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_histMinParameter->setTitle(L_("Minimum"));
                     parameters.push_back(m_histMinParameter);
                     
-                    m_histMaxParameter = new runtime::NumericParameter<runtime::Float32>(HIST_MAX);
+                    m_histMaxParameter = new runtime::NumericParameter<runtime::Float32>(PARAMETER_HIST_MAX);
                     m_histMaxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_histMaxParameter->setTitle(L_("Maximum"));
                     parameters.push_back(m_histMaxParameter);
                     
-                    m_histSizeParameter = new runtime::NumericParameter<runtime::UInt32>(HIST_SIZE);
+                    m_histSizeParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_HIST_SIZE);
                     m_histSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_histSizeParameter->setTitle(L_("Number of bins"));
                     parameters.push_back(m_histSizeParameter);
@@ -153,7 +153,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -172,7 +172,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::MATRIX);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setVisualization(runtime::Visualization::HISTOGRAM);
                     outputs.push_back(dst);
@@ -195,7 +195,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -208,7 +208,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -223,7 +223,7 @@ namespace stromx
                     
                     runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }

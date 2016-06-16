@@ -21,21 +21,20 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API ApproxPolyDP : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                OUT_CURVE,
-                CURVE
-            };
-            enum ParameterId
-            {
-                EPSILON,
-                DATA_FLOW,
-                CLOSED
+                INPUT_CURVE,
+                OUTPUT_OUT_CURVE,
+                PARAMETER_CLOSED,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_EPSILON
             };
             ApproxPolyDP();
             virtual OperatorKernel* clone() const { return new ApproxPolyDP; }

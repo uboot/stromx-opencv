@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer curve(new cvsupport::Matrix("contour_1.npy"));
             
-            m_operator->setInputData(ApproxPolyDP::CURVE, curve);
+            m_operator->setInputData(ApproxPolyDP::INPUT_CURVE, curve);
             
-            runtime::DataContainer outCurveResult = m_operator->getOutputData(ApproxPolyDP::OUT_CURVE);
+            runtime::DataContainer outCurveResult = m_operator->getOutputData(ApproxPolyDP::OUTPUT_OUT_CURVE);
             
             runtime::ReadAccess outCurveAccess(outCurveResult);
             cvsupport::Matrix::save("ApproxPolyDPTest_testAllocate0_outCurve.npy", outCurveAccess.get<runtime::Matrix>());
@@ -44,10 +44,10 @@ namespace stromx
             runtime::DataContainer curve(new cvsupport::Matrix("contour_f32.npy"));
             runtime::Float64 epsilon(5.0);
             
-            m_operator->setInputData(ApproxPolyDP::CURVE, curve);
-            m_operator->setParameter(ApproxPolyDP::EPSILON, epsilon);
+            m_operator->setInputData(ApproxPolyDP::INPUT_CURVE, curve);
+            m_operator->setParameter(ApproxPolyDP::PARAMETER_EPSILON, epsilon);
             
-            runtime::DataContainer outCurveResult = m_operator->getOutputData(ApproxPolyDP::OUT_CURVE);
+            runtime::DataContainer outCurveResult = m_operator->getOutputData(ApproxPolyDP::OUTPUT_OUT_CURVE);
             
             runtime::ReadAccess outCurveAccess(outCurveResult);
             cvsupport::Matrix::save("ApproxPolyDPTest_testAllocate1_outCurve.npy", outCurveAccess.get<runtime::Matrix>());

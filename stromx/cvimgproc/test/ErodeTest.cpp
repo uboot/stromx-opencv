@@ -23,7 +23,7 @@ namespace stromx
         
         void ErodeTest::testManual0()
         {
-            m_operator->setParameter(Erode::DATA_FLOW, runtime::Enum(Erode::MANUAL));
+            m_operator->setParameter(Erode::PARAMETER_DATA_FLOW, runtime::Enum(Erode::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -34,14 +34,14 @@ namespace stromx
             runtime::Enum shape(1);
             runtime::UInt32 iterations(2);
             
-            m_operator->setInputData(Erode::SRC, src);
-            m_operator->setInputData(Erode::DST, dst);
-            m_operator->setParameter(Erode::KSIZEX, ksizex);
-            m_operator->setParameter(Erode::KSIZEY, ksizey);
-            m_operator->setParameter(Erode::SHAPE, shape);
-            m_operator->setParameter(Erode::ITERATIONS, iterations);
+            m_operator->setInputData(Erode::INPUT_SRC, src);
+            m_operator->setInputData(Erode::INPUT_DST, dst);
+            m_operator->setParameter(Erode::PARAMETER_KSIZEX, ksizex);
+            m_operator->setParameter(Erode::PARAMETER_KSIZEY, ksizey);
+            m_operator->setParameter(Erode::PARAMETER_SHAPE, shape);
+            m_operator->setParameter(Erode::PARAMETER_ITERATIONS, iterations);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("ErodeTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -49,17 +49,17 @@ namespace stromx
         
         void ErodeTest::testManual1()
         {
-            m_operator->setParameter(Erode::DATA_FLOW, runtime::Enum(Erode::MANUAL));
+            m_operator->setParameter(Erode::PARAMETER_DATA_FLOW, runtime::Enum(Erode::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             
-            m_operator->setInputData(Erode::SRC, src);
-            m_operator->setInputData(Erode::DST, dst);
+            m_operator->setInputData(Erode::INPUT_SRC, src);
+            m_operator->setInputData(Erode::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("ErodeTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -67,15 +67,15 @@ namespace stromx
         
         void ErodeTest::testAllocate0()
         {
-            m_operator->setParameter(Erode::DATA_FLOW, runtime::Enum(Erode::ALLOCATE));
+            m_operator->setParameter(Erode::PARAMETER_DATA_FLOW, runtime::Enum(Erode::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             
-            m_operator->setInputData(Erode::SRC, src);
+            m_operator->setInputData(Erode::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("ErodeTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
@@ -83,17 +83,17 @@ namespace stromx
         
         void ErodeTest::testInPlace0()
         {
-            m_operator->setParameter(Erode::DATA_FLOW, runtime::Enum(Erode::IN_PLACE));
+            m_operator->setParameter(Erode::PARAMETER_DATA_FLOW, runtime::Enum(Erode::IN_PLACE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Enum shape(2);
             
-            m_operator->setInputData(Erode::SRC, src);
-            m_operator->setParameter(Erode::SHAPE, shape);
+            m_operator->setInputData(Erode::INPUT_SRC, src);
+            m_operator->setParameter(Erode::PARAMETER_SHAPE, shape);
             
-            runtime::DataContainer srcResult = m_operator->getOutputData(Erode::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(Erode::OUTPUT_SRC);
             
             runtime::ReadAccess srcAccess(srcResult);
             cvsupport::Image::save("ErodeTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());

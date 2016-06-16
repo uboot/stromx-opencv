@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API GaussianBlur : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
@@ -28,18 +30,17 @@ namespace stromx
                 ALLOCATE,
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                SIGMA_Y,
-                SIGMA_X,
-                DATA_FLOW,
-                KSIZEX,
-                KSIZEY
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                OUTPUT_SRC,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_KSIZEX,
+                PARAMETER_KSIZEY,
+                PARAMETER_SIGMA_X,
+                PARAMETER_SIGMA_Y
             };
             GaussianBlur();
             virtual OperatorKernel* clone() const { return new GaussianBlur; }

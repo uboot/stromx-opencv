@@ -21,22 +21,22 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API CornerMinEigenVal : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                BLOCK_SIZE,
-                KSIZE,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_BLOCK_SIZE,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_KSIZE
             };
             CornerMinEigenVal();
             virtual OperatorKernel* clone() const { return new CornerMinEigenVal; }

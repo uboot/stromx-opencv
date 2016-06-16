@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API AdaptiveThreshold : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum AdaptiveMethodId
             {
@@ -38,18 +40,17 @@ namespace stromx
                 ALLOCATE,
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                ADAPTIVE_METHOD,
-                THRESHOLD_TYPE,
-                BLOCK_SIZE,
-                DATA_FLOW,
-                MAXVAL
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                OUTPUT_SRC,
+                PARAMETER_ADAPTIVE_METHOD,
+                PARAMETER_BLOCK_SIZE,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_MAXVAL,
+                PARAMETER_THRESHOLD_TYPE
             };
             AdaptiveThreshold();
             virtual OperatorKernel* clone() const { return new AdaptiveThreshold; }

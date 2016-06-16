@@ -23,17 +23,17 @@ namespace stromx
         
         void PreCornerDetectTest::testManual0()
         {
-            m_operator->setParameter(PreCornerDetect::DATA_FLOW, runtime::Enum(PreCornerDetect::MANUAL));
+            m_operator->setParameter(PreCornerDetect::PARAMETER_DATA_FLOW, runtime::Enum(PreCornerDetect::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(10000000));
             
-            m_operator->setInputData(PreCornerDetect::SRC, src);
-            m_operator->setInputData(PreCornerDetect::DST, dst);
+            m_operator->setInputData(PreCornerDetect::INPUT_SRC, src);
+            m_operator->setInputData(PreCornerDetect::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("PreCornerDetectTest_testManual0_dst.npy", dstAccess.get<runtime::Matrix>());
@@ -41,7 +41,7 @@ namespace stromx
         
         void PreCornerDetectTest::testAllocate0()
         {
-            m_operator->setParameter(PreCornerDetect::DATA_FLOW, runtime::Enum(PreCornerDetect::ALLOCATE));
+            m_operator->setParameter(PreCornerDetect::PARAMETER_DATA_FLOW, runtime::Enum(PreCornerDetect::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -49,11 +49,11 @@ namespace stromx
             runtime::UInt32 ksize(5);
             runtime::Enum borderType(2);
             
-            m_operator->setInputData(PreCornerDetect::SRC, src);
-            m_operator->setParameter(PreCornerDetect::KSIZE, ksize);
-            m_operator->setParameter(PreCornerDetect::BORDER_TYPE, borderType);
+            m_operator->setInputData(PreCornerDetect::INPUT_SRC, src);
+            m_operator->setParameter(PreCornerDetect::PARAMETER_KSIZE, ksize);
+            m_operator->setParameter(PreCornerDetect::PARAMETER_BORDER_TYPE, borderType);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("PreCornerDetectTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());

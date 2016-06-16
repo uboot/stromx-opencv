@@ -18,20 +18,20 @@ namespace stromx
     {
         class STROMX_CVOBJDETECT_API CascadeClassifier : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
-            enum ConnectorId
+            enum DataId
             {
                 SRC,
-                DST
-            };
-            
-            enum ParameterId
-            {
+                DST,
                 CLASSIFIER,
                 MIN_SIZE_X,
                 MIN_SIZE_Y,
                 MAX_SIZE_X,
-                MAX_SIZE_Y
+                MAX_SIZE_Y,
+                OUTPUT_OFFSET = 0,
+                PARAMETER_OFFSET = 2
             };
             
             CascadeClassifier();

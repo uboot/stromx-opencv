@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVCORE_API Bitwise_not : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
@@ -28,14 +30,13 @@ namespace stromx
                 ALLOCATE,
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                DST,
-                SRC_1
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC_1,
+                OUTPUT_DST,
+                OUTPUT_SRC_1,
+                PARAMETER_DATA_FLOW
             };
             Bitwise_not();
             virtual OperatorKernel* clone() const { return new Bitwise_not; }

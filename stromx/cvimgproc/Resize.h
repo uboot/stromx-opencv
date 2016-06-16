@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Resize : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum InterpolationId
             {
@@ -32,19 +34,17 @@ namespace stromx
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                FX,
-                FY,
-                DSIZEY,
-                DSIZEX,
-                DATA_FLOW,
-                INTERPOLATION
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DSIZEX,
+                PARAMETER_DSIZEY,
+                PARAMETER_FX,
+                PARAMETER_FY,
+                PARAMETER_INTERPOLATION
             };
             Resize();
             virtual OperatorKernel* clone() const { return new Resize; }

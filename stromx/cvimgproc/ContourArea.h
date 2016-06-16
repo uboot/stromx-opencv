@@ -21,19 +21,18 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API ContourArea : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                CONTOUR,
-                AREA
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_CONTOUR,
+                OUTPUT_AREA,
+                PARAMETER_DATA_FLOW
             };
             ContourArea();
             virtual OperatorKernel* clone() const { return new ContourArea; }

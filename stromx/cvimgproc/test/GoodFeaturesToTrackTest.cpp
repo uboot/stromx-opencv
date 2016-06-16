@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Image("corners.png", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(GoodFeaturesToTrack::SRC, src);
+            m_operator->setInputData(GoodFeaturesToTrack::INPUT_SRC, src);
             
-            runtime::DataContainer pointMatrixResult = m_operator->getOutputData(GoodFeaturesToTrack::POINT_MATRIX);
+            runtime::DataContainer pointMatrixResult = m_operator->getOutputData(GoodFeaturesToTrack::OUTPUT_POINT_MATRIX);
             
             runtime::ReadAccess pointMatrixAccess(pointMatrixResult);
             cvsupport::Matrix::save("GoodFeaturesToTrackTest_testAllocate0_pointMatrix.npy", pointMatrixAccess.get<runtime::Matrix>());

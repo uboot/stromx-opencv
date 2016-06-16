@@ -85,24 +85,24 @@ initOutDdepth = document.Document((
 pixelTypeCheck = document.Document(
 """
 if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
-    throw runtime::InputError(SRC_1, *this, "Input images must have the same size.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same size.");
     
 if(src1CastedData->numChannels() != src2CastedData->numChannels())
-    throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same number of channels.");
     
 if(src1CastedData->depth() != src2CastedData->depth())
-    throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
 """)
 pixelTypeDdepthCheck = document.Document(
 """
 if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
-    throw runtime::InputError(SRC_1, *this, "Input images must have the same size.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same size.");
     
 if(src1CastedData->numChannels() != src2CastedData->numChannels())
-    throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same number of channels.");
     
 if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
-    throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
 """)
 
 # arguments

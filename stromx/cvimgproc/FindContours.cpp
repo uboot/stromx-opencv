@@ -34,11 +34,11 @@ namespace stromx
         {
             switch(id)
             {
-            case METHOD:
+            case PARAMETER_METHOD:
                 return m_method;
-            case MODE:
+            case PARAMETER_MODE:
                 return m_mode;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -51,7 +51,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case METHOD:
+                case PARAMETER_METHOD:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -62,7 +62,7 @@ namespace stromx
                         m_method = castedValue;
                     }
                     break;
-                case MODE:
+                case PARAMETER_MODE:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -73,7 +73,7 @@ namespace stromx
                         m_mode = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -109,14 +109,14 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_modeParameter = new runtime::EnumParameter(MODE);
+                    m_modeParameter = new runtime::EnumParameter(PARAMETER_MODE);
                     m_modeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_modeParameter->setTitle(L_("Mode"));
                     m_modeParameter->add(runtime::EnumDescription(runtime::Enum(RETR_EXTERNAL), L_("Extreme outer contours")));
                     m_modeParameter->add(runtime::EnumDescription(runtime::Enum(RETR_LIST), L_("All contours")));
                     parameters.push_back(m_modeParameter);
                     
-                    m_methodParameter = new runtime::EnumParameter(METHOD);
+                    m_methodParameter = new runtime::EnumParameter(PARAMETER_METHOD);
                     m_methodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_methodParameter->setTitle(L_("Mode"));
                     m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_NONE), L_("Store all points")));
@@ -140,7 +140,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_8_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -159,7 +159,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::LIST);
                     dst->setTitle(L_("Destination"));
                     dst->setVisualization(runtime::Visualization::POLYGON);
                     outputs.push_back(dst);
@@ -182,7 +182,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -195,7 +195,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -209,7 +209,7 @@ namespace stromx
                     
                     runtime::List* dstCastedData = new runtime::TypedList<cvsupport::Matrix>(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }
@@ -230,7 +230,7 @@ namespace stromx
             case CHAIN_APPROX_TC89_KCOS:
                 return CV_CHAIN_APPROX_TC89_KCOS;
             default:
-                throw runtime::WrongParameterValue(parameter(METHOD), *this);
+                throw runtime::WrongParameterValue(parameter(PARAMETER_METHOD), *this);
             }
         }
         
@@ -243,7 +243,7 @@ namespace stromx
             case RETR_LIST:
                 return CV_RETR_LIST;
             default:
-                throw runtime::WrongParameterValue(parameter(MODE), *this);
+                throw runtime::WrongParameterValue(parameter(PARAMETER_MODE), *this);
             }
         }
         

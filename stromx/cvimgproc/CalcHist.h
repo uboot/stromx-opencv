@@ -21,22 +21,21 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API CalcHist : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                HIST_MIN,
-                HIST_SIZE,
-                DATA_FLOW,
-                HIST_MAX
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_HIST_MAX,
+                PARAMETER_HIST_MIN,
+                PARAMETER_HIST_SIZE
             };
             CalcHist();
             virtual OperatorKernel* clone() const { return new CalcHist; }

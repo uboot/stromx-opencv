@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(MinAreaRect::POINTS, points);
+            m_operator->setInputData(MinAreaRect::INPUT_POINTS, points);
             
-            runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::OUTPUT_RECT);
             
             runtime::ReadAccess rectAccess(rectResult);
             cvsupport::Matrix::save("MinAreaRectTest_testAllocate0_rect.npy", rectAccess.get<runtime::Matrix>());
@@ -43,9 +43,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(MinAreaRect::POINTS, points);
+            m_operator->setInputData(MinAreaRect::INPUT_POINTS, points);
             
-            runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::OUTPUT_RECT);
             
             runtime::ReadAccess rectAccess(rectResult);
             cvsupport::Matrix::save("MinAreaRectTest_testAllocate1_rect.npy", rectAccess.get<runtime::Matrix>());

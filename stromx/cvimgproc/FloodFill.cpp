@@ -35,13 +35,13 @@ namespace stromx
         {
             switch(id)
             {
-            case NEW_VAL:
+            case PARAMETER_NEW_VAL:
                 return m_newVal;
-            case SEED_POINT_X:
+            case PARAMETER_SEED_POINT_X:
                 return m_seedPointX;
-            case SEED_POINT_Y:
+            case PARAMETER_SEED_POINT_Y:
                 return m_seedPointY;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -54,7 +54,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case NEW_VAL:
+                case PARAMETER_NEW_VAL:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -65,7 +65,7 @@ namespace stromx
                         m_newVal = castedValue;
                     }
                     break;
-                case SEED_POINT_X:
+                case PARAMETER_SEED_POINT_X:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -76,7 +76,7 @@ namespace stromx
                         m_seedPointX = castedValue;
                     }
                     break;
-                case SEED_POINT_Y:
+                case PARAMETER_SEED_POINT_Y:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -87,7 +87,7 @@ namespace stromx
                         m_seedPointY = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -123,17 +123,17 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_seedPointXParameter = new runtime::NumericParameter<runtime::UInt32>(SEED_POINT_X);
+                    m_seedPointXParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_SEED_POINT_X);
                     m_seedPointXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_seedPointXParameter->setTitle(L_("Seed point X"));
                     parameters.push_back(m_seedPointXParameter);
                     
-                    m_seedPointYParameter = new runtime::NumericParameter<runtime::UInt32>(SEED_POINT_Y);
+                    m_seedPointYParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_SEED_POINT_Y);
                     m_seedPointYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_seedPointYParameter->setTitle(L_("Seed point Y"));
                     parameters.push_back(m_seedPointYParameter);
                     
-                    m_newValParameter = new runtime::NumericParameter<runtime::Float64>(NEW_VAL);
+                    m_newValParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_NEW_VAL);
                     m_newValParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_newValParameter->setTitle(L_("New value"));
                     parameters.push_back(m_newValParameter);
@@ -153,7 +153,7 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -172,7 +172,7 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    runtime::Description* src = new runtime::Description(OUTPUT_SRC, runtime::Variant::MONO_IMAGE);
                     src->setTitle(L_("Source"));
                     outputs.push_back(src);
                     
@@ -194,7 +194,7 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -206,7 +206,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     runtime::Image * srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -219,7 +219,7 @@ namespace stromx
                     cv::floodFill(srcCvData, cv::Point(seedPointXCvData, seedPointYCvData), newValCvData);
                     
                     runtime::DataContainer srcOutContainer = inContainer;
-                    runtime::Id2DataPair srcOutMapper(SRC, srcOutContainer);
+                    runtime::Id2DataPair srcOutMapper(OUTPUT_SRC, srcOutContainer);
                     
                     provider.sendOutputData(srcOutMapper);
                 }

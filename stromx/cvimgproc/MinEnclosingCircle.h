@@ -21,19 +21,18 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API MinEnclosingCircle : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                CIRCLE,
-                POINTS
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_POINTS,
+                OUTPUT_CIRCLE,
+                PARAMETER_DATA_FLOW
             };
             MinEnclosingCircle();
             virtual OperatorKernel* clone() const { return new MinEnclosingCircle; }

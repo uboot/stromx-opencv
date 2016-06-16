@@ -37,17 +37,17 @@ namespace stromx
         {
             switch(id)
             {
-            case MAX_LINE_GAP:
+            case PARAMETER_MAX_LINE_GAP:
                 return m_maxLineGap;
-            case MIN_LINE_LENGTH:
+            case PARAMETER_MIN_LINE_LENGTH:
                 return m_minLineLength;
-            case RHO:
+            case PARAMETER_RHO:
                 return m_rho;
-            case THETA:
+            case PARAMETER_THETA:
                 return m_theta;
-            case THRESHOLD:
+            case PARAMETER_THRESHOLD:
                 return m_threshold;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -60,7 +60,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case MAX_LINE_GAP:
+                case PARAMETER_MAX_LINE_GAP:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -71,7 +71,7 @@ namespace stromx
                         m_maxLineGap = castedValue;
                     }
                     break;
-                case MIN_LINE_LENGTH:
+                case PARAMETER_MIN_LINE_LENGTH:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -82,7 +82,7 @@ namespace stromx
                         m_minLineLength = castedValue;
                     }
                     break;
-                case RHO:
+                case PARAMETER_RHO:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -93,7 +93,7 @@ namespace stromx
                         m_rho = castedValue;
                     }
                     break;
-                case THETA:
+                case PARAMETER_THETA:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -104,7 +104,7 @@ namespace stromx
                         m_theta = castedValue;
                     }
                     break;
-                case THRESHOLD:
+                case PARAMETER_THRESHOLD:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -115,7 +115,7 @@ namespace stromx
                         m_threshold = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -151,27 +151,27 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_rhoParameter = new runtime::NumericParameter<runtime::Float64>(RHO);
+                    m_rhoParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_RHO);
                     m_rhoParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_rhoParameter->setTitle(L_("Distance resolution"));
                     parameters.push_back(m_rhoParameter);
                     
-                    m_thetaParameter = new runtime::NumericParameter<runtime::Float64>(THETA);
+                    m_thetaParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_THETA);
                     m_thetaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thetaParameter->setTitle(L_("Angle resolution"));
                     parameters.push_back(m_thetaParameter);
                     
-                    m_thresholdParameter = new runtime::NumericParameter<runtime::UInt32>(THRESHOLD);
+                    m_thresholdParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdParameter->setTitle(L_("Accumulator threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
-                    m_minLineLengthParameter = new runtime::NumericParameter<runtime::Float64>(MIN_LINE_LENGTH);
+                    m_minLineLengthParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_MIN_LINE_LENGTH);
                     m_minLineLengthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_minLineLengthParameter->setTitle(L_("Minimum line length"));
                     parameters.push_back(m_minLineLengthParameter);
                     
-                    m_maxLineGapParameter = new runtime::NumericParameter<runtime::Float64>(MAX_LINE_GAP);
+                    m_maxLineGapParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_MAX_LINE_GAP);
                     m_maxLineGapParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxLineGapParameter->setTitle(L_("Maximum allowed gap"));
                     parameters.push_back(m_maxLineGapParameter);
@@ -191,7 +191,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -210,7 +210,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::Variant::MATRIX);
+                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(OUTPUT_DST, runtime::Variant::MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setVisualization(runtime::Visualization::LINE_SEGMENT);
                     dst->setRows(0);
@@ -235,7 +235,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -248,7 +248,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -266,7 +266,7 @@ namespace stromx
                     
                     runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }

@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Image("contours.png", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(FindContours::SRC, src);
+            m_operator->setInputData(FindContours::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::OUTPUT_DST);
             
             std::size_t index = 0;
             runtime::ReadAccess dstAccess(dstResult);
@@ -52,10 +52,10 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("contours.png", cvsupport::Image::GRAYSCALE));
             runtime::Enum method(1);
             
-            m_operator->setInputData(FindContours::SRC, src);
-            m_operator->setParameter(FindContours::METHOD, method);
+            m_operator->setInputData(FindContours::INPUT_SRC, src);
+            m_operator->setParameter(FindContours::PARAMETER_METHOD, method);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::OUTPUT_DST);
             
             std::size_t index = 0;
             runtime::ReadAccess dstAccess(dstResult);

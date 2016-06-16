@@ -32,7 +32,7 @@ namespace stromx
         {
             switch(id)
             {
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -45,7 +45,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -96,11 +96,11 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_rectDescription = new runtime::MatrixDescription(RECT, runtime::Variant::FLOAT_32_MATRIX);
+                    m_rectDescription = new runtime::MatrixDescription(INPUT_RECT, runtime::Variant::FLOAT_32_MATRIX);
                     m_rectDescription->setTitle("Rectangle");
                     m_rectDescription->setVisualization(runtime::Visualization::ROTATED_RECTANGLE);
                     m_rectDescription->setRows(1);
@@ -122,7 +122,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -144,8 +144,8 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
-                    runtime::Id2DataPair rectInMapper(RECT);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
+                    runtime::Id2DataPair rectInMapper(INPUT_RECT);
                     
                     provider.receiveInputData(srcInMapper && rectInMapper);
                     
@@ -162,11 +162,11 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     if(! rectData->variant().isVariant(m_rectDescription->variant()))
                     {
-                        throw runtime::InputError(RECT, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_RECT, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -181,7 +181,7 @@ namespace stromx
                     
                     runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
                     provider.sendOutputData(dstOutMapper);

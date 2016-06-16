@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Laplacian : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DdepthId
             {
@@ -33,18 +35,16 @@ namespace stromx
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                DATA_FLOW,
-                SCALE,
-                DDEPTH,
-                KSIZE,
-                DELTA
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DDEPTH,
+                PARAMETER_DELTA,
+                PARAMETER_KSIZE,
+                PARAMETER_SCALE
             };
             Laplacian();
             virtual OperatorKernel* clone() const { return new Laplacian; }

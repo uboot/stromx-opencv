@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer image(new cvsupport::Image("chess.png", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(FindChessboardCorners::IMAGE, image);
+            m_operator->setInputData(FindChessboardCorners::INPUT_IMAGE, image);
             
-            runtime::DataContainer cornersResult = m_operator->getOutputData(FindChessboardCorners::CORNERS);
+            runtime::DataContainer cornersResult = m_operator->getOutputData(FindChessboardCorners::OUTPUT_CORNERS);
             
             runtime::ReadAccess cornersAccess(cornersResult);
             cvsupport::Matrix::save("FindChessboardCornersTest_testAllocate0_corners.npy", cornersAccess.get<runtime::Matrix>());
@@ -43,9 +43,9 @@ namespace stromx
             
             runtime::DataContainer image(new cvsupport::Image("chess.png"));
             
-            m_operator->setInputData(FindChessboardCorners::IMAGE, image);
+            m_operator->setInputData(FindChessboardCorners::INPUT_IMAGE, image);
             
-            runtime::DataContainer cornersResult = m_operator->getOutputData(FindChessboardCorners::CORNERS);
+            runtime::DataContainer cornersResult = m_operator->getOutputData(FindChessboardCorners::OUTPUT_CORNERS);
             
             runtime::ReadAccess cornersAccess(cornersResult);
             cvsupport::Matrix::save("FindChessboardCornersTest_testAllocate1_corners.npy", cornersAccess.get<runtime::Matrix>());

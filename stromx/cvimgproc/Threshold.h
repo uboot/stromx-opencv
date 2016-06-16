@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Threshold : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum ThresholdTypeId
             {
@@ -36,17 +38,16 @@ namespace stromx
                 ALLOCATE,
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                THRESHOLD,
-                MAXVAL,
-                THRESHOLD_TYPE,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                OUTPUT_SRC,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_MAXVAL,
+                PARAMETER_THRESHOLD,
+                PARAMETER_THRESHOLD_TYPE
             };
             Threshold();
             virtual OperatorKernel* clone() const { return new Threshold; }

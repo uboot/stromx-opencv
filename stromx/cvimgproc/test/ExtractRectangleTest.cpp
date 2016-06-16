@@ -29,10 +29,10 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::DataContainer rect(new cvsupport::Matrix("rotated_rect.npy"));
             
-            m_operator->setInputData(ExtractRectangle::SRC, src);
-            m_operator->setInputData(ExtractRectangle::RECT, rect);
+            m_operator->setInputData(ExtractRectangle::INPUT_SRC, src);
+            m_operator->setInputData(ExtractRectangle::INPUT_RECT, rect);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("ExtractRectangleTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
@@ -46,10 +46,10 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::DataContainer rect(new cvsupport::Matrix("rotated_rect_top_right.npy"));
             
-            m_operator->setInputData(ExtractRectangle::SRC, src);
-            m_operator->setInputData(ExtractRectangle::RECT, rect);
+            m_operator->setInputData(ExtractRectangle::INPUT_SRC, src);
+            m_operator->setInputData(ExtractRectangle::INPUT_RECT, rect);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("ExtractRectangleTest_testAllocate1_dst.png", dstAccess.get<runtime::Image>());
@@ -63,10 +63,10 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::DataContainer rect(new cvsupport::Matrix("rotated_rect_bottom_left.npy"));
             
-            m_operator->setInputData(ExtractRectangle::SRC, src);
-            m_operator->setInputData(ExtractRectangle::RECT, rect);
+            m_operator->setInputData(ExtractRectangle::INPUT_SRC, src);
+            m_operator->setInputData(ExtractRectangle::INPUT_RECT, rect);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("ExtractRectangleTest_testAllocate2_dst.png", dstAccess.get<runtime::Image>());

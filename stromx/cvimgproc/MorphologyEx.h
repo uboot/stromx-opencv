@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API MorphologyEx : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum OpId
             {
@@ -42,19 +44,18 @@ namespace stromx
                 ALLOCATE,
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                KSIZEX,
-                KSIZEY,
-                SHAPE,
-                ITERATIONS,
-                DATA_FLOW,
-                OP
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                OUTPUT_SRC,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_ITERATIONS,
+                PARAMETER_KSIZEX,
+                PARAMETER_KSIZEY,
+                PARAMETER_OP,
+                PARAMETER_SHAPE
             };
             MorphologyEx();
             virtual OperatorKernel* clone() const { return new MorphologyEx; }

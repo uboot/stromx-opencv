@@ -29,20 +29,12 @@ namespace stromx
     {
         class STROMX_CVHIGHGUI_API VideoCapture : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:  
-            enum OutputId
+            enum DataId
             {
-                OUTPUT
-            };
-            
-//             enum CameraPortId
-//             {
-//                 PORT_0,
-//                 PORT_1
-//             };
-            
-            enum ParameterId
-            {
+                OUTPUT,
                 CAMERA_PORT,
                 FRAMERATE,
                 BRIGHTNESS,
@@ -50,7 +42,9 @@ namespace stromx
                 SATURATION,
                 HUE,
                 GAIN,
-                EXPOSURE
+                EXPOSURE,
+                OUTPUT_OFFSET = 0,
+                PARAMETER_OFFSET = 1
             };
                 
             //constructor

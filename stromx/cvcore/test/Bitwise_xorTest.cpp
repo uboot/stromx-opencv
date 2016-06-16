@@ -23,7 +23,7 @@ namespace stromx
         
         void Bitwise_xorTest::testManual0()
         {
-            m_operator->setParameter(Bitwise_xor::DATA_FLOW, runtime::Enum(Bitwise_xor::MANUAL));
+            m_operator->setParameter(Bitwise_xor::PARAMETER_DATA_FLOW, runtime::Enum(Bitwise_xor::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -31,11 +31,11 @@ namespace stromx
             runtime::DataContainer src2(new cvsupport::Image("barbara.jpg"));
             runtime::DataContainer dst(new cvsupport::Image(5000000));
             
-            m_operator->setInputData(Bitwise_xor::SRC_1, src1);
-            m_operator->setInputData(Bitwise_xor::SRC_2, src2);
-            m_operator->setInputData(Bitwise_xor::DST, dst);
+            m_operator->setInputData(Bitwise_xor::INPUT_SRC_1, src1);
+            m_operator->setInputData(Bitwise_xor::INPUT_SRC_2, src2);
+            m_operator->setInputData(Bitwise_xor::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_xor::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_xor::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("Bitwise_xorTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -43,7 +43,7 @@ namespace stromx
         
         void Bitwise_xorTest::testManual1()
         {
-            m_operator->setParameter(Bitwise_xor::DATA_FLOW, runtime::Enum(Bitwise_xor::MANUAL));
+            m_operator->setParameter(Bitwise_xor::PARAMETER_DATA_FLOW, runtime::Enum(Bitwise_xor::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -51,11 +51,11 @@ namespace stromx
             runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(5000000));
             
-            m_operator->setInputData(Bitwise_xor::SRC_1, src1);
-            m_operator->setInputData(Bitwise_xor::SRC_2, src2);
-            m_operator->setInputData(Bitwise_xor::DST, dst);
+            m_operator->setInputData(Bitwise_xor::INPUT_SRC_1, src1);
+            m_operator->setInputData(Bitwise_xor::INPUT_SRC_2, src2);
+            m_operator->setInputData(Bitwise_xor::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_xor::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_xor::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("Bitwise_xorTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -63,17 +63,17 @@ namespace stromx
         
         void Bitwise_xorTest::testAllocate0()
         {
-            m_operator->setParameter(Bitwise_xor::DATA_FLOW, runtime::Enum(Bitwise_xor::ALLOCATE));
+            m_operator->setParameter(Bitwise_xor::PARAMETER_DATA_FLOW, runtime::Enum(Bitwise_xor::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::DEPTH_16));
             runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::DEPTH_16));
             
-            m_operator->setInputData(Bitwise_xor::SRC_1, src1);
-            m_operator->setInputData(Bitwise_xor::SRC_2, src2);
+            m_operator->setInputData(Bitwise_xor::INPUT_SRC_1, src1);
+            m_operator->setInputData(Bitwise_xor::INPUT_SRC_2, src2);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_xor::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_xor::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("Bitwise_xorTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());

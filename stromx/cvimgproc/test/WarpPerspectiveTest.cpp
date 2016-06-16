@@ -23,7 +23,7 @@ namespace stromx
         
         void WarpPerspectiveTest::testManual0()
         {
-            m_operator->setParameter(WarpPerspective::DATA_FLOW, runtime::Enum(WarpPerspective::MANUAL));
+            m_operator->setParameter(WarpPerspective::PARAMETER_DATA_FLOW, runtime::Enum(WarpPerspective::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -33,13 +33,13 @@ namespace stromx
             runtime::UInt32 dsizex(400);
             runtime::UInt32 dsizey(500);
             
-            m_operator->setInputData(WarpPerspective::SRC, src);
-            m_operator->setInputData(WarpPerspective::DST, dst);
-            m_operator->setParameter(WarpPerspective::AFFINE_M, affineM);
-            m_operator->setParameter(WarpPerspective::DSIZEX, dsizex);
-            m_operator->setParameter(WarpPerspective::DSIZEY, dsizey);
+            m_operator->setInputData(WarpPerspective::INPUT_SRC, src);
+            m_operator->setInputData(WarpPerspective::INPUT_DST, dst);
+            m_operator->setParameter(WarpPerspective::PARAMETER_AFFINE_M, affineM);
+            m_operator->setParameter(WarpPerspective::PARAMETER_DSIZEX, dsizex);
+            m_operator->setParameter(WarpPerspective::PARAMETER_DSIZEY, dsizey);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("WarpPerspectiveTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -47,7 +47,7 @@ namespace stromx
         
         void WarpPerspectiveTest::testManual1()
         {
-            m_operator->setParameter(WarpPerspective::DATA_FLOW, runtime::Enum(WarpPerspective::MANUAL));
+            m_operator->setParameter(WarpPerspective::PARAMETER_DATA_FLOW, runtime::Enum(WarpPerspective::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -56,12 +56,12 @@ namespace stromx
             runtime::UInt32 dsizex(400);
             runtime::UInt32 dsizey(500);
             
-            m_operator->setInputData(WarpPerspective::SRC, src);
-            m_operator->setInputData(WarpPerspective::DST, dst);
-            m_operator->setParameter(WarpPerspective::DSIZEX, dsizex);
-            m_operator->setParameter(WarpPerspective::DSIZEY, dsizey);
+            m_operator->setInputData(WarpPerspective::INPUT_SRC, src);
+            m_operator->setInputData(WarpPerspective::INPUT_DST, dst);
+            m_operator->setParameter(WarpPerspective::PARAMETER_DSIZEX, dsizex);
+            m_operator->setParameter(WarpPerspective::PARAMETER_DSIZEY, dsizey);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("WarpPerspectiveTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -69,7 +69,7 @@ namespace stromx
         
         void WarpPerspectiveTest::testAllocate0()
         {
-            m_operator->setParameter(WarpPerspective::DATA_FLOW, runtime::Enum(WarpPerspective::ALLOCATE));
+            m_operator->setParameter(WarpPerspective::PARAMETER_DATA_FLOW, runtime::Enum(WarpPerspective::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -78,12 +78,12 @@ namespace stromx
             runtime::UInt32 dsizex(400);
             runtime::UInt32 dsizey(500);
             
-            m_operator->setInputData(WarpPerspective::SRC, src);
-            m_operator->setParameter(WarpPerspective::AFFINE_M, affineM);
-            m_operator->setParameter(WarpPerspective::DSIZEX, dsizex);
-            m_operator->setParameter(WarpPerspective::DSIZEY, dsizey);
+            m_operator->setInputData(WarpPerspective::INPUT_SRC, src);
+            m_operator->setParameter(WarpPerspective::PARAMETER_AFFINE_M, affineM);
+            m_operator->setParameter(WarpPerspective::PARAMETER_DSIZEX, dsizex);
+            m_operator->setParameter(WarpPerspective::PARAMETER_DSIZEY, dsizey);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("WarpPerspectiveTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());

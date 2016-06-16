@@ -35,13 +35,13 @@ namespace stromx
         {
             switch(id)
             {
-            case MAXVAL:
+            case PARAMETER_MAXVAL:
                 return m_maxval;
-            case THRESHOLD:
+            case PARAMETER_THRESHOLD:
                 return m_threshold;
-            case THRESHOLD_TYPE:
+            case PARAMETER_THRESHOLD_TYPE:
                 return m_thresholdType;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -54,7 +54,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case MAXVAL:
+                case PARAMETER_MAXVAL:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -65,7 +65,7 @@ namespace stromx
                         m_maxval = castedValue;
                     }
                     break;
-                case THRESHOLD:
+                case PARAMETER_THRESHOLD:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -76,7 +76,7 @@ namespace stromx
                         m_threshold = castedValue;
                     }
                     break;
-                case THRESHOLD_TYPE:
+                case PARAMETER_THRESHOLD_TYPE:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -87,7 +87,7 @@ namespace stromx
                         m_thresholdType = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -112,7 +112,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
+            m_dataFlowParameter = new runtime::EnumParameter(PARAMETER_DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
@@ -131,17 +131,17 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
+                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdParameter->setTitle(L_("Threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
-                    m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
+                    m_thresholdTypeParameter = new runtime::EnumParameter(PARAMETER_THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
@@ -155,17 +155,17 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
+                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdParameter->setTitle(L_("Threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
-                    m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
+                    m_thresholdTypeParameter = new runtime::EnumParameter(PARAMETER_THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
@@ -179,17 +179,17 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
+                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdParameter->setTitle(L_("Threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
-                    m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
+                    m_thresholdTypeParameter = new runtime::EnumParameter(PARAMETER_THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
@@ -214,11 +214,11 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_dstDescription = new runtime::Description(DST, runtime::Variant::IMAGE);
+                    m_dstDescription = new runtime::Description(INPUT_DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -226,7 +226,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -234,7 +234,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -253,7 +253,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -261,7 +261,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -269,7 +269,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    runtime::Description* src = new runtime::Description(OUTPUT_SRC, runtime::Variant::MONO_IMAGE);
                     src->setTitle(L_("Source"));
                     outputs.push_back(src);
                     
@@ -291,8 +291,8 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
-                    runtime::Id2DataPair dstInMapper(DST);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
+                    runtime::Id2DataPair dstInMapper(INPUT_DST);
                     
                     provider.receiveInputData(srcInMapper && dstInMapper);
                     
@@ -316,11 +316,11 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     if(! dstData->variant().isVariant(m_dstDescription->variant()))
                     {
-                        throw runtime::InputError(DST, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_DST, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -337,14 +337,14 @@ namespace stromx
                     cv::threshold(srcCvData, dstCvData, thresholdCvData, maxvalCvData, thresholdTypeCvData);
                     
                     runtime::DataContainer dstOutContainer = inContainer;
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -357,7 +357,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -372,7 +372,7 @@ namespace stromx
                     
                     runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
                     provider.sendOutputData(dstOutMapper);
@@ -380,7 +380,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -392,7 +392,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     runtime::Image * srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -406,7 +406,7 @@ namespace stromx
                     cv::threshold(srcCvData, dstCvData, thresholdCvData, maxvalCvData, thresholdTypeCvData);
                     
                     runtime::DataContainer srcOutContainer = inContainer;
-                    runtime::Id2DataPair srcOutMapper(SRC, srcOutContainer);
+                    runtime::Id2DataPair srcOutMapper(OUTPUT_SRC, srcOutContainer);
                     
                     provider.sendOutputData(srcOutMapper);
                 }
@@ -429,7 +429,7 @@ namespace stromx
             case THRESH_TOZERO_INV:
                 return cv::THRESH_TOZERO_INV;
             default:
-                throw runtime::WrongParameterValue(parameter(THRESHOLD_TYPE), *this);
+                throw runtime::WrongParameterValue(parameter(PARAMETER_THRESHOLD_TYPE), *this);
             }
         }
         

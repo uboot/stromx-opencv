@@ -21,23 +21,23 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API CornerHarris : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                K,
-                BLOCK_SIZE,
-                KSIZE,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_BLOCK_SIZE,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_K,
+                PARAMETER_KSIZE
             };
             CornerHarris();
             virtual OperatorKernel* clone() const { return new CornerHarris; }

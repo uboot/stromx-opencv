@@ -21,23 +21,23 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API DrawContours : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                CONTOURS,
-                IMG
-            };
-            enum ParameterId
-            {
-                CH_1,
-                CH_2,
-                CH_3,
-                DATA_FLOW,
-                THICKNESS
+                INPUT_CONTOURS,
+                INPUT_IMG,
+                OUTPUT_IMG,
+                PARAMETER_CH_1,
+                PARAMETER_CH_2,
+                PARAMETER_CH_3,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_THICKNESS
             };
             DrawContours();
             virtual OperatorKernel* clone() const { return new DrawContours; }

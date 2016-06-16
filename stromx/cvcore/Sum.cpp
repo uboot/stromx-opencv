@@ -32,7 +32,7 @@ namespace stromx
         {
             switch(id)
             {
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -45,7 +45,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -96,7 +96,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MATRIX);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MATRIX);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -115,7 +115,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* value = new runtime::Description(VALUE, runtime::Variant::FLOAT_64);
+                    runtime::Description* value = new runtime::Description(OUTPUT_VALUE, runtime::Variant::FLOAT_64);
                     value->setTitle(L_("Value"));
                     outputs.push_back(value);
                     
@@ -137,7 +137,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -150,7 +150,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* srcCastedData = runtime::data_cast<runtime::Matrix>(srcData);
@@ -162,7 +162,7 @@ namespace stromx
                     
                     runtime::Float64* valueCastedData = new runtime::Float64(valueCvData);
                     runtime::DataContainer valueOutContainer = runtime::DataContainer(valueCastedData);
-                    runtime::Id2DataPair valueOutMapper(VALUE, valueOutContainer);
+                    runtime::Id2DataPair valueOutMapper(OUTPUT_VALUE, valueOutContainer);
                     
                     provider.sendOutputData(valueOutMapper);
                 }

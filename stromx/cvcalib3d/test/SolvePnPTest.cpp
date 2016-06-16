@@ -31,13 +31,13 @@ namespace stromx
             cvsupport::Matrix cameraMatrix("camera_matrix_64f.npy");
             cvsupport::Matrix distCoeffs("dist_coeffs_32f.npy");
             
-            m_operator->setInputData(SolvePnP::OBJECT_POINTS, objectPoints);
-            m_operator->setInputData(SolvePnP::IMAGE_POINTS, imagePoints);
-            m_operator->setParameter(SolvePnP::CAMERA_MATRIX, cameraMatrix);
-            m_operator->setParameter(SolvePnP::DIST_COEFFS, distCoeffs);
+            m_operator->setInputData(SolvePnP::INPUT_OBJECT_POINTS, objectPoints);
+            m_operator->setInputData(SolvePnP::INPUT_IMAGE_POINTS, imagePoints);
+            m_operator->setParameter(SolvePnP::PARAMETER_CAMERA_MATRIX, cameraMatrix);
+            m_operator->setParameter(SolvePnP::PARAMETER_DIST_COEFFS, distCoeffs);
             
-            runtime::DataContainer rvecResult = m_operator->getOutputData(SolvePnP::RVEC);
-            runtime::DataContainer tvecResult = m_operator->getOutputData(SolvePnP::TVEC);
+            runtime::DataContainer rvecResult = m_operator->getOutputData(SolvePnP::OUTPUT_RVEC);
+            runtime::DataContainer tvecResult = m_operator->getOutputData(SolvePnP::OUTPUT_TVEC);
             
             runtime::ReadAccess rvecAccess(rvecResult);
             cvsupport::Matrix::save("SolvePnPTest_testAllocate0_rvec.npy", rvecAccess.get<runtime::Matrix>());
@@ -55,13 +55,13 @@ namespace stromx
             cvsupport::Matrix cameraMatrix("camera_matrix_32f.npy");
             cvsupport::Matrix distCoeffs("dist_coeffs_64f.npy");
             
-            m_operator->setInputData(SolvePnP::OBJECT_POINTS, objectPoints);
-            m_operator->setInputData(SolvePnP::IMAGE_POINTS, imagePoints);
-            m_operator->setParameter(SolvePnP::CAMERA_MATRIX, cameraMatrix);
-            m_operator->setParameter(SolvePnP::DIST_COEFFS, distCoeffs);
+            m_operator->setInputData(SolvePnP::INPUT_OBJECT_POINTS, objectPoints);
+            m_operator->setInputData(SolvePnP::INPUT_IMAGE_POINTS, imagePoints);
+            m_operator->setParameter(SolvePnP::PARAMETER_CAMERA_MATRIX, cameraMatrix);
+            m_operator->setParameter(SolvePnP::PARAMETER_DIST_COEFFS, distCoeffs);
             
-            runtime::DataContainer rvecResult = m_operator->getOutputData(SolvePnP::RVEC);
-            runtime::DataContainer tvecResult = m_operator->getOutputData(SolvePnP::TVEC);
+            runtime::DataContainer rvecResult = m_operator->getOutputData(SolvePnP::OUTPUT_RVEC);
+            runtime::DataContainer tvecResult = m_operator->getOutputData(SolvePnP::OUTPUT_TVEC);
             
             runtime::ReadAccess rvecAccess(rvecResult);
             cvsupport::Matrix::save("SolvePnPTest_testAllocate1_rvec.npy", rvecAccess.get<runtime::Matrix>());

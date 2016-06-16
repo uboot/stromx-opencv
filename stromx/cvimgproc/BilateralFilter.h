@@ -21,23 +21,23 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API BilateralFilter : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                SIGMA_COLOR,
-                D,
-                DATA_FLOW,
-                SIGMA_SPACE
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_D,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_SIGMA_COLOR,
+                PARAMETER_SIGMA_SPACE
             };
             BilateralFilter();
             virtual OperatorKernel* clone() const { return new BilateralFilter; }

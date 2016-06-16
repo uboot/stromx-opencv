@@ -34,11 +34,11 @@ namespace stromx
         {
             switch(id)
             {
-            case CAMERA_MATRIX:
+            case PARAMETER_CAMERA_MATRIX:
                 return m_cameraMatrix;
-            case DIST_COEFFS:
+            case PARAMETER_DIST_COEFFS:
                 return m_distCoeffs;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -51,7 +51,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case CAMERA_MATRIX:
+                case PARAMETER_CAMERA_MATRIX:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_MATRIX))
@@ -62,7 +62,7 @@ namespace stromx
                         m_cameraMatrix = castedValue;
                     }
                     break;
-                case DIST_COEFFS:
+                case PARAMETER_DIST_COEFFS:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_MATRIX))
@@ -73,7 +73,7 @@ namespace stromx
                         m_distCoeffs = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -109,14 +109,14 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_cameraMatrixParameter = new runtime::MatrixParameter(CAMERA_MATRIX, runtime::Variant::FLOAT_MATRIX);
+                    m_cameraMatrixParameter = new runtime::MatrixParameter(PARAMETER_CAMERA_MATRIX, runtime::Variant::FLOAT_MATRIX);
                     m_cameraMatrixParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_cameraMatrixParameter->setTitle(L_("Camera matrix"));
                     m_cameraMatrixParameter->setRows(3);
                     m_cameraMatrixParameter->setCols(3);
                     parameters.push_back(m_cameraMatrixParameter);
                     
-                    m_distCoeffsParameter = new runtime::MatrixParameter(DIST_COEFFS, runtime::Variant::FLOAT_MATRIX);
+                    m_distCoeffsParameter = new runtime::MatrixParameter(PARAMETER_DIST_COEFFS, runtime::Variant::FLOAT_MATRIX);
                     m_distCoeffsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_distCoeffsParameter->setTitle(L_("Distortion coefficients"));
                     m_distCoeffsParameter->setRows(1);
@@ -138,14 +138,14 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_objectPointsDescription = new runtime::MatrixDescription(OBJECT_POINTS, runtime::Variant::FLOAT_32_MATRIX);
+                    m_objectPointsDescription = new runtime::MatrixDescription(INPUT_OBJECT_POINTS, runtime::Variant::FLOAT_32_MATRIX);
                     m_objectPointsDescription->setTitle("Object points");
                     m_objectPointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_objectPointsDescription->setRows(0);
                     m_objectPointsDescription->setCols(3);
                     inputs.push_back(m_objectPointsDescription);
                     
-                    m_imagePointsDescription = new runtime::MatrixDescription(IMAGE_POINTS, runtime::Variant::FLOAT_32_MATRIX);
+                    m_imagePointsDescription = new runtime::MatrixDescription(INPUT_IMAGE_POINTS, runtime::Variant::FLOAT_32_MATRIX);
                     m_imagePointsDescription->setTitle("Image points");
                     m_imagePointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_imagePointsDescription->setRows(0);
@@ -167,13 +167,13 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* rvec = new runtime::MatrixDescription(RVEC, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::MatrixDescription* rvec = new runtime::MatrixDescription(OUTPUT_RVEC, runtime::Variant::FLOAT_64_MATRIX);
                     rvec->setTitle(L_("Rotation"));
                     rvec->setRows(3);
                     rvec->setCols(1);
                     outputs.push_back(rvec);
                     
-                    runtime::MatrixDescription* tvec = new runtime::MatrixDescription(TVEC, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::MatrixDescription* tvec = new runtime::MatrixDescription(OUTPUT_TVEC, runtime::Variant::FLOAT_64_MATRIX);
                     tvec->setTitle(L_("Translation"));
                     tvec->setRows(3);
                     tvec->setCols(1);
@@ -197,8 +197,8 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair objectPointsInMapper(OBJECT_POINTS);
-                    runtime::Id2DataPair imagePointsInMapper(IMAGE_POINTS);
+                    runtime::Id2DataPair objectPointsInMapper(INPUT_OBJECT_POINTS);
+                    runtime::Id2DataPair imagePointsInMapper(INPUT_IMAGE_POINTS);
                     
                     provider.receiveInputData(objectPointsInMapper && imagePointsInMapper);
                     
@@ -215,11 +215,11 @@ namespace stromx
                     
                     if(! objectPointsData->variant().isVariant(m_objectPointsDescription->variant()))
                     {
-                        throw runtime::InputError(OBJECT_POINTS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Wrong input data variant.");
                     }
                     if(! imagePointsData->variant().isVariant(m_imagePointsDescription->variant()))
                     {
-                        throw runtime::InputError(IMAGE_POINTS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_IMAGE_POINTS, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* objectPointsCastedData = runtime::data_cast<runtime::Matrix>(objectPointsData);
@@ -229,7 +229,7 @@ namespace stromx
                     
                     if (objectPointsCastedData->rows() != imagePointsCastedData->rows())
                     {
-                        throw runtime::InputError(OBJECT_POINTS, *this, "Object and image points must have the same number of rows.");
+                        throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Object and image points must have the same number of rows.");
                     }
                     
                     cv::Mat objectPointsCvData = cvsupport::getOpenCvMat(*objectPointsCastedData, 3);
@@ -243,10 +243,10 @@ namespace stromx
                     
                     runtime::Matrix* rvecCastedData = new cvsupport::Matrix(rvecCvData);
                     runtime::DataContainer rvecOutContainer = runtime::DataContainer(rvecCastedData);
-                    runtime::Id2DataPair rvecOutMapper(RVEC, rvecOutContainer);
+                    runtime::Id2DataPair rvecOutMapper(OUTPUT_RVEC, rvecOutContainer);
                     runtime::Matrix* tvecCastedData = new cvsupport::Matrix(tvecCvData);
                     runtime::DataContainer tvecOutContainer = runtime::DataContainer(tvecCastedData);
-                    runtime::Id2DataPair tvecOutMapper(TVEC, tvecOutContainer);
+                    runtime::Id2DataPair tvecOutMapper(OUTPUT_TVEC, tvecOutContainer);
                     
                     provider.sendOutputData(rvecOutMapper && tvecOutMapper);
                 }

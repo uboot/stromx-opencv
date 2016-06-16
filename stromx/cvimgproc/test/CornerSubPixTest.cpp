@@ -29,10 +29,10 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("corners.png", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer pointMatrix(new cvsupport::Matrix("corners.npy"));
             
-            m_operator->setInputData(CornerSubPix::SRC, src);
-            m_operator->setInputData(CornerSubPix::POINT_MATRIX, pointMatrix);
+            m_operator->setInputData(CornerSubPix::INPUT_SRC, src);
+            m_operator->setInputData(CornerSubPix::INPUT_POINT_MATRIX, pointMatrix);
             
-            runtime::DataContainer pointMatrixResult = m_operator->getOutputData(CornerSubPix::POINT_MATRIX);
+            runtime::DataContainer pointMatrixResult = m_operator->getOutputData(CornerSubPix::OUTPUT_POINT_MATRIX);
             
             runtime::ReadAccess pointMatrixAccess(pointMatrixResult);
             cvsupport::Matrix::save("CornerSubPixTest_testInPlace0_pointMatrix.npy", pointMatrixAccess.get<runtime::Matrix>());

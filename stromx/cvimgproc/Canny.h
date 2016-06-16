@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Canny : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
@@ -28,16 +30,15 @@ namespace stromx
                 ALLOCATE,
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                DATA_FLOW,
-                THRESHOLD_2,
-                THRESHOLD_1
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                OUTPUT_SRC,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_THRESHOLD_1,
+                PARAMETER_THRESHOLD_2
             };
             Canny();
             virtual OperatorKernel* clone() const { return new Canny; }

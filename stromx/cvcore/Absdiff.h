@@ -21,21 +21,21 @@ namespace stromx
     {
         class STROMX_CVCORE_API Absdiff : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                DST,
-                SRC_2,
-                SRC_1
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC_1,
+                INPUT_SRC_2,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW
             };
             Absdiff();
             virtual OperatorKernel* clone() const { return new Absdiff; }

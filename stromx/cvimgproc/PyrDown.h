@@ -21,20 +21,20 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API PyrDown : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW
             };
             PyrDown();
             virtual OperatorKernel* clone() const { return new PyrDown; }

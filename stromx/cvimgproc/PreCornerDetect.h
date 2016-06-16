@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API PreCornerDetect : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum BorderTypeId
             {
@@ -34,16 +36,14 @@ namespace stromx
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                BORDER_TYPE,
-                KSIZE,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_BORDER_TYPE,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_KSIZE
             };
             PreCornerDetect();
             virtual OperatorKernel* clone() const { return new PreCornerDetect; }

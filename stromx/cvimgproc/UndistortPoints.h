@@ -21,21 +21,20 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API UndistortPoints : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                DIST_COEFFS,
-                DATA_FLOW,
-                CAMERA_MATRIX
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_CAMERA_MATRIX,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DIST_COEFFS
             };
             UndistortPoints();
             virtual OperatorKernel* clone() const { return new UndistortPoints; }

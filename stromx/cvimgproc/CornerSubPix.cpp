@@ -34,11 +34,11 @@ namespace stromx
         {
             switch(id)
             {
-            case WIN_SIZE_X:
+            case PARAMETER_WIN_SIZE_X:
                 return m_winSizeX;
-            case WIN_SIZE_Y:
+            case PARAMETER_WIN_SIZE_Y:
                 return m_winSizeY;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -51,7 +51,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case WIN_SIZE_X:
+                case PARAMETER_WIN_SIZE_X:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -62,7 +62,7 @@ namespace stromx
                         m_winSizeX = castedValue;
                     }
                     break;
-                case WIN_SIZE_Y:
+                case PARAMETER_WIN_SIZE_Y:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -73,7 +73,7 @@ namespace stromx
                         m_winSizeY = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -109,12 +109,12 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_winSizeXParameter = new runtime::NumericParameter<runtime::UInt32>(WIN_SIZE_X);
+                    m_winSizeXParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_WIN_SIZE_X);
                     m_winSizeXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_winSizeXParameter->setTitle(L_("Width of search window"));
                     parameters.push_back(m_winSizeXParameter);
                     
-                    m_winSizeYParameter = new runtime::NumericParameter<runtime::UInt32>(WIN_SIZE_Y);
+                    m_winSizeYParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_WIN_SIZE_Y);
                     m_winSizeYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_winSizeYParameter->setTitle(L_("Height of search window"));
                     parameters.push_back(m_winSizeYParameter);
@@ -134,11 +134,11 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_pointMatrixDescription = new runtime::MatrixDescription(POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
+                    m_pointMatrixDescription = new runtime::MatrixDescription(INPUT_POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     m_pointMatrixDescription->setTitle("Point coordinates");
                     m_pointMatrixDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointMatrixDescription->setRows(0);
@@ -160,7 +160,7 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(OUTPUT_POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     pointMatrix->setTitle(L_("Point coordinates"));
                     pointMatrix->setVisualization(runtime::Visualization::POINT);
                     pointMatrix->setRows(0);
@@ -185,8 +185,8 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
-                    runtime::Id2DataPair pointMatrixInMapper(POINT_MATRIX);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
+                    runtime::Id2DataPair pointMatrixInMapper(INPUT_POINT_MATRIX);
                     
                     provider.receiveInputData(srcInMapper && pointMatrixInMapper);
                     
@@ -200,7 +200,7 @@ namespace stromx
                     
                     if(srcInMapper.data() == inContainer)
                     {
-                        throw runtime::InputError(SRC, *this, "Can not operate in place.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Can not operate in place.");
                     }
                     else
                     {
@@ -210,11 +210,11 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     if(! pointMatrixData->variant().isVariant(m_pointMatrixDescription->variant()))
                     {
-                        throw runtime::InputError(POINT_MATRIX, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_POINT_MATRIX, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -229,7 +229,7 @@ namespace stromx
                     cv::cornerSubPix(srcCvData, pointMatrixCvData, cv::Size(winSizeXCvData, winSizeYCvData), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, -1, -1));
                     
                     runtime::DataContainer pointMatrixOutContainer = inContainer;
-                    runtime::Id2DataPair pointMatrixOutMapper(POINT_MATRIX, pointMatrixOutContainer);
+                    runtime::Id2DataPair pointMatrixOutMapper(OUTPUT_POINT_MATRIX, pointMatrixOutContainer);
                     
                     provider.sendOutputData(pointMatrixOutMapper);
                 }

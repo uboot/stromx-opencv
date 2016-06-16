@@ -21,20 +21,19 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API ConvexHull : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                OUT_CURVE,
-                CURVE
-            };
-            enum ParameterId
-            {
-                CLOCKWISE,
-                DATA_FLOW
+                INPUT_CURVE,
+                OUTPUT_OUT_CURVE,
+                PARAMETER_CLOCKWISE,
+                PARAMETER_DATA_FLOW
             };
             ConvexHull();
             virtual OperatorKernel* clone() const { return new ConvexHull; }

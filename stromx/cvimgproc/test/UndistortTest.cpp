@@ -23,7 +23,7 @@ namespace stromx
         
         void UndistortTest::testManual0()
         {
-            m_operator->setParameter(Undistort::DATA_FLOW, runtime::Enum(Undistort::MANUAL));
+            m_operator->setParameter(Undistort::PARAMETER_DATA_FLOW, runtime::Enum(Undistort::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -32,12 +32,12 @@ namespace stromx
             cvsupport::Matrix cameraMatrix("camera_matrix.npy");
             cvsupport::Matrix distCoeffs("dist_coeffs.npy");
             
-            m_operator->setInputData(Undistort::SRC, src);
-            m_operator->setInputData(Undistort::DST, dst);
-            m_operator->setParameter(Undistort::CAMERA_MATRIX, cameraMatrix);
-            m_operator->setParameter(Undistort::DIST_COEFFS, distCoeffs);
+            m_operator->setInputData(Undistort::INPUT_SRC, src);
+            m_operator->setInputData(Undistort::INPUT_DST, dst);
+            m_operator->setParameter(Undistort::PARAMETER_CAMERA_MATRIX, cameraMatrix);
+            m_operator->setParameter(Undistort::PARAMETER_DIST_COEFFS, distCoeffs);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("UndistortTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -45,17 +45,17 @@ namespace stromx
         
         void UndistortTest::testManual1()
         {
-            m_operator->setParameter(Undistort::DATA_FLOW, runtime::Enum(Undistort::MANUAL));
+            m_operator->setParameter(Undistort::PARAMETER_DATA_FLOW, runtime::Enum(Undistort::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             
-            m_operator->setInputData(Undistort::SRC, src);
-            m_operator->setInputData(Undistort::DST, dst);
+            m_operator->setInputData(Undistort::INPUT_SRC, src);
+            m_operator->setInputData(Undistort::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("UndistortTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -63,7 +63,7 @@ namespace stromx
         
         void UndistortTest::testAllocate0()
         {
-            m_operator->setParameter(Undistort::DATA_FLOW, runtime::Enum(Undistort::ALLOCATE));
+            m_operator->setParameter(Undistort::PARAMETER_DATA_FLOW, runtime::Enum(Undistort::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -71,11 +71,11 @@ namespace stromx
             cvsupport::Matrix cameraMatrix("camera_matrix.npy");
             cvsupport::Matrix distCoeffs("dist_coeffs.npy");
             
-            m_operator->setInputData(Undistort::SRC, src);
-            m_operator->setParameter(Undistort::CAMERA_MATRIX, cameraMatrix);
-            m_operator->setParameter(Undistort::DIST_COEFFS, distCoeffs);
+            m_operator->setInputData(Undistort::INPUT_SRC, src);
+            m_operator->setParameter(Undistort::PARAMETER_CAMERA_MATRIX, cameraMatrix);
+            m_operator->setParameter(Undistort::PARAMETER_DIST_COEFFS, distCoeffs);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("UndistortTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());

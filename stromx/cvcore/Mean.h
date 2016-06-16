@@ -21,19 +21,18 @@ namespace stromx
     {
         class STROMX_CVCORE_API Mean : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                VALUE
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_SRC,
+                OUTPUT_VALUE,
+                PARAMETER_DATA_FLOW
             };
             Mean();
             virtual OperatorKernel* clone() const { return new Mean; }

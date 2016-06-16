@@ -21,21 +21,20 @@ namespace stromx
     {
         class STROMX_CVCALIB3D_API FindChessboardCorners : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                CORNERS,
-                IMAGE
-            };
-            enum ParameterId
-            {
-                PATTERN_SIZE_Y,
-                PATTERN_SIZE_X,
-                DATA_FLOW
+                INPUT_IMAGE,
+                OUTPUT_CORNERS,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_PATTERN_SIZE_X,
+                PARAMETER_PATTERN_SIZE_Y
             };
             FindChessboardCorners();
             virtual OperatorKernel* clone() const { return new FindChessboardCorners; }

@@ -23,17 +23,17 @@ namespace stromx
         
         void AdaptiveThresholdTest::testManual0()
         {
-            m_operator->setParameter(AdaptiveThreshold::DATA_FLOW, runtime::Enum(AdaptiveThreshold::MANUAL));
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_DATA_FLOW, runtime::Enum(AdaptiveThreshold::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             
-            m_operator->setInputData(AdaptiveThreshold::SRC, src);
-            m_operator->setInputData(AdaptiveThreshold::DST, dst);
+            m_operator->setInputData(AdaptiveThreshold::INPUT_SRC, src);
+            m_operator->setInputData(AdaptiveThreshold::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("AdaptiveThresholdTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -41,7 +41,7 @@ namespace stromx
         
         void AdaptiveThresholdTest::testManual1()
         {
-            m_operator->setParameter(AdaptiveThreshold::DATA_FLOW, runtime::Enum(AdaptiveThreshold::MANUAL));
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_DATA_FLOW, runtime::Enum(AdaptiveThreshold::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -51,14 +51,14 @@ namespace stromx
             runtime::Enum thresholdType(1);
             runtime::UInt32 blockSize(5);
             
-            m_operator->setInputData(AdaptiveThreshold::SRC, src);
-            m_operator->setInputData(AdaptiveThreshold::DST, src);
-            m_operator->setParameter(AdaptiveThreshold::MAXVAL, maxval);
-            m_operator->setParameter(AdaptiveThreshold::ADAPTIVE_METHOD, adaptiveMethod);
-            m_operator->setParameter(AdaptiveThreshold::THRESHOLD_TYPE, thresholdType);
-            m_operator->setParameter(AdaptiveThreshold::BLOCK_SIZE, blockSize);
+            m_operator->setInputData(AdaptiveThreshold::INPUT_SRC, src);
+            m_operator->setInputData(AdaptiveThreshold::INPUT_DST, src);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_MAXVAL, maxval);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_ADAPTIVE_METHOD, adaptiveMethod);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_THRESHOLD_TYPE, thresholdType);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_BLOCK_SIZE, blockSize);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("AdaptiveThresholdTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -66,7 +66,7 @@ namespace stromx
         
         void AdaptiveThresholdTest::testAllocate0()
         {
-            m_operator->setParameter(AdaptiveThreshold::DATA_FLOW, runtime::Enum(AdaptiveThreshold::ALLOCATE));
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_DATA_FLOW, runtime::Enum(AdaptiveThreshold::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -76,13 +76,13 @@ namespace stromx
             runtime::Enum thresholdType(0);
             runtime::UInt32 blockSize(9);
             
-            m_operator->setInputData(AdaptiveThreshold::SRC, src);
-            m_operator->setParameter(AdaptiveThreshold::MAXVAL, maxval);
-            m_operator->setParameter(AdaptiveThreshold::ADAPTIVE_METHOD, adaptiveMethod);
-            m_operator->setParameter(AdaptiveThreshold::THRESHOLD_TYPE, thresholdType);
-            m_operator->setParameter(AdaptiveThreshold::BLOCK_SIZE, blockSize);
+            m_operator->setInputData(AdaptiveThreshold::INPUT_SRC, src);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_MAXVAL, maxval);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_ADAPTIVE_METHOD, adaptiveMethod);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_THRESHOLD_TYPE, thresholdType);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_BLOCK_SIZE, blockSize);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("AdaptiveThresholdTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
@@ -90,7 +90,7 @@ namespace stromx
         
         void AdaptiveThresholdTest::testInPlace0()
         {
-            m_operator->setParameter(AdaptiveThreshold::DATA_FLOW, runtime::Enum(AdaptiveThreshold::IN_PLACE));
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_DATA_FLOW, runtime::Enum(AdaptiveThreshold::IN_PLACE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -100,13 +100,13 @@ namespace stromx
             runtime::Enum thresholdType(1);
             runtime::UInt32 blockSize(7);
             
-            m_operator->setInputData(AdaptiveThreshold::SRC, src);
-            m_operator->setParameter(AdaptiveThreshold::MAXVAL, maxval);
-            m_operator->setParameter(AdaptiveThreshold::ADAPTIVE_METHOD, adaptiveMethod);
-            m_operator->setParameter(AdaptiveThreshold::THRESHOLD_TYPE, thresholdType);
-            m_operator->setParameter(AdaptiveThreshold::BLOCK_SIZE, blockSize);
+            m_operator->setInputData(AdaptiveThreshold::INPUT_SRC, src);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_MAXVAL, maxval);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_ADAPTIVE_METHOD, adaptiveMethod);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_THRESHOLD_TYPE, thresholdType);
+            m_operator->setParameter(AdaptiveThreshold::PARAMETER_BLOCK_SIZE, blockSize);
             
-            runtime::DataContainer srcResult = m_operator->getOutputData(AdaptiveThreshold::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(AdaptiveThreshold::OUTPUT_SRC);
             
             runtime::ReadAccess srcAccess(srcResult);
             cvsupport::Image::save("AdaptiveThresholdTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());

@@ -21,19 +21,18 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API FitEllipse : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                POINTS,
-                ELLIPSE
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_POINTS,
+                OUTPUT_ELLIPSE,
+                PARAMETER_DATA_FLOW
             };
             FitEllipse();
             virtual OperatorKernel* clone() const { return new FitEllipse; }

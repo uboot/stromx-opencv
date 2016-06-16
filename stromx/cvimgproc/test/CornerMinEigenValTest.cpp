@@ -23,17 +23,17 @@ namespace stromx
         
         void CornerMinEigenValTest::testManual0()
         {
-            m_operator->setParameter(CornerMinEigenVal::DATA_FLOW, runtime::Enum(CornerMinEigenVal::MANUAL));
+            m_operator->setParameter(CornerMinEigenVal::PARAMETER_DATA_FLOW, runtime::Enum(CornerMinEigenVal::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(10000000));
             
-            m_operator->setInputData(CornerMinEigenVal::SRC, src);
-            m_operator->setInputData(CornerMinEigenVal::DST, dst);
+            m_operator->setInputData(CornerMinEigenVal::INPUT_SRC, src);
+            m_operator->setInputData(CornerMinEigenVal::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(CornerMinEigenVal::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CornerMinEigenVal::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("CornerMinEigenValTest_testManual0_dst.npy", dstAccess.get<runtime::Matrix>());
@@ -41,15 +41,15 @@ namespace stromx
         
         void CornerMinEigenValTest::testAllocate0()
         {
-            m_operator->setParameter(CornerMinEigenVal::DATA_FLOW, runtime::Enum(CornerMinEigenVal::ALLOCATE));
+            m_operator->setParameter(CornerMinEigenVal::PARAMETER_DATA_FLOW, runtime::Enum(CornerMinEigenVal::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(CornerMinEigenVal::SRC, src);
+            m_operator->setInputData(CornerMinEigenVal::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(CornerMinEigenVal::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CornerMinEigenVal::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("CornerMinEigenValTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());

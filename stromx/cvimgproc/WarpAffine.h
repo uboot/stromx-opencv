@@ -21,23 +21,23 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API WarpAffine : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                DSIZEY,
-                DSIZEX,
-                AFFINE_M,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_AFFINE_M,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DSIZEX,
+                PARAMETER_DSIZEY
             };
             WarpAffine();
             virtual OperatorKernel* clone() const { return new WarpAffine; }

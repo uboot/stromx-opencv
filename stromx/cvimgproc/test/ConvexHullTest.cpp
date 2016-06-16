@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer curve(new cvsupport::Matrix("non_convex_f32.npy"));
             
-            m_operator->setInputData(ConvexHull::CURVE, curve);
+            m_operator->setInputData(ConvexHull::INPUT_CURVE, curve);
             
-            runtime::DataContainer outCurveResult = m_operator->getOutputData(ConvexHull::OUT_CURVE);
+            runtime::DataContainer outCurveResult = m_operator->getOutputData(ConvexHull::OUTPUT_OUT_CURVE);
             
             runtime::ReadAccess outCurveAccess(outCurveResult);
             cvsupport::Matrix::save("ConvexHullTest_testAllocate0_outCurve.npy", outCurveAccess.get<runtime::Matrix>());
@@ -43,9 +43,9 @@ namespace stromx
             
             runtime::DataContainer curve(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(ConvexHull::CURVE, curve);
+            m_operator->setInputData(ConvexHull::INPUT_CURVE, curve);
             
-            runtime::DataContainer outCurveResult = m_operator->getOutputData(ConvexHull::OUT_CURVE);
+            runtime::DataContainer outCurveResult = m_operator->getOutputData(ConvexHull::OUTPUT_OUT_CURVE);
             
             runtime::ReadAccess outCurveAccess(outCurveResult);
             cvsupport::Matrix::save("ConvexHullTest_testAllocate1_outCurve.npy", outCurveAccess.get<runtime::Matrix>());

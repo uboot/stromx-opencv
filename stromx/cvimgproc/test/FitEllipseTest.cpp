@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(FitEllipse::POINTS, points);
+            m_operator->setInputData(FitEllipse::INPUT_POINTS, points);
             
-            runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::ELLIPSE);
+            runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::OUTPUT_ELLIPSE);
             
             runtime::ReadAccess ellipseAccess(ellipseResult);
             cvsupport::Matrix::save("FitEllipseTest_testAllocate0_ellipse.npy", ellipseAccess.get<runtime::Matrix>());
@@ -43,9 +43,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(FitEllipse::POINTS, points);
+            m_operator->setInputData(FitEllipse::INPUT_POINTS, points);
             
-            runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::ELLIPSE);
+            runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::OUTPUT_ELLIPSE);
             
             runtime::ReadAccess ellipseAccess(ellipseResult);
             cvsupport::Matrix::save("FitEllipseTest_testAllocate1_ellipse.npy", ellipseAccess.get<runtime::Matrix>());

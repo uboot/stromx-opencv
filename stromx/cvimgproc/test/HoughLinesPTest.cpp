@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Image("edges.png", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(HoughLinesP::SRC, src);
+            m_operator->setInputData(HoughLinesP::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(HoughLinesP::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(HoughLinesP::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("HoughLinesPTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());

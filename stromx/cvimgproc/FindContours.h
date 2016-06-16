@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API FindContours : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum MethodId
             {
@@ -38,16 +40,13 @@ namespace stromx
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                METHOD,
-                DATA_FLOW,
-                MODE
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_METHOD,
+                PARAMETER_MODE
             };
             FindContours();
             virtual OperatorKernel* clone() const { return new FindContours; }

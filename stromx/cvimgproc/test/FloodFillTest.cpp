@@ -31,12 +31,12 @@ namespace stromx
             runtime::UInt32 seedPointY(10);
             runtime::Float64 newVal(125.0);
             
-            m_operator->setInputData(FloodFill::SRC, src);
-            m_operator->setParameter(FloodFill::SEED_POINT_X, seedPointX);
-            m_operator->setParameter(FloodFill::SEED_POINT_Y, seedPointY);
-            m_operator->setParameter(FloodFill::NEW_VAL, newVal);
+            m_operator->setInputData(FloodFill::INPUT_SRC, src);
+            m_operator->setParameter(FloodFill::PARAMETER_SEED_POINT_X, seedPointX);
+            m_operator->setParameter(FloodFill::PARAMETER_SEED_POINT_Y, seedPointY);
+            m_operator->setParameter(FloodFill::PARAMETER_NEW_VAL, newVal);
             
-            runtime::DataContainer srcResult = m_operator->getOutputData(FloodFill::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(FloodFill::OUTPUT_SRC);
             
             runtime::ReadAccess srcAccess(srcResult);
             cvsupport::Image::save("FloodFillTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());

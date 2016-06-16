@@ -31,12 +31,12 @@ namespace stromx
             runtime::Float32 histMax(256);
             runtime::UInt32 histSize(5);
             
-            m_operator->setInputData(CalcHist::SRC, src);
-            m_operator->setParameter(CalcHist::HIST_MIN, histMin);
-            m_operator->setParameter(CalcHist::HIST_MAX, histMax);
-            m_operator->setParameter(CalcHist::HIST_SIZE, histSize);
+            m_operator->setInputData(CalcHist::INPUT_SRC, src);
+            m_operator->setParameter(CalcHist::PARAMETER_HIST_MIN, histMin);
+            m_operator->setParameter(CalcHist::PARAMETER_HIST_MAX, histMax);
+            m_operator->setParameter(CalcHist::PARAMETER_HIST_SIZE, histSize);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("CalcHistTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());
@@ -52,12 +52,12 @@ namespace stromx
             runtime::Float32 histMax(256);
             runtime::UInt32 histSize(20);
             
-            m_operator->setInputData(CalcHist::SRC, src);
-            m_operator->setParameter(CalcHist::HIST_MIN, histMin);
-            m_operator->setParameter(CalcHist::HIST_MAX, histMax);
-            m_operator->setParameter(CalcHist::HIST_SIZE, histSize);
+            m_operator->setInputData(CalcHist::INPUT_SRC, src);
+            m_operator->setParameter(CalcHist::PARAMETER_HIST_MIN, histMin);
+            m_operator->setParameter(CalcHist::PARAMETER_HIST_MAX, histMax);
+            m_operator->setParameter(CalcHist::PARAMETER_HIST_SIZE, histSize);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Matrix::save("CalcHistTest_testAllocate1_dst.npy", dstAccess.get<runtime::Matrix>());

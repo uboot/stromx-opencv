@@ -23,7 +23,7 @@ namespace stromx
         
         void GaussianBlurTest::testManual0()
         {
-            m_operator->setParameter(GaussianBlur::DATA_FLOW, runtime::Enum(GaussianBlur::MANUAL));
+            m_operator->setParameter(GaussianBlur::PARAMETER_DATA_FLOW, runtime::Enum(GaussianBlur::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -34,14 +34,14 @@ namespace stromx
             runtime::Float64 sigmaX(1.5);
             runtime::Float64 sigmaY(2.5);
             
-            m_operator->setInputData(GaussianBlur::SRC, src);
-            m_operator->setInputData(GaussianBlur::DST, dst);
-            m_operator->setParameter(GaussianBlur::KSIZEX, ksizex);
-            m_operator->setParameter(GaussianBlur::KSIZEY, ksizey);
-            m_operator->setParameter(GaussianBlur::SIGMA_X, sigmaX);
-            m_operator->setParameter(GaussianBlur::SIGMA_Y, sigmaY);
+            m_operator->setInputData(GaussianBlur::INPUT_SRC, src);
+            m_operator->setInputData(GaussianBlur::INPUT_DST, dst);
+            m_operator->setParameter(GaussianBlur::PARAMETER_KSIZEX, ksizex);
+            m_operator->setParameter(GaussianBlur::PARAMETER_KSIZEY, ksizey);
+            m_operator->setParameter(GaussianBlur::PARAMETER_SIGMA_X, sigmaX);
+            m_operator->setParameter(GaussianBlur::PARAMETER_SIGMA_Y, sigmaY);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("GaussianBlurTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -49,16 +49,16 @@ namespace stromx
         
         void GaussianBlurTest::testManual1()
         {
-            m_operator->setParameter(GaussianBlur::DATA_FLOW, runtime::Enum(GaussianBlur::MANUAL));
+            m_operator->setParameter(GaussianBlur::PARAMETER_DATA_FLOW, runtime::Enum(GaussianBlur::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             
-            m_operator->setInputData(GaussianBlur::SRC, src);
-            m_operator->setInputData(GaussianBlur::DST, src);
+            m_operator->setInputData(GaussianBlur::INPUT_SRC, src);
+            m_operator->setInputData(GaussianBlur::INPUT_DST, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("GaussianBlurTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -66,7 +66,7 @@ namespace stromx
         
         void GaussianBlurTest::testAllocate0()
         {
-            m_operator->setParameter(GaussianBlur::DATA_FLOW, runtime::Enum(GaussianBlur::ALLOCATE));
+            m_operator->setParameter(GaussianBlur::PARAMETER_DATA_FLOW, runtime::Enum(GaussianBlur::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -76,13 +76,13 @@ namespace stromx
             runtime::Float64 sigmaX(-1);
             runtime::Float64 sigmaY(-1);
             
-            m_operator->setInputData(GaussianBlur::SRC, src);
-            m_operator->setParameter(GaussianBlur::KSIZEX, ksizex);
-            m_operator->setParameter(GaussianBlur::KSIZEY, ksizey);
-            m_operator->setParameter(GaussianBlur::SIGMA_X, sigmaX);
-            m_operator->setParameter(GaussianBlur::SIGMA_Y, sigmaY);
+            m_operator->setInputData(GaussianBlur::INPUT_SRC, src);
+            m_operator->setParameter(GaussianBlur::PARAMETER_KSIZEX, ksizex);
+            m_operator->setParameter(GaussianBlur::PARAMETER_KSIZEY, ksizey);
+            m_operator->setParameter(GaussianBlur::PARAMETER_SIGMA_X, sigmaX);
+            m_operator->setParameter(GaussianBlur::PARAMETER_SIGMA_Y, sigmaY);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("GaussianBlurTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
@@ -90,7 +90,7 @@ namespace stromx
         
         void GaussianBlurTest::testInPlace0()
         {
-            m_operator->setParameter(GaussianBlur::DATA_FLOW, runtime::Enum(GaussianBlur::IN_PLACE));
+            m_operator->setParameter(GaussianBlur::PARAMETER_DATA_FLOW, runtime::Enum(GaussianBlur::IN_PLACE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -98,11 +98,11 @@ namespace stromx
             runtime::Float64 sigmaX(0);
             runtime::Float64 sigmaY(0);
             
-            m_operator->setInputData(GaussianBlur::SRC, src);
-            m_operator->setParameter(GaussianBlur::SIGMA_X, sigmaX);
-            m_operator->setParameter(GaussianBlur::SIGMA_Y, sigmaY);
+            m_operator->setInputData(GaussianBlur::INPUT_SRC, src);
+            m_operator->setParameter(GaussianBlur::PARAMETER_SIGMA_X, sigmaX);
+            m_operator->setParameter(GaussianBlur::PARAMETER_SIGMA_Y, sigmaY);
             
-            runtime::DataContainer srcResult = m_operator->getOutputData(GaussianBlur::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(GaussianBlur::OUTPUT_SRC);
             
             runtime::ReadAccess srcAccess(srcResult);
             cvsupport::Image::save("GaussianBlurTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());

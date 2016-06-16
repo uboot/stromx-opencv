@@ -44,7 +44,7 @@ namespace stromx
         Svm::Svm()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
 #ifdef STROMX_OPENCV2
-            m_svm(new cv::ml::SVM()),
+            m_svm(new cv::SVM()),
 #else
             m_svm(cv::ml::SVM::create()),
 #endif // STROMX_OPENCV2

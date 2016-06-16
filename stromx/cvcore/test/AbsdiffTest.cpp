@@ -23,7 +23,7 @@ namespace stromx
         
         void AbsdiffTest::testManual0()
         {
-            m_operator->setParameter(Absdiff::DATA_FLOW, runtime::Enum(Absdiff::MANUAL));
+            m_operator->setParameter(Absdiff::PARAMETER_DATA_FLOW, runtime::Enum(Absdiff::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -31,11 +31,11 @@ namespace stromx
             runtime::DataContainer src2(new cvsupport::Image("barbara.jpg"));
             runtime::DataContainer dst(new cvsupport::Image(5000000));
             
-            m_operator->setInputData(Absdiff::SRC_1, src1);
-            m_operator->setInputData(Absdiff::SRC_2, src2);
-            m_operator->setInputData(Absdiff::DST, dst);
+            m_operator->setInputData(Absdiff::INPUT_SRC_1, src1);
+            m_operator->setInputData(Absdiff::INPUT_SRC_2, src2);
+            m_operator->setInputData(Absdiff::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("AbsdiffTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -43,7 +43,7 @@ namespace stromx
         
         void AbsdiffTest::testManual1()
         {
-            m_operator->setParameter(Absdiff::DATA_FLOW, runtime::Enum(Absdiff::MANUAL));
+            m_operator->setParameter(Absdiff::PARAMETER_DATA_FLOW, runtime::Enum(Absdiff::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -51,11 +51,11 @@ namespace stromx
             runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(5000000));
             
-            m_operator->setInputData(Absdiff::SRC_1, src1);
-            m_operator->setInputData(Absdiff::SRC_2, src2);
-            m_operator->setInputData(Absdiff::DST, dst);
+            m_operator->setInputData(Absdiff::INPUT_SRC_1, src1);
+            m_operator->setInputData(Absdiff::INPUT_SRC_2, src2);
+            m_operator->setInputData(Absdiff::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("AbsdiffTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -63,17 +63,17 @@ namespace stromx
         
         void AbsdiffTest::testAllocate0()
         {
-            m_operator->setParameter(Absdiff::DATA_FLOW, runtime::Enum(Absdiff::ALLOCATE));
+            m_operator->setParameter(Absdiff::PARAMETER_DATA_FLOW, runtime::Enum(Absdiff::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::DEPTH_16));
             runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::DEPTH_16));
             
-            m_operator->setInputData(Absdiff::SRC_1, src1);
-            m_operator->setInputData(Absdiff::SRC_2, src2);
+            m_operator->setInputData(Absdiff::INPUT_SRC_1, src1);
+            m_operator->setInputData(Absdiff::INPUT_SRC_2, src2);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("AbsdiffTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());

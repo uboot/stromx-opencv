@@ -144,13 +144,15 @@ class SetDataVisitor(interface.TestArgumentVisitor):
         self.m = method
         
     def __visitData(self, arg):
-        index = "{0}::{1}".format(self.m.ident.className(),
-                                  arg.ident.constant())
         if _isParameter(arg):
+            index = "{0}::PARAMETER_{1}".format(self.m.ident.className(),
+                                                arg.ident.constant())
             l = ("m_operator->setParameter({0}, "
                 "{1});".format(index, arg.ident))
             self.doc.line(l)
         else:
+            index = "{0}::INPUT_{1}".format(self.m.ident.className(),
+                                                arg.ident.constant())
             l = ("m_operator->setInputData({0}, "
                 "{1});".format(index, arg.ident))
             self.doc.line(l)
@@ -171,7 +173,7 @@ class SetDataVisitor(interface.TestArgumentVisitor):
         self.__visitData(testData.arg)
     
     def visitRefData(self, testData):
-        index = "{0}::{1}".format(self.m.ident.className(),
+        index = "{0}::INPUT_{1}".format(self.m.ident.className(),
                                   testData.arg.ident.constant())
         l = ((
             "m_operator->setInputData({0}, {1});"
@@ -191,7 +193,7 @@ class GetDataVisitor(interface.TestArgumentVisitor):
         if not isinstance(arg, package.OutputArgument):
             return
             
-        index = "{0}::{1}".format(self.m.ident.className(),
+        index = "{0}::OUTPUT_{1}".format(self.m.ident.className(),
                                   arg.ident.constant())
                                   
         l = (

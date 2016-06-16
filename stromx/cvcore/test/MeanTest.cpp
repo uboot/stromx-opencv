@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(Mean::SRC, src);
+            m_operator->setInputData(Mean::INPUT_SRC, src);
             
-            runtime::DataContainer valueResult = m_operator->getOutputData(Mean::VALUE);
+            runtime::DataContainer valueResult = m_operator->getOutputData(Mean::OUTPUT_VALUE);
             
             runtime::ReadAccess valueAccess(valueResult);
             std::ofstream valueFile;
@@ -46,9 +46,9 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Matrix("lenna_32f.npy"));
             
-            m_operator->setInputData(Mean::SRC, src);
+            m_operator->setInputData(Mean::INPUT_SRC, src);
             
-            runtime::DataContainer valueResult = m_operator->getOutputData(Mean::VALUE);
+            runtime::DataContainer valueResult = m_operator->getOutputData(Mean::OUTPUT_VALUE);
             
             runtime::ReadAccess valueAccess(valueResult);
             std::ofstream valueFile;

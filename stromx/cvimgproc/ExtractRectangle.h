@@ -21,20 +21,19 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API ExtractRectangle : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST,
-                RECT
-            };
-            enum ParameterId
-            {
-                DATA_FLOW
+                INPUT_RECT,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW
             };
             ExtractRectangle();
             virtual OperatorKernel* clone() const { return new ExtractRectangle; }

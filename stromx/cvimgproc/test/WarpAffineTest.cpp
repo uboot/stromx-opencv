@@ -23,7 +23,7 @@ namespace stromx
         
         void WarpAffineTest::testManual0()
         {
-            m_operator->setParameter(WarpAffine::DATA_FLOW, runtime::Enum(WarpAffine::MANUAL));
+            m_operator->setParameter(WarpAffine::PARAMETER_DATA_FLOW, runtime::Enum(WarpAffine::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -33,13 +33,13 @@ namespace stromx
             runtime::UInt32 dsizex(400);
             runtime::UInt32 dsizey(500);
             
-            m_operator->setInputData(WarpAffine::SRC, src);
-            m_operator->setInputData(WarpAffine::DST, dst);
-            m_operator->setParameter(WarpAffine::AFFINE_M, affineM);
-            m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
-            m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
+            m_operator->setInputData(WarpAffine::INPUT_SRC, src);
+            m_operator->setInputData(WarpAffine::INPUT_DST, dst);
+            m_operator->setParameter(WarpAffine::PARAMETER_AFFINE_M, affineM);
+            m_operator->setParameter(WarpAffine::PARAMETER_DSIZEX, dsizex);
+            m_operator->setParameter(WarpAffine::PARAMETER_DSIZEY, dsizey);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("WarpAffineTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -47,7 +47,7 @@ namespace stromx
         
         void WarpAffineTest::testManual1()
         {
-            m_operator->setParameter(WarpAffine::DATA_FLOW, runtime::Enum(WarpAffine::MANUAL));
+            m_operator->setParameter(WarpAffine::PARAMETER_DATA_FLOW, runtime::Enum(WarpAffine::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -56,12 +56,12 @@ namespace stromx
             runtime::UInt32 dsizex(400);
             runtime::UInt32 dsizey(500);
             
-            m_operator->setInputData(WarpAffine::SRC, src);
-            m_operator->setInputData(WarpAffine::DST, dst);
-            m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
-            m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
+            m_operator->setInputData(WarpAffine::INPUT_SRC, src);
+            m_operator->setInputData(WarpAffine::INPUT_DST, dst);
+            m_operator->setParameter(WarpAffine::PARAMETER_DSIZEX, dsizex);
+            m_operator->setParameter(WarpAffine::PARAMETER_DSIZEY, dsizey);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("WarpAffineTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -69,7 +69,7 @@ namespace stromx
         
         void WarpAffineTest::testAllocate0()
         {
-            m_operator->setParameter(WarpAffine::DATA_FLOW, runtime::Enum(WarpAffine::ALLOCATE));
+            m_operator->setParameter(WarpAffine::PARAMETER_DATA_FLOW, runtime::Enum(WarpAffine::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -78,12 +78,12 @@ namespace stromx
             runtime::UInt32 dsizex(400);
             runtime::UInt32 dsizey(500);
             
-            m_operator->setInputData(WarpAffine::SRC, src);
-            m_operator->setParameter(WarpAffine::AFFINE_M, affineM);
-            m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
-            m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
+            m_operator->setInputData(WarpAffine::INPUT_SRC, src);
+            m_operator->setParameter(WarpAffine::PARAMETER_AFFINE_M, affineM);
+            m_operator->setParameter(WarpAffine::PARAMETER_DSIZEX, dsizex);
+            m_operator->setParameter(WarpAffine::PARAMETER_DSIZEY, dsizey);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("WarpAffineTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());

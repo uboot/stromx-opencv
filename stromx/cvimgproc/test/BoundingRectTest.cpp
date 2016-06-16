@@ -28,9 +28,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(BoundingRect::POINTS, points);
+            m_operator->setInputData(BoundingRect::INPUT_POINTS, points);
             
-            runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::OUTPUT_RECT);
             
             runtime::ReadAccess rectAccess(rectResult);
             cvsupport::Matrix::save("BoundingRectTest_testAllocate0_rect.npy", rectAccess.get<runtime::Matrix>());
@@ -43,9 +43,9 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(BoundingRect::POINTS, points);
+            m_operator->setInputData(BoundingRect::INPUT_POINTS, points);
             
-            runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::OUTPUT_RECT);
             
             runtime::ReadAccess rectAccess(rectResult);
             cvsupport::Matrix::save("BoundingRectTest_testAllocate1_rect.npy", rectAccess.get<runtime::Matrix>());

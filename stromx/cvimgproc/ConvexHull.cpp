@@ -33,9 +33,9 @@ namespace stromx
         {
             switch(id)
             {
-            case CLOCKWISE:
+            case PARAMETER_CLOCKWISE:
                 return m_clockwise;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -48,7 +48,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case CLOCKWISE:
+                case PARAMETER_CLOCKWISE:
                     {
                         const runtime::Bool & castedValue = runtime::data_cast<runtime::Bool>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::BOOL))
@@ -58,7 +58,7 @@ namespace stromx
                         m_clockwise = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -94,7 +94,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_clockwiseParameter = new runtime::Parameter(CLOCKWISE, runtime::Variant::BOOL);
+                    m_clockwiseParameter = new runtime::Parameter(PARAMETER_CLOCKWISE, runtime::Variant::BOOL);
                     m_clockwiseParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_clockwiseParameter->setTitle(L_("Output orientation"));
                     parameters.push_back(m_clockwiseParameter);
@@ -114,7 +114,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_curveDescription = new runtime::MatrixDescription(INPUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_curveDescription->setTitle("Input points");
                     m_curveDescription->setVisualization(runtime::Visualization::POINT);
                     m_curveDescription->setRows(0);
@@ -136,7 +136,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUTPUT_OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     outCurve->setTitle(L_("Convex hull"));
                     outCurve->setVisualization(runtime::Visualization::POLYGON);
                     outCurve->setRows(0);
@@ -161,7 +161,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair curveInMapper(CURVE);
+                    runtime::Id2DataPair curveInMapper(INPUT_CURVE);
                     
                     provider.receiveInputData(curveInMapper);
                     
@@ -174,7 +174,7 @@ namespace stromx
                     
                     if(! curveData->variant().isVariant(m_curveDescription->variant()))
                     {
-                        throw runtime::InputError(CURVE, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_CURVE, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* curveCastedData = runtime::data_cast<runtime::Matrix>(curveData);
@@ -188,7 +188,7 @@ namespace stromx
                     
                     runtime::Matrix* outCurveCastedData = new cvsupport::Matrix(outCurveCvData);
                     runtime::DataContainer outCurveOutContainer = runtime::DataContainer(outCurveCastedData);
-                    runtime::Id2DataPair outCurveOutMapper(OUT_CURVE, outCurveOutContainer);
+                    runtime::Id2DataPair outCurveOutMapper(OUTPUT_OUT_CURVE, outCurveOutContainer);
                     
                     provider.sendOutputData(outCurveOutMapper);
                 }

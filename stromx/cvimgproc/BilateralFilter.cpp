@@ -35,13 +35,13 @@ namespace stromx
         {
             switch(id)
             {
-            case D:
+            case PARAMETER_D:
                 return m_d;
-            case SIGMA_COLOR:
+            case PARAMETER_SIGMA_COLOR:
                 return m_sigmaColor;
-            case SIGMA_SPACE:
+            case PARAMETER_SIGMA_SPACE:
                 return m_sigmaSpace;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -54,7 +54,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case D:
+                case PARAMETER_D:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -65,7 +65,7 @@ namespace stromx
                         m_d = castedValue;
                     }
                     break;
-                case SIGMA_COLOR:
+                case PARAMETER_SIGMA_COLOR:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -76,7 +76,7 @@ namespace stromx
                         m_sigmaColor = castedValue;
                     }
                     break;
-                case SIGMA_SPACE:
+                case PARAMETER_SIGMA_SPACE:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -87,7 +87,7 @@ namespace stromx
                         m_sigmaSpace = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -112,7 +112,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
+            m_dataFlowParameter = new runtime::EnumParameter(PARAMETER_DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
@@ -130,17 +130,17 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_dParameter = new runtime::NumericParameter<runtime::UInt32>(D);
+                    m_dParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_D);
                     m_dParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_dParameter->setTitle(L_("Pixel neigbourhood diameter"));
                     parameters.push_back(m_dParameter);
                     
-                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_COLOR);
+                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_SIGMA_COLOR);
                     m_sigmaColorParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaColorParameter->setTitle(L_("Sigma color"));
                     parameters.push_back(m_sigmaColorParameter);
                     
-                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_SPACE);
+                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_SIGMA_SPACE);
                     m_sigmaSpaceParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaSpaceParameter->setTitle(L_("Sigma space"));
                     parameters.push_back(m_sigmaSpaceParameter);
@@ -149,17 +149,17 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_dParameter = new runtime::NumericParameter<runtime::UInt32>(D);
+                    m_dParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_D);
                     m_dParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_dParameter->setTitle(L_("Pixel neigbourhood diameter"));
                     parameters.push_back(m_dParameter);
                     
-                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_COLOR);
+                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_SIGMA_COLOR);
                     m_sigmaColorParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaColorParameter->setTitle(L_("Sigma color"));
                     parameters.push_back(m_sigmaColorParameter);
                     
-                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_SPACE);
+                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_SIGMA_SPACE);
                     m_sigmaSpaceParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaSpaceParameter->setTitle(L_("Sigma space"));
                     parameters.push_back(m_sigmaSpaceParameter);
@@ -179,11 +179,11 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_dstDescription = new runtime::Description(DST, runtime::Variant::IMAGE);
+                    m_dstDescription = new runtime::Description(INPUT_DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -191,7 +191,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::IMAGE);
+                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -210,7 +210,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -218,7 +218,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -240,8 +240,8 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
-                    runtime::Id2DataPair dstInMapper(DST);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
+                    runtime::Id2DataPair dstInMapper(INPUT_DST);
                     
                     provider.receiveInputData(srcInMapper && dstInMapper);
                     
@@ -255,7 +255,7 @@ namespace stromx
                     
                     if(srcInMapper.data() == inContainer)
                     {
-                        throw runtime::InputError(SRC, *this, "Can not operate in place.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Can not operate in place.");
                     }
                     else
                     {
@@ -265,11 +265,11 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     if(! dstData->variant().isVariant(m_dstDescription->variant()))
                     {
-                        throw runtime::InputError(DST, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_DST, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -286,14 +286,14 @@ namespace stromx
                     cv::bilateralFilter(srcCvData, dstCvData, dCvData, sigmaColorCvData, sigmaSpaceCvData);
                     
                     runtime::DataContainer dstOutContainer = inContainer;
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -306,7 +306,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
@@ -321,7 +321,7 @@ namespace stromx
                     
                     runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
                     provider.sendOutputData(dstOutMapper);

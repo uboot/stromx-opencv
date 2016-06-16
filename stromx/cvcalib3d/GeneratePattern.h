@@ -21,21 +21,20 @@ namespace stromx
     {
         class STROMX_CVCALIB3D_API GeneratePattern : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                CORNERS
-            };
-            enum ParameterId
-            {
-                SQUARE_SIZE,
-                PATTERN_SIZE_Y,
-                PATTERN_SIZE_X,
-                DATA_FLOW
+                OUTPUT_CORNERS,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_PATTERN_SIZE_X,
+                PARAMETER_PATTERN_SIZE_Y,
+                PARAMETER_SQUARE_SIZE
             };
             GeneratePattern();
             virtual OperatorKernel* clone() const { return new GeneratePattern; }

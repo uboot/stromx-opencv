@@ -21,21 +21,21 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API CornerSubPix : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 IN_PLACE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                POINT_MATRIX
-            };
-            enum ParameterId
-            {
-                WIN_SIZE_Y,
-                WIN_SIZE_X,
-                DATA_FLOW
+                INPUT_POINT_MATRIX,
+                INPUT_SRC,
+                OUTPUT_POINT_MATRIX,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_WIN_SIZE_X,
+                PARAMETER_WIN_SIZE_Y
             };
             CornerSubPix();
             virtual OperatorKernel* clone() const { return new CornerSubPix; }

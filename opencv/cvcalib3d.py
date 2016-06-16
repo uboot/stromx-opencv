@@ -91,7 +91,7 @@ listSizeCheck = document.Document(
 """
 if (objectPointsCastedData->content().size() != imagePointsCastedData->content().size())
 {
-    throw runtime::InputError(OBJECT_POINTS, *this, "Object and image point lists must have the same size.");
+    throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Object and image point lists must have the same size.");
 }
 """)
 
@@ -205,7 +205,7 @@ pointSizeCheck = document.Document(
 """
 if (objectPointsCastedData->rows() != imagePointsCastedData->rows())
 {
-    throw runtime::InputError(OBJECT_POINTS, *this, "Object and image points must have the same number of rows.");
+    throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Object and image points must have the same number of rows.");
 }
 """)
 cameraMatrix = package.MatrixParameter(

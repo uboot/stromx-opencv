@@ -32,7 +32,7 @@ namespace stromx
         {
             switch(id)
             {
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -45,7 +45,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -96,7 +96,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_pointsDescription = new runtime::MatrixDescription(INPUT_POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
                     m_pointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointsDescription->setRows(0);
@@ -118,7 +118,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* ellipse = new runtime::MatrixDescription(ELLIPSE, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* ellipse = new runtime::MatrixDescription(OUTPUT_ELLIPSE, runtime::Variant::FLOAT_32_MATRIX);
                     ellipse->setTitle(L_("Bounding box"));
                     ellipse->setVisualization(runtime::Visualization::ELLIPSE);
                     ellipse->setRows(1);
@@ -143,7 +143,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair pointsInMapper(POINTS);
+                    runtime::Id2DataPair pointsInMapper(INPUT_POINTS);
                     
                     provider.receiveInputData(pointsInMapper);
                     
@@ -156,7 +156,7 @@ namespace stromx
                     
                     if(! pointsData->variant().isVariant(m_pointsDescription->variant()))
                     {
-                        throw runtime::InputError(POINTS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_POINTS, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* pointsCastedData = runtime::data_cast<runtime::Matrix>(pointsData);
@@ -169,7 +169,7 @@ namespace stromx
                     
                     runtime::Matrix* ellipseCastedData = new cvsupport::Matrix(ellipseCvData);
                     runtime::DataContainer ellipseOutContainer = runtime::DataContainer(ellipseCastedData);
-                    runtime::Id2DataPair ellipseOutMapper(ELLIPSE, ellipseOutContainer);
+                    runtime::Id2DataPair ellipseOutMapper(OUTPUT_ELLIPSE, ellipseOutContainer);
                     
                     provider.sendOutputData(ellipseOutMapper);
                 }

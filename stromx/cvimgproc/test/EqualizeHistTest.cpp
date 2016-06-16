@@ -23,17 +23,17 @@ namespace stromx
         
         void EqualizeHistTest::testManual0()
         {
-            m_operator->setParameter(EqualizeHist::DATA_FLOW, runtime::Enum(EqualizeHist::MANUAL));
+            m_operator->setParameter(EqualizeHist::PARAMETER_DATA_FLOW, runtime::Enum(EqualizeHist::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             
-            m_operator->setInputData(EqualizeHist::SRC, src);
-            m_operator->setInputData(EqualizeHist::DST, dst);
+            m_operator->setInputData(EqualizeHist::INPUT_SRC, src);
+            m_operator->setInputData(EqualizeHist::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(EqualizeHist::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(EqualizeHist::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("EqualizeHistTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -41,16 +41,16 @@ namespace stromx
         
         void EqualizeHistTest::testManual1()
         {
-            m_operator->setParameter(EqualizeHist::DATA_FLOW, runtime::Enum(EqualizeHist::MANUAL));
+            m_operator->setParameter(EqualizeHist::PARAMETER_DATA_FLOW, runtime::Enum(EqualizeHist::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(EqualizeHist::SRC, src);
-            m_operator->setInputData(EqualizeHist::DST, src);
+            m_operator->setInputData(EqualizeHist::INPUT_SRC, src);
+            m_operator->setInputData(EqualizeHist::INPUT_DST, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(EqualizeHist::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(EqualizeHist::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("EqualizeHistTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -58,15 +58,15 @@ namespace stromx
         
         void EqualizeHistTest::testAllocate0()
         {
-            m_operator->setParameter(EqualizeHist::DATA_FLOW, runtime::Enum(EqualizeHist::ALLOCATE));
+            m_operator->setParameter(EqualizeHist::PARAMETER_DATA_FLOW, runtime::Enum(EqualizeHist::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(EqualizeHist::SRC, src);
+            m_operator->setInputData(EqualizeHist::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(EqualizeHist::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(EqualizeHist::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("EqualizeHistTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
@@ -74,15 +74,15 @@ namespace stromx
         
         void EqualizeHistTest::testInPlace0()
         {
-            m_operator->setParameter(EqualizeHist::DATA_FLOW, runtime::Enum(EqualizeHist::IN_PLACE));
+            m_operator->setParameter(EqualizeHist::PARAMETER_DATA_FLOW, runtime::Enum(EqualizeHist::IN_PLACE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             
-            m_operator->setInputData(EqualizeHist::SRC, src);
+            m_operator->setInputData(EqualizeHist::INPUT_SRC, src);
             
-            runtime::DataContainer srcResult = m_operator->getOutputData(EqualizeHist::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(EqualizeHist::OUTPUT_SRC);
             
             runtime::ReadAccess srcAccess(srcResult);
             cvsupport::Image::save("EqualizeHistTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());

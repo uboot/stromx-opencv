@@ -23,7 +23,7 @@ namespace stromx
         
         void DilateTest::testManual0()
         {
-            m_operator->setParameter(Dilate::DATA_FLOW, runtime::Enum(Dilate::MANUAL));
+            m_operator->setParameter(Dilate::PARAMETER_DATA_FLOW, runtime::Enum(Dilate::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
@@ -34,14 +34,14 @@ namespace stromx
             runtime::Enum shape(1);
             runtime::UInt32 iterations(2);
             
-            m_operator->setInputData(Dilate::SRC, src);
-            m_operator->setInputData(Dilate::DST, dst);
-            m_operator->setParameter(Dilate::KSIZEX, ksizex);
-            m_operator->setParameter(Dilate::KSIZEY, ksizey);
-            m_operator->setParameter(Dilate::SHAPE, shape);
-            m_operator->setParameter(Dilate::ITERATIONS, iterations);
+            m_operator->setInputData(Dilate::INPUT_SRC, src);
+            m_operator->setInputData(Dilate::INPUT_DST, dst);
+            m_operator->setParameter(Dilate::PARAMETER_KSIZEX, ksizex);
+            m_operator->setParameter(Dilate::PARAMETER_KSIZEY, ksizey);
+            m_operator->setParameter(Dilate::PARAMETER_SHAPE, shape);
+            m_operator->setParameter(Dilate::PARAMETER_ITERATIONS, iterations);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("DilateTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
@@ -49,17 +49,17 @@ namespace stromx
         
         void DilateTest::testManual1()
         {
-            m_operator->setParameter(Dilate::DATA_FLOW, runtime::Enum(Dilate::MANUAL));
+            m_operator->setParameter(Dilate::PARAMETER_DATA_FLOW, runtime::Enum(Dilate::MANUAL));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             
-            m_operator->setInputData(Dilate::SRC, src);
-            m_operator->setInputData(Dilate::DST, dst);
+            m_operator->setInputData(Dilate::INPUT_SRC, src);
+            m_operator->setInputData(Dilate::INPUT_DST, dst);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("DilateTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
@@ -67,15 +67,15 @@ namespace stromx
         
         void DilateTest::testAllocate0()
         {
-            m_operator->setParameter(Dilate::DATA_FLOW, runtime::Enum(Dilate::ALLOCATE));
+            m_operator->setParameter(Dilate::PARAMETER_DATA_FLOW, runtime::Enum(Dilate::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             
-            m_operator->setInputData(Dilate::SRC, src);
+            m_operator->setInputData(Dilate::INPUT_SRC, src);
             
-            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::OUTPUT_DST);
             
             runtime::ReadAccess dstAccess(dstResult);
             cvsupport::Image::save("DilateTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
@@ -83,17 +83,17 @@ namespace stromx
         
         void DilateTest::testInPlace0()
         {
-            m_operator->setParameter(Dilate::DATA_FLOW, runtime::Enum(Dilate::IN_PLACE));
+            m_operator->setParameter(Dilate::PARAMETER_DATA_FLOW, runtime::Enum(Dilate::IN_PLACE));
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Enum shape(2);
             
-            m_operator->setInputData(Dilate::SRC, src);
-            m_operator->setParameter(Dilate::SHAPE, shape);
+            m_operator->setInputData(Dilate::INPUT_SRC, src);
+            m_operator->setParameter(Dilate::PARAMETER_SHAPE, shape);
             
-            runtime::DataContainer srcResult = m_operator->getOutputData(Dilate::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(Dilate::OUTPUT_SRC);
             
             runtime::ReadAccess srcAccess(srcResult);
             cvsupport::Image::save("DilateTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());

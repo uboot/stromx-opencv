@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVCORE_API AddWeighted : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DdepthId
             {
@@ -33,19 +35,17 @@ namespace stromx
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                DST,
-                SRC_2,
-                SRC_1
-            };
-            enum ParameterId
-            {
-                DATA_FLOW,
-                ALPHA,
-                BETA,
-                DDEPTH,
-                GAMMA
+                INPUT_DST,
+                INPUT_SRC_1,
+                INPUT_SRC_2,
+                OUTPUT_DST,
+                PARAMETER_ALPHA,
+                PARAMETER_BETA,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DDEPTH,
+                PARAMETER_GAMMA
             };
             AddWeighted();
             virtual OperatorKernel* clone() const { return new AddWeighted; }

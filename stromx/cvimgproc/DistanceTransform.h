@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API DistanceTransform : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DistanceTypeId
             {
@@ -39,16 +41,14 @@ namespace stromx
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                DISTANCE_TYPE,
-                MASK_SIZE,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DISTANCE_TYPE,
+                PARAMETER_MASK_SIZE
             };
             DistanceTransform();
             virtual OperatorKernel* clone() const { return new DistanceTransform; }

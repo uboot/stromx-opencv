@@ -21,24 +21,23 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API HoughLinesP : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataFlowId
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                MAX_LINE_GAP,
-                MIN_LINE_LENGTH,
-                RHO,
-                THRESHOLD,
-                THETA,
-                DATA_FLOW
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_MAX_LINE_GAP,
+                PARAMETER_MIN_LINE_LENGTH,
+                PARAMETER_RHO,
+                PARAMETER_THETA,
+                PARAMETER_THRESHOLD
             };
             HoughLinesP();
             virtual OperatorKernel* clone() const { return new HoughLinesP; }

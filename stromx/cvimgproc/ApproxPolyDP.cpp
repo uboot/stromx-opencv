@@ -34,11 +34,11 @@ namespace stromx
         {
             switch(id)
             {
-            case CLOSED:
+            case PARAMETER_CLOSED:
                 return m_closed;
-            case EPSILON:
+            case PARAMETER_EPSILON:
                 return m_epsilon;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -51,7 +51,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case CLOSED:
+                case PARAMETER_CLOSED:
                     {
                         const runtime::Bool & castedValue = runtime::data_cast<runtime::Bool>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::BOOL))
@@ -61,7 +61,7 @@ namespace stromx
                         m_closed = castedValue;
                     }
                     break;
-                case EPSILON:
+                case PARAMETER_EPSILON:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
@@ -72,7 +72,7 @@ namespace stromx
                         m_epsilon = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -108,13 +108,13 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_epsilonParameter = new runtime::NumericParameter<runtime::Float64>(EPSILON);
+                    m_epsilonParameter = new runtime::NumericParameter<runtime::Float64>(PARAMETER_EPSILON);
                     m_epsilonParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_epsilonParameter->setTitle(L_("Maximal error in pixels"));
                     m_epsilonParameter->setMin(runtime::Float64(0.0));
                     parameters.push_back(m_epsilonParameter);
                     
-                    m_closedParameter = new runtime::Parameter(CLOSED, runtime::Variant::BOOL);
+                    m_closedParameter = new runtime::Parameter(PARAMETER_CLOSED, runtime::Variant::BOOL);
                     m_closedParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_closedParameter->setTitle(L_("Curve is closed"));
                     parameters.push_back(m_closedParameter);
@@ -134,7 +134,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_curveDescription = new runtime::MatrixDescription(INPUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_curveDescription->setTitle("Polygon");
                     m_curveDescription->setVisualization(runtime::Visualization::POLYGON || runtime::Visualization::POLYLINE);
                     m_curveDescription->setRows(0);
@@ -156,7 +156,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUTPUT_OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     outCurve->setTitle(L_("Polygon"));
                     outCurve->setVisualization(runtime::Visualization::POLYGON || runtime::Visualization::POLYLINE);
                     outCurve->setRows(0);
@@ -181,7 +181,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair curveInMapper(CURVE);
+                    runtime::Id2DataPair curveInMapper(INPUT_CURVE);
                     
                     provider.receiveInputData(curveInMapper);
                     
@@ -194,7 +194,7 @@ namespace stromx
                     
                     if(! curveData->variant().isVariant(m_curveDescription->variant()))
                     {
-                        throw runtime::InputError(CURVE, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_CURVE, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* curveCastedData = runtime::data_cast<runtime::Matrix>(curveData);
@@ -209,7 +209,7 @@ namespace stromx
                     
                     runtime::Matrix* outCurveCastedData = new cvsupport::Matrix(outCurveCvData);
                     runtime::DataContainer outCurveOutContainer = runtime::DataContainer(outCurveCastedData);
-                    runtime::Id2DataPair outCurveOutMapper(OUT_CURVE, outCurveOutContainer);
+                    runtime::Id2DataPair outCurveOutMapper(OUTPUT_OUT_CURVE, outCurveOutContainer);
                     
                     provider.sendOutputData(outCurveOutMapper);
                 }

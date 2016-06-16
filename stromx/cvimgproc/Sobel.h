@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Sobel : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DdepthId
             {
@@ -33,20 +35,18 @@ namespace stromx
                 MANUAL,
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                SRC,
-                DST
-            };
-            enum ParameterId
-            {
-                SCALE,
-                DELTA,
-                DDEPTH,
-                KSIZE,
-                DX,
-                DY,
-                DATA_FLOW
+                INPUT_DST,
+                INPUT_SRC,
+                OUTPUT_DST,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DDEPTH,
+                PARAMETER_DELTA,
+                PARAMETER_DX,
+                PARAMETER_DY,
+                PARAMETER_KSIZE,
+                PARAMETER_SCALE
             };
             Sobel();
             virtual OperatorKernel* clone() const { return new Sobel; }

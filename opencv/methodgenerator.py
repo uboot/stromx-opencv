@@ -104,7 +104,17 @@ class MethodGenerator(object):
             p.descriptions.append(desc)
         return p
             
-    def visitAll(self, visitor, visitOptionParam = True):
+    def visitAll(self, visitor):
+        """
+        Collects all arguments of all options.
+        """
+        for opt in self.m.options:
+            for arg in opt.args:
+                arg.accept(visitor)
+                
+        self.optionParam.accept(visitor)
+            
+    def visitParameters(self, visitor, visitOptionParam = True):
         """
         Collects all arguments of all options and removes duplicates (i.e. 
         arguments with common identifier). Then the visitor visits all 
@@ -162,34 +172,42 @@ class OpHeaderGenerator(MethodGenerator):
         connectors.
         """
         def __init__(self):
-            self.connectors = set()
+            self.inputs = []
+            self.outputs = []
+            self.params = []
             
         def visitRefInput(self, refInputArg):
-            self.connectors.add(refInputArg)
+            self.inputs.append(refInputArg)
     
         def visitInput(self, inputArg):
-            self.connectors.add(inputArg)
+            self.inputs.append(inputArg)
     
         def visitInputOutput(self, arg):
-            self.connectors.add(arg)
+            self.inputs.append(arg)
+            self.outputs.append(arg)
     
         def visitOutput(self, output):
-            self.connectors.add(output)
+            self.inputs.append(output)
+            self.outputs.append(output)
             
         def visitAllocation(self, allocation):
-            self.connectors.add(allocation)
+            self.outputs.append(allocation)
+    
+        def visitParameter(self, parameter):
+            self.params.append(parameter)
             
         def export(self, doc):
-            connectorIds = [i.ident.constant() for i in self.connectors]
-            doc.enum("ConnectorId", set(connectorIds))
-            
-    class ParameterEnumVisitor(MethodGenerator.CollectParametersVisitor):
-        """
-        Exports the enumeration of the parameter IDs of all visited parameters.
-        """
-        def export(self, doc):
-            paramIds = [p.ident.constant() for p in self.params]
-            doc.enum("ParameterId", set(paramIds))
+            inputIds = ["INPUT_{0}".format(i.ident.constant()) for i in 
+                        self.inputs]
+            outputIds = ["OUTPUT_{0}".format(i.ident.constant()) for i in 
+                         self.outputs]
+            paramIds = ["PARAMETER_{0}".format(i.ident.constant()) for i in 
+                        self.params]
+            inputIds = sorted(set(inputIds))
+            outputIds = sorted(set(outputIds))
+            paramIds = sorted(set(paramIds))
+            dataIds = inputIds + outputIds + paramIds
+            doc.enum("DataId", dataIds)
         
     class DataMemberVisitor(MethodGenerator.DocVisitor):
         """
@@ -279,13 +297,9 @@ class OpHeaderGenerator(MethodGenerator):
         self.__public()
         
         v = OpHeaderGenerator.EnumParameterIdVisitor(self.doc)
-        self.visitAll(v)
+        self.visitParameters(v)
         
         v = OpHeaderGenerator.ConnectorEnumVisitor()
-        self.visitAll(v)
-        v.export(self.doc)
-        
-        v = OpHeaderGenerator.ParameterEnumVisitor()
         self.visitAll(v)
         v.export(self.doc)
         
@@ -297,14 +311,14 @@ class OpHeaderGenerator(MethodGenerator):
         self.__setupFunctions()
         
         v = OpHeaderGenerator.EnumConversionDeclVisitor(self.doc)
-        self.visitAll(v, False)
+        self.visitParameters(v, False)
         self.doc.blank()
         
         v = OpHeaderGenerator.DataMemberVisitor(self.doc)
-        self.visitAll(v)
+        self.visitParameters(v)
         
         v = OpHeaderGenerator.DescriptionsVisitor(self.doc)
-        self.visitAll(v)
+        self.visitParameters(v)
         
         self.__classExit()
         self.namespaceExit()
@@ -341,6 +355,8 @@ class OpHeaderGenerator(MethodGenerator):
                       self.__apiDecl(), self.m.ident.className()))
         self.doc.line("{")
         self.doc.increaseIndent()  
+        self.doc.line("STROMX_OPERATOR_KERNEL")
+        self.doc.blank()
         
     def __public(self):
         self.doc.label("public")
@@ -418,7 +434,7 @@ class OpImplGenerator(MethodGenerator):
         parameters.
         """
         def visitParameter(self, parameter):
-            self.doc.label("case {0}".format(parameter.ident.constant()))
+            self.doc.label("case PARAMETER_{0}".format(parameter.ident.constant()))
             self.doc.line("return {0};".format(parameter.ident.attribute()))
                     
     class SetParametersVisitor(MethodGenerator.DocVisitor):
@@ -444,7 +460,7 @@ class OpImplGenerator(MethodGenerator):
             self.__setParameterWithCheck(parameter, l)
             
         def __setParameterWithCheck(self, parameter, check):
-            self.doc.label("case {0}".format(parameter.ident.constant()))
+            self.doc.label("case PARAMETER_{0}".format(parameter.ident.constant()))
             self.doc.scopeEnter()
             self.doc.line(("const {0} & castedValue = runtime::data_cast<{1}>(value);"
                           ).format(parameter.dataType.typeId(),
@@ -493,7 +509,7 @@ class OpImplGenerator(MethodGenerator):
             
         def __visitPlainParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
-            l = "{0} = new runtime::Parameter({1}, {2});"\
+            l = "{0} = new runtime::Parameter(PARAMETER_{1}, {2});"\
                 .format(ident, parameter.ident.constant(),
                         parameter.dataType.variant())
             self.doc.line(l)
@@ -506,7 +522,7 @@ class OpImplGenerator(MethodGenerator):
             
         def __visitEnumParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
-            l = ("{0} = new runtime::EnumParameter({1});"
+            l = ("{0} = new runtime::EnumParameter(PARAMETER_{1});"
                 ).format(ident, parameter.ident.constant())
             self.doc.line(l)
             self.__accessMode(ident)
@@ -524,7 +540,7 @@ class OpImplGenerator(MethodGenerator):
             
         def __visitMatrixParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
-            l = "{0} = new runtime::MatrixParameter({1}, {2});"\
+            l = "{0} = new runtime::MatrixParameter(PARAMETER_{1}, {2});"\
                 .format(ident, parameter.ident.constant(),
                         parameter.dataType.variant())
             self.doc.line(l)
@@ -539,7 +555,7 @@ class OpImplGenerator(MethodGenerator):
             
         def __visitNumericParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
-            l = ("{0} = new runtime::NumericParameter<{2}>({1});"
+            l = ("{0} = new runtime::NumericParameter<{2}>(PARAMETER_{1});"
                 ).format(ident, parameter.ident.constant(),
                          parameter.dataType.typeId())
             self.doc.line(l)
@@ -593,7 +609,7 @@ class OpImplGenerator(MethodGenerator):
             self.visitOutput(allocation)
             
         def __setupDescription(self, arg):
-            l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
+            l = "runtime::Description* {0} = new runtime::Description(OUTPUT_{1}, {2});"\
                 .format(arg.ident, arg.ident.constant(),
                         arg.dataType.variant())
             self.doc.line(l)
@@ -611,7 +627,8 @@ class OpImplGenerator(MethodGenerator):
             self.doc.blank()
             
         def __setupMatrixDescription(self, arg):
-            l = "runtime::MatrixDescription* {0} = new runtime::MatrixDescription({1}, {2});"\
+            l = ("runtime::MatrixDescription* {0} = new "
+                 "runtime::MatrixDescription(OUTPUT_{1}, {2});")\
                 .format(arg.ident, arg.ident.constant(),
                         arg.dataType.variant())
             self.doc.line(l)
@@ -657,7 +674,7 @@ class OpImplGenerator(MethodGenerator):
             
         def __setupDescription(self, arg, isOutput):
             description = "{0}Description".format(arg.ident.attribute())
-            l = "{0} = new runtime::Description({1}, {2});"\
+            l = "{0} = new runtime::Description(INPUT_{1}, {2});"\
                 .format(description, arg.ident.constant(),
                         self.__getVariant(arg, isOutput))
             self.doc.line(l)
@@ -676,7 +693,7 @@ class OpImplGenerator(MethodGenerator):
             description = "{0}Description".format(arg.ident.attribute())
             l = (
                 "{0} = new "
-                "runtime::MatrixDescription({1}, {2});"
+                "runtime::MatrixDescription(INPUT_{1}, {2});"
             ).format(description, arg.ident.constant(), 
                      self.__getVariant(arg, isOutput))
             self.doc.line(l)
@@ -716,7 +733,7 @@ class OpImplGenerator(MethodGenerator):
         def __visit(self, arg):
             ident = arg.ident
             constant = arg.ident.constant()
-            l = "runtime::Id2DataPair {0}InMapper({1});".format(ident, constant)
+            l = "runtime::Id2DataPair {0}InMapper(INPUT_{1});".format(ident, constant)
             self.doc.line(l)
     
     class ReceiveInputDataVisitor(SingleArgumentVisitor):
@@ -821,7 +838,7 @@ class OpImplGenerator(MethodGenerator):
                 else:
                     message = '"Can not operate in place."'
                     ex = (
-                        "throw runtime::InputError({0}, *this, {1});"
+                        "throw runtime::InputError(INPUT_{0}, *this, {1});"
                     ).format(i.ident.constant(), message)
                     doc.line(ex)
                 doc.scopeExit()
@@ -855,7 +872,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             self.doc.scopeEnter()
             l = (
-                'throw runtime::InputError({0}, *this, "Wrong input data '
+                'throw runtime::InputError(INPUT_{0}, *this, "Wrong input data '
                 'variant.");'
             ).format(arg.ident.constant())
             self.doc.line(l)
@@ -1044,7 +1061,7 @@ class OpImplGenerator(MethodGenerator):
         def visitOutput(self, output):
             l = "runtime::DataContainer {0}OutContainer = inContainer;".format(output.ident)
             self.doc.line(l)
-            l = ("runtime::Id2DataPair {0}OutMapper({1}, "
+            l = ("runtime::Id2DataPair {0}OutMapper(OUTPUT_{1}, "
                  "{0}OutContainer);").format(output.ident, output.ident.constant());
             self.doc.line(l)
             
@@ -1058,7 +1075,7 @@ class OpImplGenerator(MethodGenerator):
             l = ("runtime::DataContainer {0}OutContainer = "
                  "runtime::DataContainer({0}CastedData);").format(ident)
             self.doc.line(l)
-            l = ("runtime::Id2DataPair {0}OutMapper({1}, "
+            l = ("runtime::Id2DataPair {0}OutMapper(OUTPUT_{1}, "
                  "{0}OutContainer);").format(ident, allocation.ident.constant())
             self.doc.line(l)
         
@@ -1120,7 +1137,7 @@ class OpImplGenerator(MethodGenerator):
                 self.doc.label("case {0}".format(desc.ident))
                 self.doc.line("return {0};".format(desc.cvIdent))
             self.doc.label("default")
-            self.doc.line(("throw runtime::WrongParameterValue(parameter({0}),"
+            self.doc.line(("throw runtime::WrongParameterValue(parameter(PARAMETER_{0}),"
                            " *this);").format(parameter.ident.constant()))
             self.doc.scopeExit()
             self.doc.scopeExit()
@@ -1186,7 +1203,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.increaseIndent()
         
         v = OpImplGenerator.ParameterInitVisitor()
-        self.visitAll(v)
+        self.visitParameters(v)
         v.export(self.doc)
         
         self.doc.decreaseIndent()
@@ -1203,7 +1220,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.scopeEnter()
         
         v = OpImplGenerator.GetParametersVisitor(self.doc)
-        self.visitAll(v)
+        self.visitParameters(v)
         
         self.doc.label("default")
         self.doc.line("throw runtime::WrongParameterId(id, *this);")
@@ -1222,7 +1239,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.scopeEnter()
         
         v = OpImplGenerator.SetParametersVisitor(self.doc)
-        self.visitAll(v)
+        self.visitParameters(v)
         
         self.doc.label("default")
         self.doc.line("throw runtime::WrongParameterId(id, *this);")
@@ -1446,7 +1463,7 @@ class OpImplGenerator(MethodGenerator):
         
     def __convertEnumValues(self):
         v = OpImplGenerator.EnumConversionDefVisitor(self.doc, self.m)
-        self.visitAll(v, False)
+        self.visitParameters(v, False)
 
 class OpTestGenerator(object):
     """
@@ -1594,7 +1611,7 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
                 self.doc.scopeEnter()
                 
                 if len(self.m.options) > 1:
-                    index = "{0}::DATA_FLOW".format(self.m.ident.className())
+                    index = "{0}::PARAMETER_DATA_FLOW".format(self.m.ident.className())
                     value = (
                         "runtime::Enum({0}::{1})"
                         ).format(self.m.ident.className(), o.ident.constant())

@@ -21,6 +21,8 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API FitLine : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DistTypeId
             {
@@ -35,17 +37,14 @@ namespace stromx
             {
                 ALLOCATE
             };
-            enum ConnectorId
+            enum DataId
             {
-                LINE,
-                POINTS
-            };
-            enum ParameterId
-            {
-                AEPS,
-                REPS,
-                DATA_FLOW,
-                DIST_TYPE
+                INPUT_POINTS,
+                OUTPUT_LINE,
+                PARAMETER_AEPS,
+                PARAMETER_DATA_FLOW,
+                PARAMETER_DIST_TYPE,
+                PARAMETER_REPS
             };
             FitLine();
             virtual OperatorKernel* clone() const { return new FitLine; }

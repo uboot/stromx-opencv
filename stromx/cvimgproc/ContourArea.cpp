@@ -32,7 +32,7 @@ namespace stromx
         {
             switch(id)
             {
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -45,7 +45,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -96,7 +96,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_contourDescription = new runtime::MatrixDescription(CONTOUR, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_contourDescription = new runtime::MatrixDescription(INPUT_CONTOUR, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_contourDescription->setTitle("Input points");
                     m_contourDescription->setVisualization(runtime::Visualization::POLYGON);
                     m_contourDescription->setRows(0);
@@ -118,7 +118,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* area = new runtime::Description(AREA, runtime::Variant::FLOAT_64);
+                    runtime::Description* area = new runtime::Description(OUTPUT_AREA, runtime::Variant::FLOAT_64);
                     area->setTitle(L_("Area"));
                     outputs.push_back(area);
                     
@@ -140,7 +140,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair contourInMapper(CONTOUR);
+                    runtime::Id2DataPair contourInMapper(INPUT_CONTOUR);
                     
                     provider.receiveInputData(contourInMapper);
                     
@@ -153,7 +153,7 @@ namespace stromx
                     
                     if(! contourData->variant().isVariant(m_contourDescription->variant()))
                     {
-                        throw runtime::InputError(CONTOUR, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_CONTOUR, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* contourCastedData = runtime::data_cast<runtime::Matrix>(contourData);
@@ -166,7 +166,7 @@ namespace stromx
                     
                     runtime::Float64* areaCastedData = new runtime::Float64(areaCvData);
                     runtime::DataContainer areaOutContainer = runtime::DataContainer(areaCastedData);
-                    runtime::Id2DataPair areaOutMapper(AREA, areaOutContainer);
+                    runtime::Id2DataPair areaOutMapper(OUTPUT_AREA, areaOutContainer);
                     
                     provider.sendOutputData(areaOutMapper);
                 }

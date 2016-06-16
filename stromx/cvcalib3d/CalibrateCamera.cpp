@@ -34,11 +34,11 @@ namespace stromx
         {
             switch(id)
             {
-            case IMAGE_SIZE_X:
+            case PARAMETER_IMAGE_SIZE_X:
                 return m_imageSizeX;
-            case IMAGE_SIZE_Y:
+            case PARAMETER_IMAGE_SIZE_Y:
                 return m_imageSizeY;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -51,7 +51,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case IMAGE_SIZE_X:
+                case PARAMETER_IMAGE_SIZE_X:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -62,7 +62,7 @@ namespace stromx
                         m_imageSizeX = castedValue;
                     }
                     break;
-                case IMAGE_SIZE_Y:
+                case PARAMETER_IMAGE_SIZE_Y:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -73,7 +73,7 @@ namespace stromx
                         m_imageSizeY = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -109,13 +109,13 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_imageSizeXParameter = new runtime::NumericParameter<runtime::UInt32>(IMAGE_SIZE_X);
+                    m_imageSizeXParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_IMAGE_SIZE_X);
                     m_imageSizeXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_imageSizeXParameter->setTitle(L_("Sensor size X"));
                     m_imageSizeXParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_imageSizeXParameter);
                     
-                    m_imageSizeYParameter = new runtime::NumericParameter<runtime::UInt32>(IMAGE_SIZE_Y);
+                    m_imageSizeYParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_IMAGE_SIZE_Y);
                     m_imageSizeYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_imageSizeYParameter->setTitle(L_("Sensor size Y"));
                     m_imageSizeYParameter->setMin(runtime::UInt32(1));
@@ -136,12 +136,12 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_objectPointsDescription = new runtime::Description(OBJECT_POINTS, runtime::Variant::LIST);
+                    m_objectPointsDescription = new runtime::Description(INPUT_OBJECT_POINTS, runtime::Variant::LIST);
                     m_objectPointsDescription->setTitle(L_("Object points"));
                     m_objectPointsDescription->setVisualization(runtime::Visualization::POINT);
                     inputs.push_back(m_objectPointsDescription);
                     
-                    m_imagePointsDescription = new runtime::Description(IMAGE_POINTS, runtime::Variant::LIST);
+                    m_imagePointsDescription = new runtime::Description(INPUT_IMAGE_POINTS, runtime::Variant::LIST);
                     m_imagePointsDescription->setTitle(L_("Image points"));
                     m_imagePointsDescription->setVisualization(runtime::Visualization::POINT);
                     inputs.push_back(m_imagePointsDescription);
@@ -161,13 +161,13 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* cameraMatrix = new runtime::MatrixDescription(CAMERA_MATRIX, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::MatrixDescription* cameraMatrix = new runtime::MatrixDescription(OUTPUT_CAMERA_MATRIX, runtime::Variant::FLOAT_64_MATRIX);
                     cameraMatrix->setTitle(L_("Camera matrix"));
                     cameraMatrix->setRows(3);
                     cameraMatrix->setCols(3);
                     outputs.push_back(cameraMatrix);
                     
-                    runtime::MatrixDescription* distCoeffs = new runtime::MatrixDescription(DIST_COEFFS, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::MatrixDescription* distCoeffs = new runtime::MatrixDescription(OUTPUT_DIST_COEFFS, runtime::Variant::FLOAT_64_MATRIX);
                     distCoeffs->setTitle(L_("Distortion coefficients"));
                     distCoeffs->setRows(1);
                     distCoeffs->setCols(5);
@@ -191,8 +191,8 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair objectPointsInMapper(OBJECT_POINTS);
-                    runtime::Id2DataPair imagePointsInMapper(IMAGE_POINTS);
+                    runtime::Id2DataPair objectPointsInMapper(INPUT_OBJECT_POINTS);
+                    runtime::Id2DataPair imagePointsInMapper(INPUT_IMAGE_POINTS);
                     
                     provider.receiveInputData(objectPointsInMapper && imagePointsInMapper);
                     
@@ -209,11 +209,11 @@ namespace stromx
                     
                     if(! objectPointsData->variant().isVariant(m_objectPointsDescription->variant()))
                     {
-                        throw runtime::InputError(OBJECT_POINTS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Wrong input data variant.");
                     }
                     if(! imagePointsData->variant().isVariant(m_imagePointsDescription->variant()))
                     {
-                        throw runtime::InputError(IMAGE_POINTS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_IMAGE_POINTS, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::List* objectPointsCastedData = runtime::data_cast<runtime::List>(objectPointsData);
@@ -221,7 +221,7 @@ namespace stromx
                     
                     if (objectPointsCastedData->content().size() != imagePointsCastedData->content().size())
                     {
-                        throw runtime::InputError(OBJECT_POINTS, *this, "Object and image point lists must have the same size.");
+                        throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Object and image point lists must have the same size.");
                     }
                     
                     std::vector<cv::Mat> rvecs(objectPointsCastedData->content().size());
@@ -240,10 +240,10 @@ namespace stromx
                     
                     runtime::Matrix* cameraMatrixCastedData = new cvsupport::Matrix(cameraMatrixCvData);
                     runtime::DataContainer cameraMatrixOutContainer = runtime::DataContainer(cameraMatrixCastedData);
-                    runtime::Id2DataPair cameraMatrixOutMapper(CAMERA_MATRIX, cameraMatrixOutContainer);
+                    runtime::Id2DataPair cameraMatrixOutMapper(OUTPUT_CAMERA_MATRIX, cameraMatrixOutContainer);
                     runtime::Matrix* distCoeffsCastedData = new cvsupport::Matrix(distCoeffsCvData);
                     runtime::DataContainer distCoeffsOutContainer = runtime::DataContainer(distCoeffsCastedData);
-                    runtime::Id2DataPair distCoeffsOutMapper(DIST_COEFFS, distCoeffsOutContainer);
+                    runtime::Id2DataPair distCoeffsOutMapper(OUTPUT_DIST_COEFFS, distCoeffsOutContainer);
                     
                     provider.sendOutputData(cameraMatrixOutMapper && distCoeffsOutMapper);
                 }

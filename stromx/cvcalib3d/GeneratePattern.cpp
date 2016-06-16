@@ -35,13 +35,13 @@ namespace stromx
         {
             switch(id)
             {
-            case PATTERN_SIZE_X:
+            case PARAMETER_PATTERN_SIZE_X:
                 return m_patternSizeX;
-            case PATTERN_SIZE_Y:
+            case PARAMETER_PATTERN_SIZE_Y:
                 return m_patternSizeY;
-            case SQUARE_SIZE:
+            case PARAMETER_SQUARE_SIZE:
                 return m_squareSize;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -54,7 +54,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case PATTERN_SIZE_X:
+                case PARAMETER_PATTERN_SIZE_X:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -65,7 +65,7 @@ namespace stromx
                         m_patternSizeX = castedValue;
                     }
                     break;
-                case PATTERN_SIZE_Y:
+                case PARAMETER_PATTERN_SIZE_Y:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
@@ -76,7 +76,7 @@ namespace stromx
                         m_patternSizeY = castedValue;
                     }
                     break;
-                case SQUARE_SIZE:
+                case PARAMETER_SQUARE_SIZE:
                     {
                         const runtime::Float32 & castedValue = runtime::data_cast<runtime::Float32>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_32))
@@ -87,7 +87,7 @@ namespace stromx
                         m_squareSize = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -123,19 +123,19 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_patternSizeXParameter = new runtime::NumericParameter<runtime::UInt32>(PATTERN_SIZE_X);
+                    m_patternSizeXParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_PATTERN_SIZE_X);
                     m_patternSizeXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_patternSizeXParameter->setTitle(L_("Pattern size X"));
                     m_patternSizeXParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_patternSizeXParameter);
                     
-                    m_patternSizeYParameter = new runtime::NumericParameter<runtime::UInt32>(PATTERN_SIZE_Y);
+                    m_patternSizeYParameter = new runtime::NumericParameter<runtime::UInt32>(PARAMETER_PATTERN_SIZE_Y);
                     m_patternSizeYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_patternSizeYParameter->setTitle(L_("Pattern size Y"));
                     m_patternSizeYParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_patternSizeYParameter);
                     
-                    m_squareSizeParameter = new runtime::NumericParameter<runtime::Float32>(SQUARE_SIZE);
+                    m_squareSizeParameter = new runtime::NumericParameter<runtime::Float32>(PARAMETER_SQUARE_SIZE);
                     m_squareSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_squareSizeParameter->setTitle(L_("Square size"));
                     m_squareSizeParameter->setMin(runtime::Float32(0));
@@ -171,7 +171,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* corners = new runtime::MatrixDescription(CORNERS, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* corners = new runtime::MatrixDescription(OUTPUT_CORNERS, runtime::Variant::FLOAT_32_MATRIX);
                     corners->setTitle(L_("Corners"));
                     corners->setVisualization(runtime::Visualization::POLYLINE);
                     corners->setRows(0);
@@ -206,7 +206,7 @@ namespace stromx
                     
                     runtime::Matrix* cornersCastedData = new cvsupport::Matrix(cornersCvData);
                     runtime::DataContainer cornersOutContainer = runtime::DataContainer(cornersCastedData);
-                    runtime::Id2DataPair cornersOutMapper(CORNERS, cornersOutContainer);
+                    runtime::Id2DataPair cornersOutMapper(OUTPUT_CORNERS, cornersOutContainer);
                     
                     provider.sendOutputData(cornersOutMapper);
                 }

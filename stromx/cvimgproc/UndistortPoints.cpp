@@ -34,11 +34,11 @@ namespace stromx
         {
             switch(id)
             {
-            case CAMERA_MATRIX:
+            case PARAMETER_CAMERA_MATRIX:
                 return m_cameraMatrix;
-            case DIST_COEFFS:
+            case PARAMETER_DIST_COEFFS:
                 return m_distCoeffs;
-            case DATA_FLOW:
+            case PARAMETER_DATA_FLOW:
                 return m_dataFlow;
             default:
                 throw runtime::WrongParameterId(id, *this);
@@ -51,7 +51,7 @@ namespace stromx
             {
                 switch(id)
                 {
-                case CAMERA_MATRIX:
+                case PARAMETER_CAMERA_MATRIX:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_MATRIX))
@@ -62,7 +62,7 @@ namespace stromx
                         m_cameraMatrix = castedValue;
                     }
                     break;
-                case DIST_COEFFS:
+                case PARAMETER_DIST_COEFFS:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_MATRIX))
@@ -73,7 +73,7 @@ namespace stromx
                         m_distCoeffs = castedValue;
                     }
                     break;
-                case DATA_FLOW:
+                case PARAMETER_DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
@@ -109,14 +109,14 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_cameraMatrixParameter = new runtime::MatrixParameter(CAMERA_MATRIX, runtime::Variant::FLOAT_MATRIX);
+                    m_cameraMatrixParameter = new runtime::MatrixParameter(PARAMETER_CAMERA_MATRIX, runtime::Variant::FLOAT_MATRIX);
                     m_cameraMatrixParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_cameraMatrixParameter->setTitle(L_("Camera matrix"));
                     m_cameraMatrixParameter->setRows(3);
                     m_cameraMatrixParameter->setCols(3);
                     parameters.push_back(m_cameraMatrixParameter);
                     
-                    m_distCoeffsParameter = new runtime::MatrixParameter(DIST_COEFFS, runtime::Variant::FLOAT_MATRIX);
+                    m_distCoeffsParameter = new runtime::MatrixParameter(PARAMETER_DIST_COEFFS, runtime::Variant::FLOAT_MATRIX);
                     m_distCoeffsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_distCoeffsParameter->setTitle(L_("Distortion coefficients"));
                     m_distCoeffsParameter->setRows(1);
@@ -138,7 +138,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::MatrixDescription(SRC, runtime::Variant::FLOAT_32_MATRIX);
+                    m_srcDescription = new runtime::MatrixDescription(INPUT_SRC, runtime::Variant::FLOAT_32_MATRIX);
                     m_srcDescription->setTitle("Source");
                     m_srcDescription->setVisualization(runtime::Visualization::POINT);
                     m_srcDescription->setRows(0);
@@ -160,7 +160,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(OUTPUT_DST, runtime::Variant::FLOAT_32_MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setVisualization(runtime::Visualization::POINT);
                     dst->setRows(0);
@@ -185,7 +185,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair srcInMapper(SRC);
+                    runtime::Id2DataPair srcInMapper(INPUT_SRC);
                     
                     provider.receiveInputData(srcInMapper);
                     
@@ -198,7 +198,7 @@ namespace stromx
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                        throw runtime::InputError(INPUT_SRC, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* srcCastedData = runtime::data_cast<runtime::Matrix>(srcData);
@@ -213,7 +213,7 @@ namespace stromx
                     
                     runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+                    runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
                     provider.sendOutputData(dstOutMapper);
                 }
