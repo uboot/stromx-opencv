@@ -21,8 +21,6 @@ namespace stromx
     {
         class STROMX_CVCORE_API Bitwise_not : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataFlowId
             {

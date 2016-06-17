@@ -21,8 +21,6 @@ namespace stromx
     {
         class STROMX_CVCALIB3D_API SolvePnP : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataFlowId
             {

@@ -354,9 +354,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.doc.line("class {0} {1} : public runtime::OperatorKernel".format(
                       self.__apiDecl(), self.m.ident.className()))
         self.doc.line("{")
-        self.doc.increaseIndent()  
-        self.doc.line("STROMX_OPERATOR_KERNEL")
-        self.doc.blank()
+        self.doc.increaseIndent()
         
     def __public(self):
         self.doc.label("public")

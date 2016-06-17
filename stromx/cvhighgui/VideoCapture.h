@@ -29,8 +29,6 @@ namespace stromx
     {
         class STROMX_CVHIGHGUI_API VideoCapture : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:  
             enum DataId
             {
@@ -42,9 +40,7 @@ namespace stromx
                 SATURATION,
                 HUE,
                 GAIN,
-                EXPOSURE,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                EXPOSURE
             };
                 
             //constructor

@@ -21,8 +21,6 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API Threshold : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum ThresholdTypeId
             {

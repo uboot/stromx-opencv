@@ -42,9 +42,7 @@ namespace stromx
     namespace cvml
     {
         class STROMX_CVML_API Svm : public runtime::OperatorKernel
-        {
-            STROMX_OPERATOR_KERNEL
-            
+        {            
         public:      
             enum DataId
             {
@@ -52,9 +50,7 @@ namespace stromx
                 TRAINING_RESPONSE,
                 PREDICTED_RESPONSE,
                 TRAINING_IS_ACTIVE,
-                STATISTICAL_MODEL,
-                OUTPUT_OFFSET = 2,
-                PARAMETER_OFFSET = 3
+                STATISTICAL_MODEL
             };
             
             Svm();

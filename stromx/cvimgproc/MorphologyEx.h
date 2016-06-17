@@ -21,8 +21,6 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API MorphologyEx : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum OpId
             {

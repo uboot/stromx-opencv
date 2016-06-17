@@ -21,8 +21,6 @@ namespace stromx
     {
         class STROMX_CVCORE_API AddWeighted : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DdepthId
             {

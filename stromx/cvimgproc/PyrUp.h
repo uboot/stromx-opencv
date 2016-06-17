@@ -21,8 +21,6 @@ namespace stromx
     {
         class STROMX_CVIMGPROC_API PyrUp : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataFlowId
             {
