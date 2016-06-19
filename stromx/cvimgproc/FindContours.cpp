@@ -118,7 +118,7 @@ namespace stromx
                     
                     m_methodParameter = new runtime::EnumParameter(PARAMETER_METHOD);
                     m_methodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_methodParameter->setTitle(L_("Mode"));
+                    m_methodParameter->setTitle(L_("Method"));
                     m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_NONE), L_("Store all points")));
                     m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_SIMPLE), L_("Compress straight segments")));
                     m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_TC89_L1), L_("Teh-Chin L1")));

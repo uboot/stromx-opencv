@@ -1120,7 +1120,7 @@ descriptions = [
     package.EnumDescription("CHAIN_APPROX_TC89_KCOS", "Teh-Chin Kcos", "CV_CHAIN_APPROX_TC89_KCOS")
 ]
 findContoursMethod = package.EnumParameter(
-    "method", "Mode", descriptions = descriptions,
+    "method", "Method", descriptions = descriptions,
     default = 0
 )
 dstListOfMatrices = package.Argument(
