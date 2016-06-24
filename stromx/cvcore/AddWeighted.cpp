@@ -201,23 +201,23 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> AddWeighted::setupInputs()
+        const std::vector<const runtime::Input*> AddWeighted::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(MANUAL):
                 {
-                    m_src1Description = new runtime::Description(INPUT_SRC_1, runtime::Variant::IMAGE);
+                    m_src1Description = new runtime::Input(INPUT_SRC_1, runtime::Variant::IMAGE);
                     m_src1Description->setTitle(L_("Source 1"));
                     inputs.push_back(m_src1Description);
                     
-                    m_src2Description = new runtime::Description(INPUT_SRC_2, runtime::Variant::IMAGE);
+                    m_src2Description = new runtime::Input(INPUT_SRC_2, runtime::Variant::IMAGE);
                     m_src2Description->setTitle(L_("Source 2"));
                     inputs.push_back(m_src2Description);
                     
-                    m_dstDescription = new runtime::Description(INPUT_DST, runtime::Variant::IMAGE);
+                    m_dstDescription = new runtime::Input(INPUT_DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -225,11 +225,11 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_src1Description = new runtime::Description(INPUT_SRC_1, runtime::Variant::IMAGE);
+                    m_src1Description = new runtime::Input(INPUT_SRC_1, runtime::Variant::IMAGE);
                     m_src1Description->setTitle(L_("Source 1"));
                     inputs.push_back(m_src1Description);
                     
-                    m_src2Description = new runtime::Description(INPUT_SRC_2, runtime::Variant::IMAGE);
+                    m_src2Description = new runtime::Input(INPUT_SRC_2, runtime::Variant::IMAGE);
                     m_src2Description->setTitle(L_("Source 2"));
                     inputs.push_back(m_src2Description);
                     
@@ -240,15 +240,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> AddWeighted::setupOutputs()
+        const std::vector<const runtime::Output*> AddWeighted::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -256,7 +256,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     

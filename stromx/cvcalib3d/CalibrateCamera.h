@@ -50,18 +50,18 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::UInt32 m_imageSizeX;
             runtime::UInt32 m_imageSizeY;
             runtime::Enum m_dataFlow;
-            runtime::MatrixDescription* m_cameraMatrixDescription;
-            runtime::MatrixDescription* m_distCoeffsDescription;
-            runtime::Description* m_imagePointsDescription;
+            runtime::Input* m_cameraMatrixDescription;
+            runtime::Input* m_distCoeffsDescription;
+            runtime::Input* m_imagePointsDescription;
             runtime::NumericParameter<runtime::UInt32>* m_imageSizeXParameter;
             runtime::NumericParameter<runtime::UInt32>* m_imageSizeYParameter;
-            runtime::Description* m_objectPointsDescription;
+            runtime::Input* m_objectPointsDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     } // cvcalib3d

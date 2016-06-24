@@ -126,15 +126,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> ApproxPolyDP::setupInputs()
+        const std::vector<const runtime::Input*> ApproxPolyDP::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_curveDescription = new runtime::MatrixDescription(INPUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_curveDescription = new runtime::Input(INPUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_curveDescription->setTitle("Polygon");
                     m_curveDescription->setVisualization(runtime::Visualization::POLYGON || runtime::Visualization::POLYLINE);
                     m_curveDescription->setRows(0);
@@ -148,15 +148,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> ApproxPolyDP::setupOutputs()
+        const std::vector<const runtime::Output*> ApproxPolyDP::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUTPUT_OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Output* outCurve = new runtime::Output(OUTPUT_OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     outCurve->setTitle(L_("Polygon"));
                     outCurve->setVisualization(runtime::Visualization::POLYGON || runtime::Visualization::POLYLINE);
                     outCurve->setRows(0);

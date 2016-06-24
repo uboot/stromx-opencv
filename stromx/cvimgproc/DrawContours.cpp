@@ -164,19 +164,19 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> DrawContours::setupInputs()
+        const std::vector<const runtime::Input*> DrawContours::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(IN_PLACE):
                 {
-                    m_imgDescription = new runtime::Description(INPUT_IMG, runtime::Variant::IMAGE);
+                    m_imgDescription = new runtime::Input(INPUT_IMG, runtime::Variant::IMAGE);
                     m_imgDescription->setTitle(L_("Image"));
                     inputs.push_back(m_imgDescription);
                     
-                    m_contoursDescription = new runtime::Description(INPUT_CONTOURS, runtime::Variant::LIST);
+                    m_contoursDescription = new runtime::Input(INPUT_CONTOURS, runtime::Variant::LIST);
                     m_contoursDescription->setTitle(L_("Contours"));
                     m_contoursDescription->setVisualization(runtime::Visualization::POLYGON);
                     inputs.push_back(m_contoursDescription);
@@ -188,15 +188,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> DrawContours::setupOutputs()
+        const std::vector<const runtime::Output*> DrawContours::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(IN_PLACE):
                 {
-                    runtime::Description* img = new runtime::Description(OUTPUT_IMG, runtime::Variant::IMAGE);
+                    runtime::Output* img = new runtime::Output(OUTPUT_IMG, runtime::Variant::IMAGE);
                     img->setTitle(L_("Image"));
                     outputs.push_back(img);
                     

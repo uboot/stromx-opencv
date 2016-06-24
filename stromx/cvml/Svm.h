@@ -66,8 +66,8 @@ namespace stromx
             static const std::string PACKAGE;
             static const runtime::Version VERSION; 
             
-            static const std::vector<const runtime::Description*> setupInputs();
-            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Input*> setupInputs();
+            static const std::vector<const runtime::Output*> setupOutputs();
             static const std::vector<const runtime::Parameter*> setupParameters();
             
             runtime::File m_statisticalModel;

@@ -48,14 +48,14 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::UInt32 m_patternSizeX;
             runtime::UInt32 m_patternSizeY;
             runtime::Float32 m_squareSize;
             runtime::Enum m_dataFlow;
-            runtime::MatrixDescription* m_cornersDescription;
+            runtime::Input* m_cornersDescription;
             runtime::NumericParameter<runtime::UInt32>* m_patternSizeXParameter;
             runtime::NumericParameter<runtime::UInt32>* m_patternSizeYParameter;
             runtime::NumericParameter<runtime::Float32>* m_squareSizeParameter;

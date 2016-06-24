@@ -106,15 +106,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> ConvexHull::setupInputs()
+        const std::vector<const runtime::Input*> ConvexHull::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_curveDescription = new runtime::MatrixDescription(INPUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_curveDescription = new runtime::Input(INPUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_curveDescription->setTitle("Input points");
                     m_curveDescription->setVisualization(runtime::Visualization::POINT);
                     m_curveDescription->setRows(0);
@@ -128,15 +128,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> ConvexHull::setupOutputs()
+        const std::vector<const runtime::Output*> ConvexHull::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUTPUT_OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Output* outCurve = new runtime::Output(OUTPUT_OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     outCurve->setTitle(L_("Convex hull"));
                     outCurve->setVisualization(runtime::Visualization::POLYGON);
                     outCurve->setRows(0);

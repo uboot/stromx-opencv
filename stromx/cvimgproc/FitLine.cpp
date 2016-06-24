@@ -153,15 +153,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> FitLine::setupInputs()
+        const std::vector<const runtime::Input*> FitLine::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(INPUT_POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_pointsDescription = new runtime::Input(INPUT_POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
                     m_pointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointsDescription->setRows(0);
@@ -175,15 +175,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> FitLine::setupOutputs()
+        const std::vector<const runtime::Output*> FitLine::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* line = new runtime::MatrixDescription(OUTPUT_LINE, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Output* line = new runtime::Output(OUTPUT_LINE, runtime::Variant::FLOAT_32_MATRIX);
                     line->setTitle(L_("Line (\u03C1, \u03B8)"));
                     line->setVisualization(runtime::Visualization::LINE);
                     line->setRows(1);

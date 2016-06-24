@@ -165,16 +165,16 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Description*> Svm::setupInputs()
+        const std::vector<const runtime::Input*> Svm::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            MatrixDescription* input = new MatrixDescription(DATA, Variant::FLOAT_32_MATRIX);
+            Input* input = new Input(DATA, Variant::FLOAT_32_MATRIX);
             input->setTitle("Data vector");
             input->setRows(1);
             inputs.push_back(input);
             
-            Description* response = new Description(TRAINING_RESPONSE, Variant::FLOAT_32);
+            Input* response = new Input(TRAINING_RESPONSE, Variant::FLOAT_32);
             response->setTitle("Training response");
             response->setOperatorThread(1);
             inputs.push_back(response);
@@ -182,11 +182,11 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> Svm::setupOutputs()
+        const std::vector<const runtime::Output*> Svm::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
-            Description* response = new Description(PREDICTED_RESPONSE, Variant::FLOAT_32);
+            Output* response = new Output(PREDICTED_RESPONSE, Variant::FLOAT_32);
             response->setTitle("Predicted response");
             outputs.push_back(response);
             

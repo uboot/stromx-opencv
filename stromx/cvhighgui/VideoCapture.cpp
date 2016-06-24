@@ -35,17 +35,17 @@ namespace stromx
         const std::string VideoCapture::PACKAGE(STROMX_CVHIGHGUI_PACKAGE_NAME);
         const runtime::Version VideoCapture::VERSION(STROMX_CVHIGHGUI_VERSION_MAJOR,STROMX_CVHIGHGUI_VERSION_MINOR,STROMX_CVHIGHGUI_VERSION_PATCH);
         
-        const std::vector<const runtime::Description*> VideoCapture::setupInputs()
+        const std::vector<const runtime::Input*> VideoCapture::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             return inputs;
         }
 
-        const std::vector<const runtime::Description*> VideoCapture::setupOutputs()
+        const std::vector<const runtime::Output*> VideoCapture::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
 
-            runtime::Description* output = new runtime::Description(OUTPUT, runtime::Variant::RGB_IMAGE);
+            runtime::Output* output = new runtime::Output(OUTPUT, runtime::Variant::RGB_IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
 
@@ -302,8 +302,8 @@ namespace stromx
                 //occur twice resulting in an exception caused by validateOutputs called 
                 //in OperatorKernel::initialize. Note: setupInputs() could be called since for this operator
                 //no input is generated, i.e. inputs is automatically an empty vector!
-                std::vector<const runtime::Description*> inputs;
-                std::vector<const runtime::Description*> outputs;
+                std::vector<const runtime::Input*> inputs;
+                std::vector<const runtime::Output*> outputs;
                 
                 OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam.get()));
                 m_alreadyInitializedCameraPorts[m_portId] = true;

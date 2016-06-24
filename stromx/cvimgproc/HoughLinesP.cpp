@@ -183,15 +183,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> HoughLinesP::setupInputs()
+        const std::vector<const runtime::Input*> HoughLinesP::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -202,15 +202,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> HoughLinesP::setupOutputs()
+        const std::vector<const runtime::Output*> HoughLinesP::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(OUTPUT_DST, runtime::Variant::MATRIX);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setVisualization(runtime::Visualization::LINE_SEGMENT);
                     dst->setRows(0);

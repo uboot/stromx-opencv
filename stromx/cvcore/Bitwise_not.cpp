@@ -104,19 +104,19 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> Bitwise_not::setupInputs()
+        const std::vector<const runtime::Input*> Bitwise_not::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(MANUAL):
                 {
-                    m_src1Description = new runtime::Description(INPUT_SRC_1, runtime::Variant::IMAGE);
+                    m_src1Description = new runtime::Input(INPUT_SRC_1, runtime::Variant::IMAGE);
                     m_src1Description->setTitle(L_("Source 1"));
                     inputs.push_back(m_src1Description);
                     
-                    m_dstDescription = new runtime::Description(INPUT_DST, runtime::Variant::IMAGE);
+                    m_dstDescription = new runtime::Input(INPUT_DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -124,7 +124,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_src1Description = new runtime::Description(INPUT_SRC_1, runtime::Variant::IMAGE);
+                    m_src1Description = new runtime::Input(INPUT_SRC_1, runtime::Variant::IMAGE);
                     m_src1Description->setTitle(L_("Source 1"));
                     inputs.push_back(m_src1Description);
                     
@@ -132,7 +132,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    m_src1Description = new runtime::Description(INPUT_SRC_1, runtime::Variant::IMAGE);
+                    m_src1Description = new runtime::Input(INPUT_SRC_1, runtime::Variant::IMAGE);
                     m_src1Description->setTitle(L_("Source 1"));
                     inputs.push_back(m_src1Description);
                     
@@ -143,15 +143,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> Bitwise_not::setupOutputs()
+        const std::vector<const runtime::Output*> Bitwise_not::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -159,7 +159,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -167,7 +167,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    runtime::Description* src1 = new runtime::Description(OUTPUT_SRC_1, runtime::Variant::IMAGE);
+                    runtime::Output* src1 = new runtime::Output(OUTPUT_SRC_1, runtime::Variant::IMAGE);
                     src1->setTitle(L_("Source 1"));
                     outputs.push_back(src1);
                     

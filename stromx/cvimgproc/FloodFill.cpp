@@ -145,15 +145,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> FloodFill::setupInputs()
+        const std::vector<const runtime::Input*> FloodFill::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -164,15 +164,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> FloodFill::setupOutputs()
+        const std::vector<const runtime::Output*> FloodFill::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(IN_PLACE):
                 {
-                    runtime::Description* src = new runtime::Description(OUTPUT_SRC, runtime::Variant::MONO_IMAGE);
+                    runtime::Output* src = new runtime::Output(OUTPUT_SRC, runtime::Variant::MONO_IMAGE);
                     src->setTitle(L_("Source"));
                     outputs.push_back(src);
                     

@@ -128,20 +128,20 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> CalibrateCamera::setupInputs()
+        const std::vector<const runtime::Input*> CalibrateCamera::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_objectPointsDescription = new runtime::Description(INPUT_OBJECT_POINTS, runtime::Variant::LIST);
+                    m_objectPointsDescription = new runtime::Input(INPUT_OBJECT_POINTS, runtime::Variant::LIST);
                     m_objectPointsDescription->setTitle(L_("Object points"));
                     m_objectPointsDescription->setVisualization(runtime::Visualization::POINT);
                     inputs.push_back(m_objectPointsDescription);
                     
-                    m_imagePointsDescription = new runtime::Description(INPUT_IMAGE_POINTS, runtime::Variant::LIST);
+                    m_imagePointsDescription = new runtime::Input(INPUT_IMAGE_POINTS, runtime::Variant::LIST);
                     m_imagePointsDescription->setTitle(L_("Image points"));
                     m_imagePointsDescription->setVisualization(runtime::Visualization::POINT);
                     inputs.push_back(m_imagePointsDescription);
@@ -153,21 +153,21 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> CalibrateCamera::setupOutputs()
+        const std::vector<const runtime::Output*> CalibrateCamera::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* cameraMatrix = new runtime::MatrixDescription(OUTPUT_CAMERA_MATRIX, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::Output* cameraMatrix = new runtime::Output(OUTPUT_CAMERA_MATRIX, runtime::Variant::FLOAT_64_MATRIX);
                     cameraMatrix->setTitle(L_("Camera matrix"));
                     cameraMatrix->setRows(3);
                     cameraMatrix->setCols(3);
                     outputs.push_back(cameraMatrix);
                     
-                    runtime::MatrixDescription* distCoeffs = new runtime::MatrixDescription(OUTPUT_DIST_COEFFS, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::Output* distCoeffs = new runtime::Output(OUTPUT_DIST_COEFFS, runtime::Variant::FLOAT_64_MATRIX);
                     distCoeffs->setTitle(L_("Distortion coefficients"));
                     distCoeffs->setRows(1);
                     distCoeffs->setCols(5);

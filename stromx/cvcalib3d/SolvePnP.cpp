@@ -130,22 +130,22 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> SolvePnP::setupInputs()
+        const std::vector<const runtime::Input*> SolvePnP::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_objectPointsDescription = new runtime::MatrixDescription(INPUT_OBJECT_POINTS, runtime::Variant::FLOAT_32_MATRIX);
+                    m_objectPointsDescription = new runtime::Input(INPUT_OBJECT_POINTS, runtime::Variant::FLOAT_32_MATRIX);
                     m_objectPointsDescription->setTitle("Object points");
                     m_objectPointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_objectPointsDescription->setRows(0);
                     m_objectPointsDescription->setCols(3);
                     inputs.push_back(m_objectPointsDescription);
                     
-                    m_imagePointsDescription = new runtime::MatrixDescription(INPUT_IMAGE_POINTS, runtime::Variant::FLOAT_32_MATRIX);
+                    m_imagePointsDescription = new runtime::Input(INPUT_IMAGE_POINTS, runtime::Variant::FLOAT_32_MATRIX);
                     m_imagePointsDescription->setTitle("Image points");
                     m_imagePointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_imagePointsDescription->setRows(0);
@@ -159,21 +159,21 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> SolvePnP::setupOutputs()
+        const std::vector<const runtime::Output*> SolvePnP::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* rvec = new runtime::MatrixDescription(OUTPUT_RVEC, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::Output* rvec = new runtime::Output(OUTPUT_RVEC, runtime::Variant::FLOAT_64_MATRIX);
                     rvec->setTitle(L_("Rotation"));
                     rvec->setRows(3);
                     rvec->setCols(1);
                     outputs.push_back(rvec);
                     
-                    runtime::MatrixDescription* tvec = new runtime::MatrixDescription(OUTPUT_TVEC, runtime::Variant::FLOAT_64_MATRIX);
+                    runtime::Output* tvec = new runtime::Output(OUTPUT_TVEC, runtime::Variant::FLOAT_64_MATRIX);
                     tvec->setTitle(L_("Translation"));
                     tvec->setRows(3);
                     tvec->setCols(1);

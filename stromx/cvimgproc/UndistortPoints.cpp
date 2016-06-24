@@ -130,15 +130,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> UndistortPoints::setupInputs()
+        const std::vector<const runtime::Input*> UndistortPoints::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::MatrixDescription(INPUT_SRC, runtime::Variant::FLOAT_32_MATRIX);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::FLOAT_32_MATRIX);
                     m_srcDescription->setTitle("Source");
                     m_srcDescription->setVisualization(runtime::Visualization::POINT);
                     m_srcDescription->setRows(0);
@@ -152,15 +152,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> UndistortPoints::setupOutputs()
+        const std::vector<const runtime::Output*> UndistortPoints::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(OUTPUT_DST, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::FLOAT_32_MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setVisualization(runtime::Visualization::POINT);
                     dst->setRows(0);

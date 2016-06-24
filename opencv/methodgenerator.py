@@ -253,14 +253,9 @@ class OpHeaderGenerator(MethodGenerator):
             self.visitInput(arg)
             
         def visitInput(self, arg):
-            if arg.argType == package.ArgType.MATRIX:
-                self.doc.line((
-                    "runtime::MatrixDescription* m_{0}Description;"
-                ).format(arg.ident))
-            else:
-                self.doc.line((
-                    "runtime::Description* m_{0}Description;"
-                ).format(arg.ident))
+            self.doc.line((
+                "runtime::Input* m_{0}Description;"
+            ).format(arg.ident))
             
     class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
         """
@@ -387,9 +382,9 @@ class OpHeaderGenerator(MethodGenerator):
                       "setupInitParameters();")
         self.doc.line("const std::vector<const runtime::Parameter*> "
                       "setupParameters();")
-        self.doc.line("const std::vector<const runtime::Description*> "
+        self.doc.line("const std::vector<const runtime::Input*> "
                       "setupInputs();")
-        self.doc.line("const std::vector<const runtime::Description*> "
+        self.doc.line("const std::vector<const runtime::Output*> "
                       "setupOutputs();")
         self.doc.blank()
         
@@ -607,7 +602,7 @@ class OpImplGenerator(MethodGenerator):
             self.visitOutput(allocation)
             
         def __setupDescription(self, arg):
-            l = "runtime::Description* {0} = new runtime::Description(OUTPUT_{1}, {2});"\
+            l = "runtime::Output* {0} = new runtime::Output(OUTPUT_{1}, {2});"\
                 .format(arg.ident, arg.ident.constant(),
                         arg.dataType.variant())
             self.doc.line(l)
@@ -625,8 +620,8 @@ class OpImplGenerator(MethodGenerator):
             self.doc.blank()
             
         def __setupMatrixDescription(self, arg):
-            l = ("runtime::MatrixDescription* {0} = new "
-                 "runtime::MatrixDescription(OUTPUT_{1}, {2});")\
+            l = ("runtime::Output* {0} = new "
+                 "runtime::Output(OUTPUT_{1}, {2});")\
                 .format(arg.ident, arg.ident.constant(),
                         arg.dataType.variant())
             self.doc.line(l)
@@ -672,7 +667,7 @@ class OpImplGenerator(MethodGenerator):
             
         def __setupDescription(self, arg, isOutput):
             description = "{0}Description".format(arg.ident.attribute())
-            l = "{0} = new runtime::Description(INPUT_{1}, {2});"\
+            l = "{0} = new runtime::Input(INPUT_{1}, {2});"\
                 .format(description, arg.ident.constant(),
                         self.__getVariant(arg, isOutput))
             self.doc.line(l)
@@ -691,7 +686,7 @@ class OpImplGenerator(MethodGenerator):
             description = "{0}Description".format(arg.ident.attribute())
             l = (
                 "{0} = new "
-                "runtime::MatrixDescription(INPUT_{1}, {2});"
+                "runtime::Input(INPUT_{1}, {2});"
             ).format(description, arg.ident.constant(), 
                      self.__getVariant(arg, isOutput))
             self.doc.line(l)
@@ -1295,11 +1290,11 @@ class OpImplGenerator(MethodGenerator):
         self.doc.blank()
         
     def __setupInputs(self):
-        self.doc.line("const std::vector<const runtime::Description*> "
+        self.doc.line("const std::vector<const runtime::Input*> "
                       "{0}::setupInputs()"\
                       .format(self.m.ident.className()))
         self.doc.scopeEnter()
-        self.doc.line("std::vector<const runtime::Description*> inputs;")
+        self.doc.line("std::vector<const runtime::Input*> inputs;")
         self.doc.blank()
         
         self.doc.line("switch(int({0}))".format(
@@ -1323,11 +1318,11 @@ class OpImplGenerator(MethodGenerator):
         self.doc.blank()
         
     def __setupOutputs(self):
-        self.doc.line("const std::vector<const runtime::Description*> "
+        self.doc.line("const std::vector<const runtime::Output*> "
                       "{0}::setupOutputs()"\
                       .format(self.m.ident.className()))
         self.doc.scopeEnter()
-        self.doc.line("std::vector<const runtime::Description*> outputs;")
+        self.doc.line("std::vector<const runtime::Output*> outputs;")
         self.doc.blank()
         
         self.doc.line("switch(int({0}))".format(

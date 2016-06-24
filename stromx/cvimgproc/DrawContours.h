@@ -51,8 +51,8 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::UInt8 m_ch1;
             runtime::UInt8 m_ch2;
@@ -62,8 +62,8 @@ namespace stromx
             runtime::NumericParameter<runtime::UInt8>* m_ch1Parameter;
             runtime::NumericParameter<runtime::UInt8>* m_ch2Parameter;
             runtime::NumericParameter<runtime::UInt8>* m_ch3Parameter;
-            runtime::Description* m_contoursDescription;
-            runtime::Description* m_imgDescription;
+            runtime::Input* m_contoursDescription;
+            runtime::Input* m_imgDescription;
             runtime::NumericParameter<runtime::Int32>* m_thicknessParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };

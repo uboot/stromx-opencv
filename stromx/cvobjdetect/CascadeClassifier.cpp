@@ -124,22 +124,22 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> CascadeClassifier::setupInputs()
+        const std::vector<const runtime::Input*> CascadeClassifier::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
-            m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
+            m_srcDescription = new runtime::Input(SRC, runtime::Variant::MONO_8_IMAGE);
             m_srcDescription->setTitle(L_("Source image"));
             inputs.push_back(m_srcDescription);
             
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> CascadeClassifier::setupOutputs()
+        const std::vector<const runtime::Output*> CascadeClassifier::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
-            runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
+            runtime::Output* dst = new runtime::Output(DST, runtime::Variant::LIST);
             dst->setTitle(L_("Detected rectangles"));
             dst->setVisualization(runtime::Visualization::RECTANGLE);
             outputs.push_back(dst);

@@ -59,8 +59,8 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             int convertDdepth(const runtime::Enum & value);
             
@@ -72,10 +72,10 @@ namespace stromx
             runtime::NumericParameter<runtime::Float64>* m_alphaParameter;
             runtime::NumericParameter<runtime::Float64>* m_betaParameter;
             runtime::EnumParameter* m_ddepthParameter;
-            runtime::Description* m_dstDescription;
+            runtime::Input* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_gammaParameter;
-            runtime::Description* m_src1Description;
-            runtime::Description* m_src2Description;
+            runtime::Input* m_src1Description;
+            runtime::Input* m_src2Description;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     } // cvcore

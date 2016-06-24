@@ -148,9 +148,9 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> GeneratePattern::setupInputs()
+        const std::vector<const runtime::Input*> GeneratePattern::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
@@ -163,15 +163,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> GeneratePattern::setupOutputs()
+        const std::vector<const runtime::Output*> GeneratePattern::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* corners = new runtime::MatrixDescription(OUTPUT_CORNERS, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Output* corners = new runtime::Output(OUTPUT_CORNERS, runtime::Variant::FLOAT_32_MATRIX);
                     corners->setTitle(L_("Corners"));
                     corners->setVisualization(runtime::Visualization::POLYLINE);
                     corners->setRows(0);

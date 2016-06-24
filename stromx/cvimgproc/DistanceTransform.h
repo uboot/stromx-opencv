@@ -62,8 +62,8 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             int convertDistanceType(const runtime::Enum & value);
             int convertMaskSize(const runtime::Enum & value);
@@ -72,9 +72,9 @@ namespace stromx
             runtime::Enum m_maskSize;
             runtime::Enum m_dataFlow;
             runtime::EnumParameter* m_distanceTypeParameter;
-            runtime::Description* m_dstDescription;
+            runtime::Input* m_dstDescription;
             runtime::EnumParameter* m_maskSizeParameter;
-            runtime::Description* m_srcDescription;
+            runtime::Input* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     } // cvimgproc

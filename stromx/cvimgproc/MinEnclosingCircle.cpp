@@ -88,15 +88,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> MinEnclosingCircle::setupInputs()
+        const std::vector<const runtime::Input*> MinEnclosingCircle::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(INPUT_POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_pointsDescription = new runtime::Input(INPUT_POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
                     m_pointsDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointsDescription->setRows(0);
@@ -110,15 +110,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> MinEnclosingCircle::setupOutputs()
+        const std::vector<const runtime::Output*> MinEnclosingCircle::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* circle = new runtime::MatrixDescription(OUTPUT_CIRCLE, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Output* circle = new runtime::Output(OUTPUT_CIRCLE, runtime::Variant::FLOAT_32_MATRIX);
                     circle->setTitle(L_("Circle"));
                     circle->setVisualization(runtime::Visualization::CIRCLE);
                     circle->setRows(1);

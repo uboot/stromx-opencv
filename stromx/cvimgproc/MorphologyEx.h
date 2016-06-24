@@ -69,8 +69,8 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             int convertOp(const runtime::Enum & value);
             int convertShape(const runtime::Enum & value);
@@ -81,13 +81,13 @@ namespace stromx
             runtime::Enum m_op;
             runtime::Enum m_shape;
             runtime::Enum m_dataFlow;
-            runtime::Description* m_dstDescription;
+            runtime::Input* m_dstDescription;
             runtime::NumericParameter<runtime::UInt32>* m_iterationsParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
             runtime::EnumParameter* m_opParameter;
             runtime::EnumParameter* m_shapeParameter;
-            runtime::Description* m_srcDescription;
+            runtime::Input* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     } // cvimgproc

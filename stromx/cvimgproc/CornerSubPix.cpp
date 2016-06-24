@@ -126,19 +126,19 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> CornerSubPix::setupInputs()
+        const std::vector<const runtime::Input*> CornerSubPix::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_pointMatrixDescription = new runtime::MatrixDescription(INPUT_POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
+                    m_pointMatrixDescription = new runtime::Input(INPUT_POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     m_pointMatrixDescription->setTitle("Point coordinates");
                     m_pointMatrixDescription->setVisualization(runtime::Visualization::POINT);
                     m_pointMatrixDescription->setRows(0);
@@ -152,15 +152,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> CornerSubPix::setupOutputs()
+        const std::vector<const runtime::Output*> CornerSubPix::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(IN_PLACE):
                 {
-                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(OUTPUT_POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
+                    runtime::Output* pointMatrix = new runtime::Output(OUTPUT_POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     pointMatrix->setTitle(L_("Point coordinates"));
                     pointMatrix->setVisualization(runtime::Visualization::POINT);
                     pointMatrix->setRows(0);

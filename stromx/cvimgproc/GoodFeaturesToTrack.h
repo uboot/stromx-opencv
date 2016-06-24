@@ -52,8 +52,8 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::UInt32 m_blockSize;
             runtime::Float64 m_k;
@@ -66,9 +66,9 @@ namespace stromx
             runtime::NumericParameter<runtime::Float64>* m_kParameter;
             runtime::NumericParameter<runtime::UInt32>* m_maxCornersParameter;
             runtime::NumericParameter<runtime::Float64>* m_minDistanceParameter;
-            runtime::MatrixDescription* m_pointMatrixDescription;
+            runtime::Input* m_pointMatrixDescription;
             runtime::NumericParameter<runtime::Float64>* m_qualityLevelParameter;
-            runtime::Description* m_srcDescription;
+            runtime::Input* m_srcDescription;
             runtime::Parameter* m_useHarrisDetectorParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };

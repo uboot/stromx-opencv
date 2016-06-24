@@ -88,15 +88,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> ContourArea::setupInputs()
+        const std::vector<const runtime::Input*> ContourArea::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_contourDescription = new runtime::MatrixDescription(INPUT_CONTOUR, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_contourDescription = new runtime::Input(INPUT_CONTOUR, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_contourDescription->setTitle("Input points");
                     m_contourDescription->setVisualization(runtime::Visualization::POLYGON);
                     m_contourDescription->setRows(0);
@@ -110,15 +110,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> ContourArea::setupOutputs()
+        const std::vector<const runtime::Output*> ContourArea::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* area = new runtime::Description(OUTPUT_AREA, runtime::Variant::FLOAT_64);
+                    runtime::Output* area = new runtime::Output(OUTPUT_AREA, runtime::Variant::FLOAT_64);
                     area->setTitle(L_("Area"));
                     outputs.push_back(area);
                     

@@ -51,8 +51,8 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::Float64 m_maxLineGap;
             runtime::Float64 m_minLineLength;
@@ -60,11 +60,11 @@ namespace stromx
             runtime::Float64 m_theta;
             runtime::UInt32 m_threshold;
             runtime::Enum m_dataFlow;
-            runtime::MatrixDescription* m_dstDescription;
+            runtime::Input* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_maxLineGapParameter;
             runtime::NumericParameter<runtime::Float64>* m_minLineLengthParameter;
             runtime::NumericParameter<runtime::Float64>* m_rhoParameter;
-            runtime::Description* m_srcDescription;
+            runtime::Input* m_srcDescription;
             runtime::NumericParameter<runtime::Float64>* m_thetaParameter;
             runtime::NumericParameter<runtime::UInt32>* m_thresholdParameter;
             runtime::EnumParameter* m_dataFlowParameter;

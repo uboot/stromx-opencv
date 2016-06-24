@@ -282,19 +282,19 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> MorphologyEx::setupInputs()
+        const std::vector<const runtime::Input*> MorphologyEx::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(MANUAL):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::IMAGE);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_dstDescription = new runtime::Description(INPUT_DST, runtime::Variant::IMAGE);
+                    m_dstDescription = new runtime::Input(INPUT_DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -302,7 +302,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::IMAGE);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -310,7 +310,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::IMAGE);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -321,15 +321,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> MorphologyEx::setupOutputs()
+        const std::vector<const runtime::Output*> MorphologyEx::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -337,7 +337,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::IMAGE);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -345,7 +345,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    runtime::Description* src = new runtime::Description(OUTPUT_SRC, runtime::Variant::IMAGE);
+                    runtime::Output* src = new runtime::Output(OUTPUT_SRC, runtime::Variant::IMAGE);
                     src->setTitle(L_("Source"));
                     outputs.push_back(src);
                     

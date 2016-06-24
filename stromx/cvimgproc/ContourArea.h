@@ -46,12 +46,12 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::Enum m_dataFlow;
-            runtime::Description* m_areaDescription;
-            runtime::MatrixDescription* m_contourDescription;
+            runtime::Input* m_areaDescription;
+            runtime::Input* m_contourDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     } // cvimgproc

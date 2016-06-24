@@ -88,15 +88,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> Mean::setupInputs()
+        const std::vector<const runtime::Input*> Mean::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MATRIX);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::MATRIX);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -107,15 +107,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> Mean::setupOutputs()
+        const std::vector<const runtime::Output*> Mean::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* value = new runtime::Description(OUTPUT_VALUE, runtime::Variant::FLOAT_64);
+                    runtime::Output* value = new runtime::Output(OUTPUT_VALUE, runtime::Variant::FLOAT_64);
                     value->setTitle(L_("Value"));
                     outputs.push_back(value);
                     

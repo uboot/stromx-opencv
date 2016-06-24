@@ -50,16 +50,16 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::UInt32 m_blockSize;
             runtime::UInt32 m_ksize;
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::UInt32>* m_blockSizeParameter;
-            runtime::Description* m_dstDescription;
+            runtime::Input* m_dstDescription;
             runtime::NumericParameter<runtime::UInt32>* m_ksizeParameter;
-            runtime::Description* m_srcDescription;
+            runtime::Input* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     } // cvimgproc

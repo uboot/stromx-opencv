@@ -58,8 +58,8 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             int convertDistType(const runtime::Enum & value);
             
@@ -69,8 +69,8 @@ namespace stromx
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::Float64>* m_aepsParameter;
             runtime::EnumParameter* m_distTypeParameter;
-            runtime::MatrixDescription* m_lineDescription;
-            runtime::MatrixDescription* m_pointsDescription;
+            runtime::Input* m_lineDescription;
+            runtime::Input* m_pointsDescription;
             runtime::NumericParameter<runtime::Float64>* m_repsParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };

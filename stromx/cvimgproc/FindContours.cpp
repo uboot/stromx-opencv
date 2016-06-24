@@ -132,15 +132,15 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> FindContours::setupInputs()
+        const std::vector<const runtime::Input*> FindContours::setupInputs()
         {
-            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Input*> inputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(INPUT_SRC, runtime::Variant::MONO_8_IMAGE);
+                    m_srcDescription = new runtime::Input(INPUT_SRC, runtime::Variant::MONO_8_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -151,15 +151,15 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> FindContours::setupOutputs()
+        const std::vector<const runtime::Output*> FindContours::setupOutputs()
         {
-            std::vector<const runtime::Description*> outputs;
+            std::vector<const runtime::Output*> outputs;
             
             switch(int(m_dataFlow))
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(OUTPUT_DST, runtime::Variant::LIST);
+                    runtime::Output* dst = new runtime::Output(OUTPUT_DST, runtime::Variant::LIST);
                     dst->setTitle(L_("Destination"));
                     dst->setVisualization(runtime::Visualization::POLYGON);
                     outputs.push_back(dst);

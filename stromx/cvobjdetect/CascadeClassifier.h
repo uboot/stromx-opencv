@@ -43,11 +43,11 @@ namespace stromx
             static const std::string TYPE;
             
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::File m_classifier;
-            runtime::Description* m_srcDescription;
+            runtime::Input* m_srcDescription;
             cv::CascadeClassifier* m_cvClassifier;
             runtime::UInt32 m_minSizeX;
             runtime::UInt32 m_minSizeY;

@@ -52,14 +52,14 @@ namespace stromx
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             
             runtime::Float64 m_threshold1;
             runtime::Float64 m_threshold2;
             runtime::Enum m_dataFlow;
-            runtime::Description* m_dstDescription;
-            runtime::Description* m_srcDescription;
+            runtime::Input* m_dstDescription;
+            runtime::Input* m_srcDescription;
             runtime::NumericParameter<runtime::Float64>* m_threshold1Parameter;
             runtime::NumericParameter<runtime::Float64>* m_threshold2Parameter;
             runtime::EnumParameter* m_dataFlowParameter;
