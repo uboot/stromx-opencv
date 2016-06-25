@@ -22,7 +22,6 @@
 
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/Matrix.h>
-#include <stromx/runtime/MatrixDescription.h>
 #include <stromx/runtime/ReadAccess.h>
 #include <stromx/runtime/Variant.h>
 #include <stromx/cvsupport/Utilities.h>
