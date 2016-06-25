@@ -330,7 +330,6 @@ class OpHeaderGenerator(MethodGenerator):
         self.doc.line('#include <stromx/runtime/Enum.h>')
         self.doc.line('#include <stromx/runtime/EnumParameter.h>')
         self.doc.line('#include <stromx/runtime/List.h>')
-        self.doc.line('#include <stromx/runtime/MatrixDescription.h>')
         self.doc.line('#include <stromx/runtime/MatrixParameter.h>')
         self.doc.line('#include <stromx/runtime/NumericParameter.h>')
         self.doc.line('#include <stromx/runtime/OperatorException.h>')
