@@ -37,6 +37,7 @@ namespace stromx
             CPPUNIT_TEST (testExecutePredictInt32Data);
             CPPUNIT_TEST (testExecutePredictWrongDimension);
             CPPUNIT_TEST (testExecuteTrain);
+            CPPUNIT_TEST (testExecuteTrainAndPredict);
             CPPUNIT_TEST (testExecuteTrainWrongDimension);
             CPPUNIT_TEST (testGetStatisticalModel);
             CPPUNIT_TEST_SUITE_END ();
@@ -52,6 +53,7 @@ namespace stromx
                 void testExecutePredictInt32Data();
                 void testExecutePredictWrongDimension();
                 void testExecuteTrain();
+                void testExecuteTrainAndPredict();
                 void testExecuteTrainWrongDimension();
                 void testGetStatisticalModel();
                 

@@ -107,6 +107,26 @@ namespace stromx
             
             m_operator->setInputData(Svm::DATA, DataContainer(data));
             m_operator->setInputData(Svm::TRAINING_RESPONSE, DataContainer(response));
+            DataContainer output = m_operator->getOutputData(Svm::PREDICTED_RESPONSE);
+            ReadAccess access(output);
+            const Float32 & predictedResponse = access.get<Float32>();
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(float(1.0), static_cast<float>(predictedResponse), 0.001);
+        }
+        
+        void SvmTest::testExecuteTrainAndPredict()
+        {
+            m_operator->setParameter(Svm::TRAINING_IS_ACTIVE, Bool(true));
+            
+            cvsupport::Matrix* data = 0;
+            Float32* response = 0;
+            
+            data = new cvsupport::Matrix(1, 2, runtime::Matrix::FLOAT_32);
+            data->at<float>(0, 0) = 0.0;
+            data->at<float>(0, 1) = 1.1;
+            response = new Float32(1.0);
+            
+            m_operator->setInputData(Svm::DATA, DataContainer(data));
+            m_operator->setInputData(Svm::TRAINING_RESPONSE, DataContainer(response));
             m_operator->getOutputData(Svm::PREDICTED_RESPONSE);
             m_operator->clearOutputData(Svm::PREDICTED_RESPONSE);
             
@@ -128,8 +148,7 @@ namespace stromx
             m_operator->setInputData(Svm::DATA, DataContainer(data));
             m_operator->setInputData(Svm::TRAINING_RESPONSE, DataContainer(response));
             m_operator->getOutputData(Svm::PREDICTED_RESPONSE);
-            m_operator->clearOutputData(Svm::PREDICTED_RESPONSE);
-            
+            m_operator->clearOutputData(Svm::PREDICTED_RESPONSE);            
             
             m_operator->setParameter(Svm::TRAINING_IS_ACTIVE, Bool(false));
             data = new cvsupport::Matrix(1, 2, runtime::Matrix::FLOAT_32);

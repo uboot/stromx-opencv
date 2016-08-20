@@ -145,7 +145,7 @@ namespace stromx
                 m_trainingResponses->push_back(static_cast<int32_t>(response));
 #endif // STROMX_OPENCV2
                 
-                Id2DataPair outputMapper(PREDICTED_RESPONSE, dataMapper.data());
+                Id2DataPair outputMapper(PREDICTED_RESPONSE, responseMapper.data());
                 provider.sendOutputData(outputMapper);
             }
             else 
