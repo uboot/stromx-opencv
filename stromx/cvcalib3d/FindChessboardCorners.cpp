@@ -160,7 +160,6 @@ namespace stromx
                     corners->setVisualization(runtime::Visualization::POLYLINE);
                     corners->setRows(0);
                     corners->setCols(2);
-                    corners->setOperatorThread(1);
                     outputs.push_back(corners);
                     
                 }
@@ -205,8 +204,6 @@ namespace stromx
                     cv::Mat cornersCvData;
                     
                     cv::findChessboardCorners(imageCvData, cv::Size(patternSizeXCvData, patternSizeYCvData), cornersCvData);
-                    if (cornersCvData.empty())
-                        return;
                     
                     runtime::Matrix* cornersCastedData = new cvsupport::Matrix(cornersCvData);
                     runtime::DataContainer cornersOutContainer = runtime::DataContainer(cornersCastedData);
