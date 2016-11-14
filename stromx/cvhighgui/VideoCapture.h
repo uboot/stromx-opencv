@@ -40,7 +40,8 @@ namespace stromx
                 SATURATION,
                 HUE,
                 GAIN,
-                EXPOSURE
+                EXPOSURE,
+                TRIGGER
             };
                 
             //constructor

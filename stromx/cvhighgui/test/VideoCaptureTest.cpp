@@ -19,6 +19,7 @@
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/TriggerData.h>
 #include <stromx/cvsupport/Image.h>
 #include "stromx/cvhighgui//VideoCapture.h"
 
@@ -179,10 +180,11 @@ namespace stromx
             if(m_hasCamera)
             {
                 m_operator->activate();
+                m_operator->setInputData(VideoCapture::TRIGGER, runtime::DataContainer(new runtime::TriggerData));
                 runtime::DataContainer output = m_operator->getOutputData(VideoCapture::OUTPUT);
             
-                runtime::ReadAccess<runtime::Image> access(output);
-                const runtime::Image& image = access();
+                runtime::ReadAccess access(output);
+                const runtime::Image& image = access.get<runtime::Image>();
             
                 cvsupport::Image::save("VideoCaptureTest_testExecute.png", image);
                 m_operator->deactivate();

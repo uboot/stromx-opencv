@@ -38,6 +38,11 @@ namespace stromx
         const std::vector<const runtime::Input*> VideoCapture::setupInputs()
         {
             std::vector<const runtime::Input*> inputs;
+            
+            runtime::Input* trigger = new runtime::Input(TRIGGER, runtime::Variant::TRIGGER);
+            trigger->setTitle("Trigger");
+            inputs.push_back(trigger);
+            
             return inputs;
         }
 
@@ -254,6 +259,10 @@ namespace stromx
 
         void VideoCapture::execute(runtime::DataProvider& provider)
         {            
+            // wait for a trigger signal
+            runtime::Id2DataPair trigger(TRIGGER);
+            provider.receiveInputData(trigger);
+            
             // grab and retrieve a frame
             // apparently the returned frame is a pointer to a fixed frame buffer
             // (i.e. with a constant address)
