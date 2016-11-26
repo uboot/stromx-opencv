@@ -124,6 +124,89 @@ calibrateCamera = package.Method(
     "calibrateCamera", options = [allocate]
 )
 
+# stereoCalibrate
+imagePoints1 = package.Argument(
+    "imagePoints1", "Image points camera 1", cvtype.VectorOfMat(),
+    datatype.List(datatype.Float32Matrix()),
+    visualization = datatype.Visualization.POINT
+)
+imagePoints2 = package.Argument(
+    "imagePoints2", "Image points 2", cvtype.VectorOfMat(),
+    datatype.List(datatype.Float32Matrix()),
+    visualization = datatype.Visualization.POINT
+)
+cameraMatrix1 = package.MatrixArgument(
+    "cameraMatrix1", "Camera matrix 1", cvtype.Mat(), datatype.Float64Matrix(),
+    rows = 3, cols = 3
+)
+distCoeffs1 = package.MatrixArgument(
+    "distCoeffs1", "Distortion coefficients 1", cvtype.Mat(), 
+    datatype.Float64Matrix(), rows = 1, cols = 5
+)
+cameraMatrix2 = package.MatrixArgument(
+    "cameraMatrix2", "Camera matrix 2", cvtype.Mat(), datatype.Float64Matrix(),
+    rows = 3, cols = 3
+)
+distCoeffs2 = package.MatrixArgument(
+    "distCoeffs2", "Distortion coefficients 2", cvtype.Mat(), 
+    datatype.Float64Matrix(), rows = 1, cols = 5
+)
+rvec = package.MatrixArgument(
+    "rvec", "Rotation", cvtype.Mat(channels = 2), datatype.Float64Matrix(),
+    rows = 3, cols = 1
+)
+tvec = package.MatrixArgument(
+    "tvec", "Translation", cvtype.Mat(channels = 2), datatype.Float64Matrix(),
+    rows = 3, cols = 1
+)
+listSizeCheck = document.Document(
+"""
+if (objectPointsCastedData->content().size() != imagePoints1CastedData->content().size())
+{
+    throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Object and image point (1) lists must have the same size.");
+}
+if (objectPointsCastedData->content().size() != imagePoints2CastedData->content().size())
+{
+    throw runtime::InputError(INPUT_OBJECT_POINTS, *this, "Object and image point (2) lists must have the same size.");
+}
+""")
+
+chess_corners_files = (
+  test.MatrixFile("chess_corners_1.npy"), # 32-bit float 35x2
+  test.MatrixFile("chess_corners_2.npy"),
+  test.MatrixFile("chess_corners_3.npy"),
+  test.MatrixFile("chess_corners_4.npy"),
+  test.MatrixFile("chess_corners_5.npy"),
+  test.MatrixFile("chess_corners_6.npy"),
+  test.MatrixFile("chess_corners_7.npy")
+)
+chess_corners_3d_files = (
+  test.MatrixFile("chess_corners_3d.npy"), # 32-bit float 35x3
+) * 7
+chess_corners = test.List(*chess_corners_files)
+chess_corners_3d = test.List(*chess_corners_3d_files)
+camera_matrix = test.MatrixFile("camera_matrix_32f.npy")
+dist_coeffs = test.MatrixFile("dist_coeffs_32f.npy")
+
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(objectPoints), package.Input(imagePoints1), 
+     package.Input(imagePoints2), package.Input(cameraMatrix1), 
+     package.Input(distCoeffs1), package.Input(cameraMatrix2), 
+     package.Input(distCoeffs2), imageSize, package.Allocation(rvec),
+     package.Allocation(tvec),  package.Constant('cv::Mat()'),
+     package.Constant("cv::Mat()")],
+    inputCheck = listSizeCheck,
+    tests = [
+        [chess_corners_3d, chess_corners, chess_corners, camera_matrix,
+         dist_coeffs, camera_matrix, dist_coeffs, (320, 240), DT, DT,
+         DT, DT]
+    ]
+)
+stereoCalibrate = package.Method(
+    "stereoCalibrate", options = [allocate]
+)
+
 # findChessboardCorners
 image = package.Argument(
     "image", "Image", cvtype.Mat(), datatype.Image()
@@ -212,14 +295,6 @@ distCoeffs = package.MatrixParameter(
     default = "cvsupport::Matrix::zeros(1, 5, runtime::Matrix::FLOAT_32)",
     rows = 1, cols = 5,
 )
-rvec = package.MatrixArgument(
-    "rvec", "Rotation", cvtype.Mat(channels = 2), datatype.Float64Matrix(),
-    rows = 3, cols = 1
-)
-tvec = package.MatrixArgument(
-    "tvec", "Translation", cvtype.Mat(channels = 2), datatype.Float64Matrix(),
-    rows = 3, cols = 1
-)
 chess_corners = test.MatrixFile("chess_corners_1.npy")
 chess_corners_3d = test.MatrixFile("chess_corners_3d.npy")
 camera_matrix_64f = test.MatrixFile("camera_matrix_64f.npy")
@@ -245,6 +320,7 @@ calib3d = package.Package(
     "cvcalib3d", 0, 1, 0,
     methods = [
         calibrateCamera,
+        stereoCalibrate,
         findChessboardCorners,
         generatePattern,
         solvePnP
