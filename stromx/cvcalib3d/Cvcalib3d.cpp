@@ -1,6 +1,7 @@
 #include "stromx/cvcalib3d/Cvcalib3d.h"
 
 #include "stromx/cvcalib3d/CalibrateCamera.h"
+#include "stromx/cvcalib3d/StereoCalibrate.h"
 #include "stromx/cvcalib3d/FindChessboardCorners.h"
 #include "stromx/cvcalib3d/GeneratePattern.h"
 #include "stromx/cvcalib3d/SolvePnP.h"
@@ -24,6 +25,7 @@ int stromxRegisterCvcalib3d(stromx::runtime::Registry* registry)
     try
     {
         registry->registerOperator(new CalibrateCamera);
+        registry->registerOperator(new StereoCalibrate);
         registry->registerOperator(new FindChessboardCorners);
         registry->registerOperator(new GeneratePattern);
         registry->registerOperator(new SolvePnP);

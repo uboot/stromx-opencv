@@ -8,6 +8,7 @@
 #include "stromx/cvcore/Bitwise_or.h"
 #include "stromx/cvcore/Bitwise_xor.h"
 #include "stromx/cvcore/Mean.h"
+#include "stromx/cvcore/Merge.h"
 #include "stromx/cvcore/Sum.h"
 #include <stromx/runtime/Locale.h>
 #include <stromx/runtime/Registry.h>
@@ -36,6 +37,7 @@ int stromxRegisterCvcore(stromx::runtime::Registry* registry)
         registry->registerOperator(new Bitwise_or);
         registry->registerOperator(new Bitwise_xor);
         registry->registerOperator(new Mean);
+        registry->registerOperator(new Merge);
         registry->registerOperator(new Sum);
     }
     catch(stromx::runtime::Exception & e)

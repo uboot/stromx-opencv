@@ -9,6 +9,8 @@ namespace stromx
     {
         double mean(const cv::Mat & input);
         
+        void merge(const cv::Mat & input1, const cv::Mat & input2, cv::Mat & dst);
+        
         double sum(const cv::Mat & input);
         
     }

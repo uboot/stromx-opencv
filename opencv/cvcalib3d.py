@@ -135,20 +135,40 @@ imagePoints2 = package.Argument(
     datatype.List(datatype.Float32Matrix()),
     visualization = datatype.Visualization.POINT
 )
-cameraMatrix1 = package.MatrixArgument(
-    "cameraMatrix1", "Camera matrix 1", cvtype.Mat(), datatype.Float64Matrix(),
+cameraMatrix1 = package.MatrixParameter(
+    "cameraMatrix1", "Camera matrix 1", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::zeros(3, 3, runtime::Matrix::FLOAT_32)",
     rows = 3, cols = 3
 )
-distCoeffs1 = package.MatrixArgument(
-    "distCoeffs1", "Distortion coefficients 1", cvtype.Mat(), 
+distCoeffs1 = package.MatrixParameter(
+    "distCoeffs1", "Distortion coefficients 1", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::zeros(1, 5, runtime::Matrix::FLOAT_32)",
+    rows = 1, cols = 5,
+)
+cameraMatrix2 = package.MatrixParameter(
+    "cameraMatrix2", "Camera matrix 2", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::zeros(3, 3, runtime::Matrix::FLOAT_32)",
+    rows = 3, cols = 3
+)
+distCoeffs2 = package.MatrixParameter(
+    "distCoeffs2", "Distortion coefficients 2", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::zeros(1, 5, runtime::Matrix::FLOAT_32)",
+    rows = 1, cols = 5,
+)
+cameraMatrix1Arg = package.MatrixArgument(
+    "cameraMatrix1Arg", "Camera matrix 1", cvtype.Mat(), datatype.Float64Matrix(),
+    rows = 3, cols = 3
+)
+distCoeffs1Arg = package.MatrixArgument(
+    "distCoeffs1Arg", "Distortion coefficients 1", cvtype.Mat(), 
     datatype.Float64Matrix(), rows = 1, cols = 5
 )
-cameraMatrix2 = package.MatrixArgument(
-    "cameraMatrix2", "Camera matrix 2", cvtype.Mat(), datatype.Float64Matrix(),
+cameraMatrix2Arg = package.MatrixArgument(
+    "cameraMatrix2Arg", "Camera matrix 2", cvtype.Mat(), datatype.Float64Matrix(),
     rows = 3, cols = 3
 )
-distCoeffs2 = package.MatrixArgument(
-    "distCoeffs2", "Distortion coefficients 2", cvtype.Mat(), 
+distCoeffs2Arg = package.MatrixArgument(
+    "distCoeffs2Arg", "Distortion coefficients 2", cvtype.Mat(), 
     datatype.Float64Matrix(), rows = 1, cols = 5
 )
 rvec = package.MatrixArgument(
@@ -188,14 +208,27 @@ chess_corners_3d = test.List(*chess_corners_3d_files)
 camera_matrix = test.MatrixFile("camera_matrix_32f.npy")
 dist_coeffs = test.MatrixFile("dist_coeffs_32f.npy")
 
-allocate = package.Option(
-    "allocate", "Allocate",
+intrinsics = package.Option(
+    "intrinsics", "Extrinsics and intrinsics",
     [package.Input(objectPoints), package.Input(imagePoints1), 
-     package.Input(imagePoints2), package.Input(cameraMatrix1), 
-     package.Input(distCoeffs1), package.Input(cameraMatrix2), 
-     package.Input(distCoeffs2), imageSize, package.Allocation(rvec),
-     package.Allocation(tvec),  package.Constant('cv::Mat()'),
-     package.Constant("cv::Mat()")],
+     package.Input(imagePoints2), package.Allocation(cameraMatrix1Arg), 
+     package.Allocation(distCoeffs1Arg), package.Allocation(cameraMatrix2Arg),
+     package.Allocation(distCoeffs2Arg), imageSize, package.Allocation(rvec),
+     package.Allocation(tvec),  package.Constant('cv::Mat(3, 3, CV_64F)'),
+     package.Constant("cv::Mat(3, 3, CV_64F)")],
+    inputCheck = listSizeCheck,
+    tests = [
+        [chess_corners_3d, chess_corners, chess_corners, DT, DT, DT, DT, 
+         (320, 240), DT, DT, DT, DT]
+    ]
+)
+extrinsics = package.Option(
+    "extrinsics", "Only extrinsics",
+    [package.Input(objectPoints), package.Input(imagePoints1), 
+     package.Input(imagePoints2), cameraMatrix1, distCoeffs1, 
+     cameraMatrix2, distCoeffs2, imageSize, package.Allocation(rvec),
+     package.Allocation(tvec),  package.Constant('cv::Mat(3, 3, CV_64F)'),
+     package.Constant("cv::Mat(3, 3, CV_64F)")],
     inputCheck = listSizeCheck,
     tests = [
         [chess_corners_3d, chess_corners, chess_corners, camera_matrix,
@@ -204,7 +237,7 @@ allocate = package.Option(
     ]
 )
 stereoCalibrate = package.Method(
-    "stereoCalibrate", options = [allocate]
+    "stereoCalibrate", options = [extrinsics, intrinsics]
 )
 
 # findChessboardCorners

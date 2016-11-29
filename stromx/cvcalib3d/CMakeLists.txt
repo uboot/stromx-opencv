@@ -12,6 +12,7 @@ set (SOURCES
     Cvcalib3d.cpp
     Utility.cpp
     CalibrateCamera.cpp
+    StereoCalibrate.cpp
     FindChessboardCorners.cpp
     GeneratePattern.cpp
     SolvePnP.cpp

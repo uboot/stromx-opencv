@@ -28,12 +28,14 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dist_coeffs_32f.npy ${CMAKE_CURRENT_B
 
 set (SOURCES 
     ../CalibrateCamera.cpp
+    ../StereoCalibrate.cpp
     ../FindChessboardCorners.cpp
     ../GeneratePattern.cpp
     ../SolvePnP.cpp
     ../Utility.cpp
     ../Cvcalib3d.cpp
     CalibrateCameraTest.cpp
+    StereoCalibrateTest.cpp
     FindChessboardCornersTest.cpp
     GeneratePatternTest.cpp
     SolvePnPTest.cpp

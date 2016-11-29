@@ -37,6 +37,29 @@ double mean(const cv::Mat & input)
 """)
 mean1DWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 
+# merge2Wrapper
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+void merge(const cv::Mat & input1, const cv::Mat & input2, cv::Mat & dst);
+""")
+dtnIncludes = ["<opencv2/core/core.hpp>"]
+dtn = document.Document()              
+dtn.text(
+"""
+void merge(const cv::Mat & input1, const cv::Mat & input2, cv::Mat & dst)
+{
+    std::vector<cv::Mat> mv(2);
+    mv[0] = input1;
+    mv[1] = input2;
+    cv::merge(mv, dst);
+    
+}
+
+""")
+merge2Wrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
 # sum1DWrapper
 dcl = document.Document()
 dclIncludes = ["<opencv2/core/core.hpp>"]
@@ -338,6 +361,28 @@ mean = package.Method(
     "mean", namespace = "", options = [allocate]
 )
 
+# merge
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg)],
+    tests = [
+        [lenna, barbara, memory],
+        [lenna_bw, barbara_bw, memory]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg1), package.Input(srcImg2),
+     package.Allocation(dstImg)],
+    tests = [
+        [lenna_16bit, barbara_16bit, DT],
+        [lenna, barbara, DT]
+    ]
+)
+merge = package.Method(
+    "merge", namespace = "", options = [manual, allocate]
+)
+
 # sum
 allocate = package.Option(
     "allocate", "Allocate",
@@ -362,10 +407,12 @@ core = package.Package(
         bitwise_or,
         bitwise_xor,
         mean,
+        merge,
         sumFunction
     ],
     functions = [
         mean1DWrapper,
+        merge2Wrapper,
         sum1DWrapper
     ],
     testFiles = [

@@ -25,6 +25,7 @@ set (SOURCES
     ../Bitwise_or.cpp
     ../Bitwise_xor.cpp
     ../Mean.cpp
+    ../Merge.cpp
     ../Sum.cpp
     ../Utility.cpp
     ../Cvcore.cpp
@@ -36,6 +37,7 @@ set (SOURCES
     Bitwise_orTest.cpp
     Bitwise_xorTest.cpp
     MeanTest.cpp
+    MergeTest.cpp
     SumTest.cpp
     main.cpp
 )

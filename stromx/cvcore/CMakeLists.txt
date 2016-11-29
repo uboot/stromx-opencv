@@ -19,6 +19,7 @@ set (SOURCES
     Bitwise_or.cpp
     Bitwise_xor.cpp
     Mean.cpp
+    Merge.cpp
     Sum.cpp
 )
 

@@ -12,6 +12,15 @@ namespace stromx
             return value[0];
         }
         
+        void merge(const cv::Mat & input1, const cv::Mat & input2, cv::Mat & dst)
+        {
+            std::vector<cv::Mat> mv(2);
+            mv[0] = input1;
+            mv[1] = input2;
+            cv::merge(mv, dst);
+            
+        }
+        
         double sum(const cv::Mat & input)
         {
             cv::Scalar value = cv::sum(input);
