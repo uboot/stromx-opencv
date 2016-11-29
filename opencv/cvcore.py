@@ -362,9 +362,22 @@ mean = package.Method(
 )
 
 # merge
+srcMatrix1 = package.Argument(
+    "src1", "Source 1", cvtype.Mat(),
+    datatype.Matrix("runtime::Variant::MATRIX")
+)
+srcMatrix2 = package.Argument(
+    "src2", "Source 2", cvtype.Mat(),
+    datatype.Matrix("runtime::Variant::MATRIX")
+)
+dstMatrix = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(), initIn = initInCopy,
+    initOut = initOutCopy
+)
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg)],
+    [package.Input(srcMatrix1), package.Input(srcMatrix2),
+     package.Output(dstMatrix)],
     tests = [
         [lenna, barbara, memory],
         [lenna_bw, barbara_bw, memory]
@@ -372,8 +385,8 @@ manual = package.Option(
 )
 allocate = package.Option(
     "allocate", "Allocate",
-    [package.Input(srcImg1), package.Input(srcImg2),
-     package.Allocation(dstImg)],
+    [package.Input(srcMatrix1), package.Input(srcMatrix2),
+     package.Allocation(dstMatrix)],
     tests = [
         [lenna_16bit, barbara_16bit, DT],
         [lenna, barbara, DT]
