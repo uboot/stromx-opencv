@@ -229,7 +229,13 @@ namespace stromx
                     const runtime::Matrix* src2CastedData = runtime::data_cast<runtime::Matrix>(src2Data);
                     runtime::Matrix * dstCastedData = runtime::data_cast<runtime::Matrix>(dstData);
                     
-                    dstCastedData->initializeImage(src1CastedData->width(), src1CastedData->height(), src1CastedData->stride(), dstCastedData->data(), src1CastedData->pixelType());
+                    if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
+                        throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same size.");
+                        
+                    if(src1CastedData->type() != src2CastedData->type())
+                        throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same types.");
+                    
+                    dstCastedData->initializeMatrix(src1CastedData->rows(), src1CastedData->cols(), src1CastedData->stride(), dstCastedData->data(), src1CastedData->valueType());
                     
                     cv::Mat src1CvData = cvsupport::getOpenCvMat(*src1CastedData);
                     cv::Mat src2CvData = cvsupport::getOpenCvMat(*src2CastedData);
@@ -273,6 +279,12 @@ namespace stromx
                     const runtime::Matrix* src1CastedData = runtime::data_cast<runtime::Matrix>(src1Data);
                     const runtime::Matrix* src2CastedData = runtime::data_cast<runtime::Matrix>(src2Data);
                     
+                    if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
+                        throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same size.");
+                        
+                    if(src1CastedData->type() != src2CastedData->type())
+                        throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same types.");
+                    
                     cv::Mat src1CvData = cvsupport::getOpenCvMat(*src1CastedData);
                     cv::Mat src2CvData = cvsupport::getOpenCvMat(*src2CastedData);
                     cv::Mat dstCvData;
@@ -283,7 +295,7 @@ namespace stromx
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair dstOutMapper(OUTPUT_DST, dstOutContainer);
                     
-                    dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), src1CastedData->pixelType());
+                    dstCastedData->initializeMatrix(dstCastedData->rows(), dstCastedData->cols(), dstCastedData->stride(), dstCastedData->data(), src1CastedData->valueType());
                     provider.sendOutputData(dstOutMapper);
                 }
                 break;

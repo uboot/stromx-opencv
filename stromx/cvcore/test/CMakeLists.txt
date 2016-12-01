@@ -15,6 +15,10 @@ include_directories (
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/barbara.jpg ${CMAKE_CURRENT_BINARY_DIR}/barbara.jpg COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg ${CMAKE_CURRENT_BINARY_DIR}/lenna.jpg COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna_32f.npy ${CMAKE_CURRENT_BINARY_DIR}/lenna_32f.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/row_32f.npy ${CMAKE_CURRENT_BINARY_DIR}/row_32f.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/row_64f.npy ${CMAKE_CURRENT_BINARY_DIR}/row_64f.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/column_32f.npy ${CMAKE_CURRENT_BINARY_DIR}/column_32f.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/column_64f.npy ${CMAKE_CURRENT_BINARY_DIR}/column_64f.npy COPYONLY)
 
 set (SOURCES 
     ../Absdiff.cpp

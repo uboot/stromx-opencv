@@ -180,6 +180,10 @@ lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
 barbara_bw = test.ImageFile("barbara.jpg", grayscale = True)
 memory = test.ImageBuffer(5000000)
 lenna_32f = test.MatrixFile("lenna_32f.npy")
+row_32f = test.MatrixFile("row_32f.npy")
+row_64f = test.MatrixFile("row_64f.npy")
+column_32f = test.MatrixFile("column_32f.npy")
+column_64f = test.MatrixFile("column_64f.npy")
 
 # absdiff
 manual = package.Option(
@@ -362,6 +366,22 @@ mean = package.Method(
 )
 
 # merge
+initMatrixInCopy = document.Document((
+    "{1}->initializeMatrix({0}->rows(), {0}->cols(), {0}->stride(), "
+    "{1}->data(), {0}->valueType());").format("src1CastedData", "dstCastedData"
+))
+initMatrixOutCopy = document.Document((
+    "{1}->initializeMatrix({1}->rows(), {1}->cols(), {1}->stride(), "
+    "{1}->data(), {0}->valueType());").format("src1CastedData", "dstCastedData"
+))
+valueTypeCheck = document.Document(
+"""
+if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same size.");
+    
+if(src1CastedData->type() != src2CastedData->type())
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same types.");
+""")
 srcMatrix1 = package.Argument(
     "src1", "Source 1", cvtype.Mat(),
     datatype.Matrix("runtime::Variant::MATRIX")
@@ -371,25 +391,27 @@ srcMatrix2 = package.Argument(
     datatype.Matrix("runtime::Variant::MATRIX")
 )
 dstMatrix = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Matrix(), initIn = initInCopy,
-    initOut = initOutCopy
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
+    initIn = initMatrixInCopy, initOut = initMatrixOutCopy
 )
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcMatrix1), package.Input(srcMatrix2),
      package.Output(dstMatrix)],
+    inputCheck = valueTypeCheck,
     tests = [
-        [lenna, barbara, memory],
-        [lenna_bw, barbara_bw, memory]
+        [column_32f, column_32f, memory],
+        [row_64f, row_64f, memory]
     ]
 )
 allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(srcMatrix1), package.Input(srcMatrix2),
      package.Allocation(dstMatrix)],
+    inputCheck = valueTypeCheck,
     tests = [
-        [lenna_16bit, barbara_16bit, DT],
-        [lenna, barbara, DT]
+        [column_64f, column_64f, memory],
+        [row_32f, row_32f, memory]
     ]
 )
 merge = package.Method(
@@ -431,7 +453,11 @@ core = package.Package(
     testFiles = [
         "barbara.jpg",
         "lenna.jpg",
-        "lenna_32f.npy"
+        "lenna_32f.npy",
+        "row_32f.npy",
+        "row_64f.npy",
+        "column_32f.npy",
+        "column_64f.npy"        
     ]
 )
 

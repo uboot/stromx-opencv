@@ -27,8 +27,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg"));
-            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg"));
+            runtime::DataContainer src1(new cvsupport::Matrix("column_32f.npy"));
+            runtime::DataContainer src2(new cvsupport::Matrix("column_32f.npy"));
             runtime::DataContainer dst(new cvsupport::Image(5000000));
             
             m_operator->setInputData(Merge::INPUT_SRC_1, src1);
@@ -47,8 +47,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
-            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::GRAYSCALE));
+            runtime::DataContainer src1(new cvsupport::Matrix("row_64f.npy"));
+            runtime::DataContainer src2(new cvsupport::Matrix("row_64f.npy"));
             runtime::DataContainer dst(new cvsupport::Image(5000000));
             
             m_operator->setInputData(Merge::INPUT_SRC_1, src1);
@@ -67,11 +67,13 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::DEPTH_16));
-            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::DEPTH_16));
+            runtime::DataContainer src1(new cvsupport::Matrix("column_64f.npy"));
+            runtime::DataContainer src2(new cvsupport::Matrix("column_64f.npy"));
+            runtime::DataContainer dst(new cvsupport::Image(5000000));
             
             m_operator->setInputData(Merge::INPUT_SRC_1, src1);
             m_operator->setInputData(Merge::INPUT_SRC_2, src2);
+            m_operator->setInputData(Merge::INPUT_DST, dst);
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Merge::OUTPUT_DST);
             
@@ -85,11 +87,13 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg"));
-            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg"));
+            runtime::DataContainer src1(new cvsupport::Matrix("row_32f.npy"));
+            runtime::DataContainer src2(new cvsupport::Matrix("row_32f.npy"));
+            runtime::DataContainer dst(new cvsupport::Image(5000000));
             
             m_operator->setInputData(Merge::INPUT_SRC_1, src1);
             m_operator->setInputData(Merge::INPUT_SRC_2, src2);
+            m_operator->setInputData(Merge::INPUT_DST, dst);
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Merge::OUTPUT_DST);
             
