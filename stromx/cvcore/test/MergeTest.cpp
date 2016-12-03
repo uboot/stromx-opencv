@@ -69,11 +69,9 @@ namespace stromx
             
             runtime::DataContainer src1(new cvsupport::Matrix("column_64f.npy"));
             runtime::DataContainer src2(new cvsupport::Matrix("column_64f.npy"));
-            runtime::DataContainer dst(new cvsupport::Image(5000000));
             
             m_operator->setInputData(Merge::INPUT_SRC_1, src1);
             m_operator->setInputData(Merge::INPUT_SRC_2, src2);
-            m_operator->setInputData(Merge::INPUT_DST, dst);
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Merge::OUTPUT_DST);
             
@@ -89,11 +87,9 @@ namespace stromx
             
             runtime::DataContainer src1(new cvsupport::Matrix("row_32f.npy"));
             runtime::DataContainer src2(new cvsupport::Matrix("row_32f.npy"));
-            runtime::DataContainer dst(new cvsupport::Image(5000000));
             
             m_operator->setInputData(Merge::INPUT_SRC_1, src1);
             m_operator->setInputData(Merge::INPUT_SRC_2, src2);
-            m_operator->setInputData(Merge::INPUT_DST, dst);
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Merge::OUTPUT_DST);
             

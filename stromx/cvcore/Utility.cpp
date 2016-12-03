@@ -17,6 +17,7 @@ namespace stromx
             std::vector<cv::Mat> mv(2);
             mv[0] = input1;
             mv[1] = input2;
+            dst = dst.reshape(2);
             cv::merge(mv, dst);
             
         }

@@ -53,8 +53,8 @@ void merge(const cv::Mat & input1, const cv::Mat & input2, cv::Mat & dst)
     std::vector<cv::Mat> mv(2);
     mv[0] = input1;
     mv[1] = input2;
+    dst = dst.reshape(2);
     cv::merge(mv, dst);
-    
 }
 
 """)
@@ -367,7 +367,7 @@ mean = package.Method(
 
 # merge
 initMatrixInCopy = document.Document((
-    "{1}->initializeMatrix({0}->rows(), {0}->cols(), {0}->stride(), "
+    "{1}->initializeMatrix({0}->rows(), 2*{0}->cols(), 2*{0}->cols()*{0}->valueSize(), "
     "{1}->data(), {0}->valueType());").format("src1CastedData", "dstCastedData"
 ))
 initMatrixOutCopy = document.Document((
@@ -377,10 +377,10 @@ initMatrixOutCopy = document.Document((
 valueTypeCheck = document.Document(
 """
 if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
-    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same size.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input matrices must have the same size.");
     
 if(src1CastedData->type() != src2CastedData->type())
-    throw runtime::InputError(INPUT_SRC_1, *this, "Input images must have the same types.");
+    throw runtime::InputError(INPUT_SRC_1, *this, "Input matrices must have the same types.");
 """)
 srcMatrix1 = package.Argument(
     "src1", "Source 1", cvtype.Mat(),
@@ -410,8 +410,8 @@ allocate = package.Option(
      package.Allocation(dstMatrix)],
     inputCheck = valueTypeCheck,
     tests = [
-        [column_64f, column_64f, memory],
-        [row_32f, row_32f, memory]
+        [column_64f, column_64f, DT],
+        [row_32f, row_32f, DT]
     ]
 )
 merge = package.Method(
